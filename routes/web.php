@@ -14,5 +14,10 @@ use App\Http\Controllers\Authentication;
 |
 */
 
-Route::get('/', [Authentication::class, 'showLoginForm'])->name('login');
+Route::get('/', [Authentication::class, 'showLoginForm'])->name('LoginForm');
+Route::post('/login', [Authentication::class, 'login'])->name('login');
+Route::post('/logout', [Authentication::class, 'logout'])->name('logout');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', 'DashboardController@index');
+});
