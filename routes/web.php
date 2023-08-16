@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,9 @@ use App\Http\Controllers\Authentication;
 Route::get('/', [Authentication::class, 'showLoginForm'])->name('LoginForm');
 Route::post('/login', [Authentication::class, 'login'])->name('login');
 Route::post('/logout', [Authentication::class, 'logout'])->name('logout');
+Route::get('/signup', [Authentication::class, 'showInscription'])->name('LoginSingup');
+Route::post('/signup', [Authentication::class, 'signup'])->name('signup');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
 });
