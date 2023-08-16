@@ -21,7 +21,7 @@ class Authentication extends Controller
             return redirect()->intended('/dashboard');
         } else {
             // Authentication failed
-            return redirect()->route('login')->withErrors(['message' => 'Invalid credentials']);
+            return redirect()->route('LoginForm')->withErrors(['message' => 'les informations d\'identification invalides']);
         }
     }
 
