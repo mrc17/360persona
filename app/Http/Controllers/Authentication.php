@@ -20,7 +20,7 @@ class Authentication extends Controller
 
         if (Auth::attempt($credentials)) {
             // Authentication passed
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/Dashboard');
         } else {
             // Authentication failed
             return redirect()->route('LoginForm')->withErrors(['message' => 'les informations d\'identification invalides']);
@@ -30,7 +30,7 @@ class Authentication extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect('/');
     }
 
     public function showInscription(){
