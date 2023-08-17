@@ -17,10 +17,13 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [Authentication::class, 'showLoginForm'])->name('LoginForm');
 Route::post('/login', [Authentication::class, 'login'])->name('login');
-Route::post('/logout', [Authentication::class, 'logout'])->name('logout');
-Route::get('/signup', [Authentication::class, 'showInscription'])->name('LoginSingup');
 Route::post('/signup', [Authentication::class, 'signup'])->name('signup');
+Route::get('/logout', [Authentication::class, 'logout'])->name('logout');
+Route::get('/signup', [Authentication::class, 'showInscription'])->name('LoginSingup');
 
 Route::middleware('auth')->group(function () {
-Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+Route::get('/Dashboard', [DashboardController::class,'index'])->name('Dashboard');
+Route::get('/Fiche', [DashboardController::class,'showFiche'])->name('Fiche');
+Route::get('/Liste', [DashboardController::class,'showListe'])->name('Liste');
+Route::get('/Messages', [DashboardController::class,'showMessages'])->name('Messages');
 });
