@@ -8,12 +8,22 @@ class DashboardController extends Controller
 {
     public function index()
     {
-
         $user = Auth::user();
-
-        // Utiliser les informations de l'utilisateur pour le traitement
-        // Par exemple, $user->name pour obtenir le nom de l'utilisateur
-
-        return view('dashboard', ['user' => $user]);
+        return view('Dashboard', ['user' => $user]);
+    }
+    public function showFiche()
+    {
+        $user = Auth::user();
+        return view('Fiche',['user' => $user]);
+    }
+    public function showListe()
+    {
+        $user = Auth::user();
+        return view('Liste',['user' => $user]);
+    }
+    public function showMessages()
+    {
+        $user = Auth::user();
+        return view('Fiche',['user' => $user]);
     }
 }
