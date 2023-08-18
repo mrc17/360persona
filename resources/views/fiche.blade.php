@@ -96,33 +96,43 @@
             </div>
         </div>
         <div class=" py-4 h-screen md:block  mx-auto px-3 rounded-md  relative overflow-x-auto transition-transform duration-300 ease-in-out">
-            <form method="POST" class="bg-white p-5 rounded-lg ">
+            <form method="POST" action="{{ route('create-artisan') }}" class="bg-white p-5 rounded-lg ">
+                @csrf
                 <div class="flex flex-col border-2 p-2 border-black">
                     <p class="text-xl flex-wrap text-center font-bold text-red-600">FICHE D’IDENTIFICATION ET DE REFERENCEMENT DES PROFESSIONNELS DE METIER</p>
                     <p class="text-sm text-center font-italic  text-gray-800">Fiche à remplir et retourner physiquement ou par mail à ksira2015@yahoo.fr ou par WhatsApp aux 07 68 24 40 61</p>
                     <div class="flex flex-row flex-wrap my-4">
                         <p class="mx-2 py-4 font-bold">DATE :</p>
-                        <input type="date" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateResence" required>
-                        <p class="mx-2 py-4 font-bold">FICHE N° :</p>
-                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" required name="dateResence">
-                        <p class="mx-2 py-4 font-bold">Code : KS-</p>
-                        <input type="month" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="start" min="03" placeholder="" value="2023-05" /><span class="py-4">/</span>
-                        <input type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" placeholder="Zone" required name="dateResence"><span class="py-4">/</span>
-                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" placeholder="N°d'ordre" required name="dateResence">
+                        <input type="date" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="daterecensement">
+                        <p class="mx-2 py-4 font-bold">FICHE N°:</p>
+                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficherecensement">
+                        <p class="mx-2 py-4 font-bold">Code : KS- </p>
+                        <input type="month" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="coderecensement" min="03" placeholder="" value="2023-05" /><span class="py-4">/</span>
+                        <input type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" placeholder="Zone" name="zonerecensement"><span class="py-4">/</span>
+                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" placeholder="N°d'ordre" name="ordrerecensement">
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Agent" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="NomDeLagentRecenseur" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Agent" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agent</label>
+                        @error('NomDeLagentRecenseur')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Contact " id="Contact " class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Contact " class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact</label>
+                        <input type="tel" name="contactRecenseur" id="Contact" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Contact" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact</label>
+                        @error('contactRecenseur')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Zone " id="Zone " class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Zone " class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zone</label>
+                        <input type="text" name="ZoneRecenseur" id="Zone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Zone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zone</label>
+                        @error('ZoneRecenseur')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 md:gap-6">
@@ -130,38 +140,56 @@
                 </div>
                 <div class="grid md:grid-cols-4 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Nom" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="NomArtisan" id="Nom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Nom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nom</label>
+                        @error('NomArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Prénom" id="Prenom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="PrenomArtisan" id="Prenom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Prenom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prénom</label>
+                        @error('PrenomArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Date_de_naissance" id="Date_de_naissance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="date" name="DateNaissanceArtisan" id="Date_de_naissance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Date_de_naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date de naissance</label>
+                        @error('DateNaissanceArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Lieu_de_Naissance" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="LieuNaissanceArtisan" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Lieu_de_Naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lieu de Naissance</label>
+                        @error('LieuNaissanceArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Profession" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="ProfessionArtisan" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Profession" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession</label>
+                        @error('ProfessionArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="An_exp_prof" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="number" name="AnneeExperienceProfessionnelleArtisan" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="An_exp_prof" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Année d’expérience professionnelle</label>
+                        @error('AnneeExperienceProfessionnelleArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
-                            <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="Femme" name="sexeartisan" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Femme</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
-                            <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="Homme" name="sexeartisan" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Homme</label>
                         </div>
                     </div>
@@ -169,149 +197,209 @@
                 </div>
                 <div class="grid md:grid-cols-5 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Avez-vous un registre de métier ?</label>
+                        <label class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Avez-vous un registre de métier ?</label>
+                        @error('registre')
+                        <p class="text-red-600 absolute duration-300 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
-                            <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
+                            <input id="registre" name="registre" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <label for="registre" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
-                            <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
+                            <input id="registre" name="registre" value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <label for="registre" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
                         </div>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="An_exp_prof" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="number" name="AnneeProfession" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="An_exp_prof" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Année de profession</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="Contact" name="Contact" id="Contact" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="telephone" name="Contact" id="Contact" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Contact" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact</label>
+                        @error('Contact')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">E- mail</label>
+                        <input type="email" name="email" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">E- mail</label>
+                        @error('email')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-4 md:gap-6">
-                    <h2 class="font-bold uppercase underline"> Lieu d’habitation </h2>
+                    <h2 class="font-bold uppercase underline"> Lieu d’habitation</h2>
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Ville" id="Ville" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="VilleArtisan" id="Ville" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Ville" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ville</label>
+                        @error('VilleArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Commune " id="Commune " class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Commune " class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Commune</label>
+                        <input type="text" name="CommuneArtisan" id="Commune" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Commune" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Commune</label>
+                        @error('CommuneArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Quartier" id="Quartier" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="QuartierArtisan" id="Quartier" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Quartier" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Quartier</label>
+                        @error('QuartierArtisan')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-8 md:gap-6">
                     <div class="flex items-center col-span-4 gap-x-3">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Situation matrimoliale ?</label>
+                        <label class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Situation matrimoliale ?</label>
+                        @error('Situation')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center mt-4 col-span-2 gap-x-3">
-                        <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Marié</label>
+                        <input id="Marie" value="Marié" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Marie" class="block text-sm font-medium leading-6 text-gray-900">Marié</label>
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Célibataire</label>
+                        <input value="Célibataire" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Célibataire" class="block text-sm font-medium leading-6 text-gray-900">Célibataire</label>
                     </div>
                     <div class="flex items-center col-span-4 gap-x-3">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Régime matrimoliale ?</label>
+                        <label for="Regime" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Régime matrimoliale ?</label>
+                        @error('Regime')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Communauté de bien</label>
+                        <input id="Regime" name="Regime" value="Communauté de bien" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Regime" class="block text-sm font-medium leading-6 text-gray-900">Communauté de bien</label>
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Séparation de bien</label>
+                        <input id="Séparation" name="Regime" value="Séparation de bien" type="radio" value="Séparation de bien" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Séparation" class="block text-sm font-medium leading-6 text-gray-900">Séparation de bien</label>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-5 mt-5 md:gap-6">
                     <div class="relative col-span-2 z-0 w-full mb-6">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Avez-vous une Assurance Maladie ?</label>
+                        <label for="Assurance" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Avez-vous une Assurance Maladie ?</label>
+                        @error('Assurance')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">CMU</label>
+                        <input id="CMU" name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="CMU" class="block text-sm font-medium leading-6 text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">CNPS</label>
+                        <input id="CNPS" name="Assurance" value="CNPS" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="CNPS" class="block text-sm font-medium leading-6 text-gray-900">CNPS</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Autre</label>
+                        <input type="text" name="autre" id="autre" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="autre" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Autre</label>
+                        @error('autre')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-2 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">N° CNPS</label>
+                        <input type="text" name="numcnps" id="numcnps" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="numcnps" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">N° CNPS</label>
+                        @error('numeroCnps')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agence de rattachement</label>
+                        <input type="text" name="Agence" id="Agence" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Agence" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agence de rattachement</label>
+                        @error('Agence')
+                        <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-8 mt-5 md:gap-6">
                     <div class="relative col-span-3 z-0 w-full mb-6">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Etes-vous affilié à une banque ou microfinance ?</label>
+                        <label for="Affiliation" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Etes-vous affilié à une banque ou microfinance ?</label>
+                        @error('etatFinance')
+                        <p class="text-red-600 absolute mt-10 duration-300 italic text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
+                        <input id="Oui" name="etatFinance" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Oui" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
+                        <input id="Non" name="etatFinance" value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Non" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
                     </div>
                     <div class="relative col-span-3 z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Si oui la(les)quelles ?</label>
+                        <input type="text" name="nomfinance" id="nomfinance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="nomFinance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Si oui la(les)quelles ?</label>
+                        @error('nomFinance')
+                        <p class="text-red-600 text-sm italic">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-8 mt-5 md:gap-6">
                     <div class="relative col-span-3 z-0 w-full mb-6">
-                        <label for="Profession" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Etes-vous affilié à une organisation professionnelle ?</label>
+                        <label class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Etes-vous affilié à une organisation professionnelle ?</label>
+                        @error('reponseOrganition')
+                        <p class="text-red-600 absolute mt-10 duration-300 italic text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Femme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
+                        <input id="reponseorganitionoui" name="reponseOrganition" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="reponseorganitionoui" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="Homme" name="push-notifications" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
+                        <input id="reponseorganitionNon" name="reponseOrganition" value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="reponseorganitionNon" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
                     </div>
                     <div class="relative col-span-3 z-0 w-full mb-6 group">
-                        <input type="email" name="mail" id="mail" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="mail" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Si oui la(les)quelles ?</label>
+                        <input type="organisation" name="NomOrganisation" id="organisation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="organisation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Si oui la(les)quelles ?</label>
+                        @error('NomOrganisation')
+                        <p class="text-red-600 text-sm italic">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-4 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Nom" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Nom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nbre d’enfant à charge :</label>
+                        <input type="text" name="NbreEnfant" id="NbreEnfant" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="NbreEnfant" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nbre d’enfant à charge :</label>
+                        @error('NbreEnfant')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Prénom" id="Prenom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Prenom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fille</label>
+                        <input type="number" name="NbreFille" id="NbreFille" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="NbreFille" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fille</label>
+                        @error('NbreFille')
+                        <p class="text-red-500 italic text-sm">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Date_de_naissance" id="Date_de_naissance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Date_de_naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Garçon</label>
+                        <input type="number" name="NbreGarcon" id="NbreFille" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="NbreGarcon" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Garçon</label>
+                        @error('NbreGarcon')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Lieu_de_Naissance" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Lieu_de_Naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Scolarisé</label>
+                        <input type="text" name="Scolaire" id="Scolaire" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Scolaire" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Scolarisé</label>
+                        @error('Scolaire')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-4 md:gap-6">
@@ -319,48 +407,81 @@
                 </div>
                 <div class="grid md:grid-cols-2 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Nom" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Nom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Activité 1</label>
+                        <input type="text" name="Activite_1" id="Activite" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Activite" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Activité 1</label>
+                        @error('Activite_1')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="DENOMINATION" id="DENOMINATION" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="denomination" id="DENOMINATION" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="DENOMINATION" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">DENOMINATION:</label>
+                        @error('denomination')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Localisation1" id="Localisation1" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="Localisation_1" id="Localisation1" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Localisation1" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Localisation 1</label>
+                        @error('Localisation_1')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="num_rccm" id="num_rccm" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="numero_rccm" id="num_rccm" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="num_rccm" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">RCCM N°</label>
+                        @error('numero_rccm')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Activité2" id="Activité2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="Activite_2" id="Activité2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Activité2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Activité 2</label>
+                        @error('Activite_2')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="num_dfe" id="num_dfe" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="numeroDeLaDfe" id="num_dfe" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="num_dfe" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">DFE N°</label>
+                        @error('numeroDeLaDfe')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="Localisation2" id="Localisation2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Localisation2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Localisation 2</label>
+                        <input type="text" name="Localisation_2" id="Localisation2" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Localisation_2" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Localisation 2</label>
+                        @error('Localisation_2')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="numcnps" id="numcnps" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="numeroCnps" id="numcnps" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="numcnps" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">N° CNPS</label>
+                        @error('numeroCnps')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative col-span-full z-0 w-full mb-6 group">
-                        <input type="text" name="Projet" id="Projet" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="Projet" id="Projet" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Projet" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Projet / Besoin en équipement</label>
+                        @error('Projet')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative  z-0 w-full mb-6 group">
-                        <input type="text" name="CoutestimatifEnchiffre" id="CoutestimatifEnchiffre" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="CoutEstimatifEnChiffre" id="CoutestimatifEnchiffre" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="CoutestimatifEnchiffre" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Coût estimatif (En chiffre FCFA)</label>
+                        @error('CoutEstimatifEnChiffre')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative  z-0 w-full mb-6 group">
-                        <input type="text" name="CoutestimatifEnlettre" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="CoutEstimatifEnLettre" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="CoutestimatifEnlettre" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Coût estimatif (En lettre)</label>
+                        @error('CoutEstimatifEnLettre')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-4 md:gap-6">
@@ -368,33 +489,48 @@
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="NomParrain" id="NomParrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="NomDuParrain" id="NomParrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="NomParrain" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nom</label>
+                        @error('NomDuParrain')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="PrenomParrain" id="PrenomParrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="PrenomDuParrain" id="PrenomParrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="PrenomParrain" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prenom</label>
+                        @error('PrenomDuParrain')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="grid md:grid-cols-3 mt-2 md:gap-6">
                         <div class="relative z-0 w-full">
                             <label for="sexeParrain" class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Sexe</label>
+                            @error('sexeDuParrain')
+                            <p class="text-red-600 absolute mt-10 duration-300 italic text-sm">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="flex items-center gap-x-3">
-                            <input id="FemmeParrain" name="sexeParrain" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="FemmeParrain" name="sexeDuParrain" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="FemmeParrain" class="block text-sm font-medium leading-6 text-gray-900">Femme</label>
                         </div>
                         <div class="flex items-center gap-x-3">
-                            <input id="HommeParrain" name="sexeParrain" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="HommeParrain" name="sexeDuParrain" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="HommeParrain" class="block text-sm font-medium leading-6 text-gray-900">Homme</label>
                         </div>
                     </div>
                     <div class="relative z-0 col-span-2 w-full mb-6 group">
-                        <input type="text" name="Profession" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                        <label for="Profession" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession</label>
+                        <input type="text" name="ProfessionDuParrain" id="Professionparrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Professionparrain" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession</label>
+                        @error('ProfessionDuParrain')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="relative z-0 col-span-full w-full mb-6 group">
-                        <input type="text" name="Appreciation_du_bureau" id="Appreciation_du_bureau" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <input type="text" name="Appreciation_du_bureau" id="Appreciation_du_bureau" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Appreciation_du_bureau" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Appréciation du bureau</label>
+                        @error('Appreciation_du_bureau')
+                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="flex items-center col-span-full gap-x-3">
                         <input checked id="checkbox-1" type="checkbox" value="checked" name="checked" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
