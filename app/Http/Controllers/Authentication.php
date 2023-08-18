@@ -11,7 +11,11 @@ class Authentication extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        if (!Auth::check()) {
+            # code...
+            return view('auth.login');
+        }
+        return redirect()->intended('/Dashboard');
     }
 
     public function login(Request $request)
