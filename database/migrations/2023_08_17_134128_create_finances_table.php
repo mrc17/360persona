@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('finances', function (Blueprint $table) {
             $table->id();
             $table->string('etat');
-            $table->string('Nom');
+            $table->string('Nom')->nullable();
             $table->timestamps();
         });
     }
