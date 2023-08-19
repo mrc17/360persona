@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class organisation extends Model
+class Organisation extends Model
 {
     use HasFactory;
+
+    protected $fillable =[
+        'etat',"Nom"
+    ];
 }
