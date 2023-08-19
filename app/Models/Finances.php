@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Finances extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'etat','Nom',
+    ];
 }
