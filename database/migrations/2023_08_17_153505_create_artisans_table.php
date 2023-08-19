@@ -25,9 +25,10 @@ return new class extends Migration
             $table->string('Email');
             $table->string('Contact');
             $table->foreignId('id_parrain')->constrained("parrains");
-            $table->foreignId('id_active')->constrained("actives");
             $table->foreignId('id_habitation')->constrained("habitations");
             $table->foreignId('id_agent')->constrained("agents");
+            $table->foreignId('id_fiche')->constrained("fiches");
+            $table->foreignId('id_activite')->constrained("activites");
             $table->timestamps();
         });
     }
