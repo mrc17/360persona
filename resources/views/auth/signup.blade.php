@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Inscription</title>
+    <link rel="shortcut icon" href="asset('images/360..png')">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
 </head>
