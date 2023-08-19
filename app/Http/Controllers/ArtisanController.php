@@ -136,7 +136,8 @@ class ArtisanController extends Controller
             'id_fiche' => $fiche_id,
             'id_activite' => $activite_id,
         ]);
-
-        return redirect()->route('Fiche');
+        return redirect()->route('Fiche')->with('success','Formulaire Enregister');
     }
+
+
 }
