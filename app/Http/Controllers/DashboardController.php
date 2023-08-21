@@ -19,10 +19,11 @@ class DashboardController extends Controller
     }
     public function showListe()
     {
+        $nbrArtisanTotal =Artisan::All()->count();
         $artisans = Artisan::paginate(12);
         $user = Auth::user();
-
-        return view('Liste', ['user' => $user, 'artisans' => $artisans]);
+        $count=1;
+        return view('Liste', ['user' => $user, 'artisans' => $artisans,"count"=>$count,"nbrArtisanTotal"=>$nbrArtisanTotal]);
     }
 
     public function showMessages()
