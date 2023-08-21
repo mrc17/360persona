@@ -139,5 +139,15 @@ class ArtisanController extends Controller
         return redirect()->route('Fiche')->with('success','Formulaire Enregister');
     }
 
+    public function show($artisan){
+
+        $artisan = Artisan::find($artisan);
+
+        if($artisan){
+            return view('artisan', compact('artisan'));
+        }else {
+            abort(404);
+        }
+    }
 
 }
