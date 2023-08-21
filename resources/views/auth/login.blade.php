@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>Connexion</title>
-    <link rel="shortcut icon" href="asset('images/360..png')">
+    <link rel="apple-touch-icon" type="image/gif" sizes="180x180" href="{{asset('images/360.png') }}">
+    <link rel="icon" type="image/gif" sizes="16x16" href="{{asset('images/360.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/360.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/360.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
 </head>
