@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Agent;
+use App\Models\Fiche;
+use App\Models\Habitation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Artisan extends Model
 {
@@ -28,4 +31,19 @@ class Artisan extends Model
         'id_agent',
         'id_activite'
     ];
+
+    public function habitation(){
+        return $this->belongsTo(Habitation::class,'id_habitation');
+    }
+    public function agent(){
+        return $this->belongsTo(Agent::class,'id_agent');
+    }
+
+    public function parrain(){
+        return $this->belongsTo(Parrain::class,'id_parrain');
+    }
+    public function fiche(){
+        return $this->belongsTo(Fiche::class,'id_fiche');
+    }
+
 }
