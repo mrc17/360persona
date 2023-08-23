@@ -83,8 +83,7 @@
                             <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                         </svg>
                         <span class="dark:text-white">Tableau</span>
-                    </a>
-                    <a href="" class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out">
+                    </a> <a href="" class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out">
                         <svg class="w-6 h-6 fill-current inline-block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                         </svg>
@@ -109,7 +108,6 @@
                             <span class="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">{{ $nbrArtisanTotal }} enregistrés</span>
                         </div>
                     </div>
-
                     <div class="flex items-center mt-4 gap-x-3">
                         <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -120,31 +118,47 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="mt-6 md:flex md:items-center md:justify-between">
                     <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
                         <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                            View all
-                        </button>
-
-                        <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
-                            Monitored
-                        </button>
-
-                        <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
-                            Unmonitored
+                            Voir tout
                         </button>
                     </div>
-
-                    <div class="relative flex items-center mt-4 md:mt-0">
-                        <span class="absolute">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
-                        </span>
-
-                        <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
-                    </div>
+                    <form method="POST" action="{{ route('search-artisan') }}" class="inline-flex overflow-hidden bg-white  divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:divide-gray-700">
+                        @csrf
+                        <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            <span class="absolute">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
+                            </span>
+                            <select name="critere" type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                                <option value="Charge">Charge</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Artisan">Artisan</option>
+                                <option value="Parrain">Parrain</option>
+                                <option value="Activite">Activité</option>
+                                <option value="Habitation">Habitation</option>
+                                <option value="Organisation">Organisation</option>
+                                <option value="Assurance">Assurance Maladie</option>
+                                <option value="Fiche">Fiche resencement</option>
+                            </select>
+                            @error('critere')
+                            <p class="text-red-600 italic text-xs">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            <span class="absolute">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
+                            </span>
+                            <input type="text" name='search' placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                            @error('search')
+                            <p class="text-red-600 block italic text-xs">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </form>
                 </div>
 
                 <div class="flex flex-col mt-6">
@@ -165,48 +179,48 @@
                                                 </button>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Nom</span>
+                                                <span>Nom</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Prenom</span>
+                                                <span>Prenom</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Téléphone</span>
+                                                <span>Téléphone</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Date de naissance</span>
+                                                <span>Date de naissance</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Profession</span>
+                                                <span>Profession</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Sexe</span>
+                                                <span>Sexe</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Lieu de residence</span>
+                                                <span>Lieu de residence</span>
                                             </th>
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                                    <span>Détail</span>
+                                                <span>Détail</span>
                                             </th>
 
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                     @foreach ( $artisans as $artisan )
-                                     <tr>
-                                         <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                    <h4 class="text-gray-700 dark:text-gray-200">{{ $count }}</h4>
-                                        </td>
-                                        <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
+                                        @foreach ( $artisans as $artisan )
+                                        <tr>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $count }}</h4>
+                                            </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Nom }}</h4>
                                             </td>
-                                        <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
+                                            <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Prenom }}</h4>
                                             </td>
-                                        <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Contact }}</h4>
                                             </td>
-                                        <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Dtnaissance}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
@@ -215,9 +229,9 @@
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Sexe}}</h4>
                                             </td>
-                                                <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                    <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Email}}</h4>
-                                                </td>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Email}}</h4>
+                                            </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <a href="{{ route('show-artisan', ['artisan' => $artisan->id]) }}" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -226,7 +240,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                            @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -247,3 +261,4 @@
     </div>
 </body>
 </html>
+
