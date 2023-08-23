@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Habitation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Agent extends Model
 {
@@ -13,4 +14,8 @@ class Agent extends Model
         "Contact",
         "Zone",
     ];
+
+    public function habitation(){
+        return $this->belongsTo(Artisan::class,'id_fiche');
+    }
 }
