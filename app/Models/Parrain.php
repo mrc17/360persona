@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Artisan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Parrain extends Model
 {
@@ -12,4 +13,8 @@ class Parrain extends Model
     protected $fillable=[
         'Nom',"Prenom","sexe","Profession","Appreciation",
     ];
+
+    public function artisan(){
+        return $this->belongsTo(Artisan::class,'id_parrain');
+    }
 }
