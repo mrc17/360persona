@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Artisan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fiche extends Model
 {
@@ -16,4 +17,8 @@ class Fiche extends Model
         "zone",
         "ordre"
     ];
+
+    public function artisan(){
+        return $this->belongsTo(Artisan::class,'id_fiche');
+    }
 }
