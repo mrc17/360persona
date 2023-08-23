@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Habitation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Organisation extends Model
 {
@@ -12,4 +13,8 @@ class Organisation extends Model
     protected $fillable =[
         'etat',"Nom"
     ];
+
+    public function habitation(){
+        return $this->belongsTo(Habitation::class,'organisation_id');
+    }
 }
