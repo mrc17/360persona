@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Habitation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Charge extends Model
 {
@@ -15,4 +16,8 @@ class Charge extends Model
         'NbrGarcon',
         'Scolarise',
     ];
+
+    public function habitation(){
+        return $this->belongsTo(Habitation::class,"charge_id");
+    }
 }
