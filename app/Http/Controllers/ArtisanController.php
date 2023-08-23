@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fiche;
-use App\Models\Parrain;
-use App\Models\Finances;
-use App\Models\Habitation;
-use App\Http\Requests\ArtisanRequest;
-use App\Models\Activite;
 use App\Models\Agent;
-use App\Models\Artisan;
-use App\Models\Assurance;
+use App\Models\Fiche;
 use App\Models\Charge;
+use App\Models\Artisan;
+use App\Models\Parrain;
+use App\Models\Activite;
+use App\Models\Finances;
+use App\Models\Assurance;
+use App\Models\Habitation;
 use App\Models\Organisation;
+use App\Http\Requests\ArtisanRequest;
+use App\Http\Requests\SearchArtisanRequest;
 
 class ArtisanController extends Controller
 {
@@ -136,18 +137,97 @@ class ArtisanController extends Controller
             'id_fiche' => $fiche_id,
             'id_activite' => $activite_id,
         ]);
-        return redirect()->route('Fiche')->with('success','Formulaire Enregister');
+        return redirect()->route('Fiche')->with('success', 'Formulaire Enregister');
     }
 
-    public function show($artisan){
+    public function show($artisan)
+    {
 
         $artisan = Artisan::find($artisan);
 
-        if($artisan){
+        if ($artisan) {
             return view('artisan', compact('artisan'));
-        }else {
+        } else {
             abort(404);
         }
     }
 
+    public function searchartisan(SearchArtisanRequest $request)
+    {
+        $critere = $request->input('critere');
+        $search = $request->input('search');
+
+        $artisans = [];
+
+        if ($critere === 'Parrain') {
+            $artisans = Parrain::where(function ($query) use ($search) {
+                $query->where('Nom', 'LIKE', "%{$search}%")
+                    ->orWhere('Prenom', 'LIKE', "%{$search}%")
+                    ->orWhere('Sexe', 'LIKE', "%{$search}%")
+                    ->orWhere('Profession', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Artisan') {
+            $artisans = Artisan::where(function ($query) use ($search) {
+                $query->where('Nom', 'LIKE', "%{$search}%")
+                    ->orWhere('Prenom', 'LIKE', "%{$search}%")
+                    ->orWhere('Sexe', 'LIKE', "%{$search}%")
+                    ->orWhere('Profession', 'LIKE', "%{$search}%")
+                    ->orWhere('Dtnaissance', 'LIKE', "%{$search}%")
+                    ->orWhere('LieuNaissance', 'LIKE', "%{$search}%")
+                    ->orWhere('AnExpProf', 'LIKE', "%{$search}%")
+                    ->orWhere('AnProf', 'LIKE', "%{$search}%")
+                    ->orWhere('registreMetier', 'LIKE', "%{$search}%")
+                    ->orWhere('Email', 'LIKE', "%{$search}%")
+                    ->orWhere('Contact', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Organisation') {
+            $artisans = Organisation::where(function ($query) use ($search) {
+                $query->where('etat', 'LIKE', "%{$search}%")
+                    ->orWhere('Nom', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Habitation') {
+            $artisans = Habitation::where(function ($query) use ($search) {
+                $query->where('Ville', 'LIKE', "%{$search}%")
+                    ->orWhere('Quartier', 'LIKE', "%{$search}%")
+                    ->orWhere('SituationMatrimoliale', 'LIKE', "%{$search}%")
+                    ->orWhere('RégimeMatrimoliale', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Finance') {
+            $artisans = Finances::where(function ($query) use ($search) {
+                $query->where('etat', 'LIKE', "%{$search}%")
+                    ->orWhere('Nom', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Fiche') {
+            $artisans = Fiche::where(function ($query) use ($search) {
+                $query->where('date', 'LIKE', "%{$search}%")
+                    ->orWhere('numfiche', 'LIKE', "%{$search}%")
+                    ->orWhere('code', 'LIKE', "%{$search}%")
+                    ->orWhere('zone', 'LIKE', "%{$search}%")
+                    ->orWhere('ordre', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Charge') {
+            $artisans = Charge::where(function ($query) use ($search) {
+                $query->where('NbrEnfant', 'LIKE', "%{$search}%")
+                    ->orWhere('Nbrfille', 'LIKE', "%{$search}%")
+                    ->orWhere('NbrGarcon', 'LIKE', "%{$search}%")
+                    ->orWhere('Scolarise', 'LIKE', "%{$search}%");
+            })->get();
+        } elseif ($critere === 'Activite') {
+            $artisans = Activite::where(function ($query) use ($search) {
+                $query->where('Activite1', 'LIKE', "%{$search}%")
+                    ->orWhere('Denomination', 'LIKE', "%{$search}%")
+                    ->orWhere('Localisation1', 'LIKE', "%{$search}%")
+                    ->orWhere('numRccm', 'LIKE', "%{$search}%")
+                    ->orWhere('Activite2', 'LIKE', "%{$search}%")
+                    ->orWhere('numeroDeLaDfe', 'LIKE', "%{$search}%")
+                    ->orWhere('Localisation2', 'LIKE', "%{$search}%")
+                    ->orWhere('numcnps', 'LIKE', "%{$search}%")
+                    ->orWhere('Projet', 'LIKE', "%{$search}%")
+                    ->orWhere('CoutestimatifEnlettre', 'LIKE', "%{$search}%")
+                    ->orWhere('CoutestimatifEnchiffre', 'LIKE', "%{$search}%");
+            })->get();
+        }
+dd($artisans);
+        return view('resultats', ['artisans' => $artisans]);
+    }
 }
