@@ -22,8 +22,8 @@ class SearchArtisanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'critere' => 'required|string|in:Nom,Prenom,Telephone,Date de naissance,Profession,Sexe,Lieu de residence,Agent,Année de d\'experience,Lieu de Naissance,Registre,Email,Situation,Régime,Banque ou microfinance,Organisation professionnelle,Charge,Assurance Maladie,Parrain,Activité,Date de resencement,Fiche de resencement,Code de resencement,Ordre de resencement',
-            'search' => 'required|string',
+            'critere' => 'required|string|in:Charge,Finance,Artisan,Parrain,Activite,Habitation,Organisation,Assurance,Fiche'
+            ,'search' => 'required|string',
         ];
     }
 
