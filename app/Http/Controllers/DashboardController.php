@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activite;
 use App\Models\Artisan;
 use App\Models\Parrain;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,9 @@ class DashboardController extends Controller
         $nombreArtisans = Artisan::count();
         // Vous pouvez faire de même pour les autres entités (Parrains)
         $nombreParrains = Parrain::count();
-        // Vous pouvez faire de même pour les autres entités (Parrains)
-
-        return view('Dashboard', ['user' => $user, 'nombreArtisans' => $nombreArtisans, "nombreParrains" => $nombreParrains]);
+        // Vous pouvez faire de même pour les autres entités (Activité)
+        $nombreActivites=Activite::count();
+        return view('Dashboard', ['user' => $user, 'nombreArtisans' => $nombreArtisans, "nombreParrains" => $nombreParrains,"nombreActivites"=>$nombreActivites]);
     }
     public function showFiche()
     {
