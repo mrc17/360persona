@@ -32,7 +32,7 @@ class SearchArtisanRequest extends FormRequest
         return [
             'required'=>'Le champ :attribute est obligatoire.',
             'string'=>'Le champ :attribute doit être une chaîne de caractères.',
-            "in" => "La valeur du champ :attribute n'est pas valide.",
+            "in" => "L'option de recherche :attribute n'est pas valide.",
         ];
 
     }
