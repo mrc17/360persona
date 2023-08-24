@@ -27,6 +27,7 @@ Route::get('/Dashboard', [DashboardController::class,'index'])->name('Dashboard'
 Route::get('/Fiche', [DashboardController::class,'showFiche'])->name('Fiche');
 Route::get('/Liste', [DashboardController::class,'showListe'])->name('Liste');
 Route::get('/Messages', [DashboardController::class,'showMessages'])->name('Messages');
+Route::get('/Calendrier', [DashboardController::class,'showCalendrier'])->name('Calendrier');
 Route::post('/create/artisan', [ArtisanController::class,'create'])->name('create-artisan');
 Route::get('/show/artisan/{artisan}', [ArtisanController::class, 'show'])->name('show-artisan');
 Route::post('/show/artisan/search', [ArtisanController::class, 'searchartisan'])->name('search-artisan');
