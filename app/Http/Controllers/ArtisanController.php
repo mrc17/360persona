@@ -12,6 +12,7 @@ use App\Models\Finances;
 use App\Models\Assurance;
 use App\Models\Habitation;
 use App\Models\Organisation;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\SearchArtisanRequest;
 
@@ -148,7 +149,7 @@ class ArtisanController extends Controller
         if ($artisan) {
             return view('artisan', compact('artisan'));
         } else {
-            abort(404);
+            return redirect()->route('LoginForm');
         }
     }
 
@@ -172,17 +173,15 @@ class ArtisanController extends Controller
                     ->orWhere('registreMetier', 'LIKE', "%{$search}%")
                     ->orWhere('Email', 'LIKE', "%{$search}%")
                     ->orWhere('Contact', 'LIKE', "%{$search}%");
-            })->get();
+            })->paginate(12);
         } elseif ($critere === "Agent") {
             $agents = Agent::where(function ($query) use ($search) {
                 $query->where('Nom', 'LIKE', "%{$search}%")
                     ->orWhere('Contact', 'LIKE', "%{$search}%")
                     ->orWhere('Zone', 'LIKE', "%{$search}%");
             })->get();
-            foreach ($agents as $agent) {
-                $artisansAgent = Artisan::where('id_agent', $agent->id)->get();
-                $artisans = array_merge($artisans, $artisansAgent->toArray());
-            }
+            $agentIds = $agents->pluck('id')->toArray();
+            $artisans = Artisan::whereIn('id_agent', $agentIds)->paginate(12);
         } elseif ($critere === "Activite") {
             $activites = Activite::where(function ($query) use ($search) {
                 $query->where('Activite1', 'LIKE', "%{$search}%")
@@ -198,9 +197,7 @@ class ArtisanController extends Controller
                     ->orWhere('CoutestimatifEnchiffre', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $activites->pluck('id')->toArray();
-            if (count($artisanIds) > 0) {
-                $artisans = Artisan::whereIn('id_activite', $artisanIds)->get();
-            }
+            $artisans = Artisan::whereIn('id_activite', $artisanIds)->paginate(12);
         } elseif ($critere === "Fiche") {
             $fiches = Fiche::where(function ($query) use ($search) {
                 $query->where('date', 'LIKE', "%{$search}%")
@@ -211,7 +208,7 @@ class ArtisanController extends Controller
             })->get();
             // Maintenant, récupérez les artisans liés à ces fiches
             $artisanIds = $fiches->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_fiche', $artisanIds)->get();
+            $artisans = Artisan::whereIn('id_fiche', $artisanIds)->paginate(12);
         } elseif ($critere === "Habitation") {
             $habitation = Habitation::where(function ($query) use ($search) {
                 $query->where('Ville', 'LIKE', "%{$search}%")
@@ -220,7 +217,7 @@ class ArtisanController extends Controller
                     ->orWhere('RégimeMatrimoliale', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $habitation->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_fiche', $artisanIds)->get();
+            $artisans = Artisan::whereIn('id_fiche', $artisanIds)->paginate(12);
         } elseif ($critere === "Parrain") {
             $parrains = Parrain::where(function ($query) use ($search) {
                 $query->where('Nom', 'LIKE', "%{$search}%")
@@ -229,7 +226,7 @@ class ArtisanController extends Controller
                     ->orWhere('Profession', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $parrains->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_parrain', $artisanIds)->get();
+            $artisans = Artisan::whereIn('id_parrain', $artisanIds)->paginate(12);
         } elseif ($critere === "Charge") {
             $Charge = Charge::where(function ($query) use ($search) {
                 $query->where('NbrEnfant', 'LIKE', "%{$search}%")
@@ -238,7 +235,7 @@ class ArtisanController extends Controller
                     ->orWhere('Scolarise', 'LIKE', "%{$search}%");
             })->get();
             $ChargeIds = $Charge->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_parrain', $ChargeIds)->get();
+            $artisans = Artisan::whereIn('id_parrain', $ChargeIds)->paginate(12);
         } elseif ($critere === "Assurance") {
             $assurances = Assurance::where(function ($query) use ($search) {
                 $query->where('Nom', 'LIKE', "%{$search}%")
@@ -246,16 +243,15 @@ class ArtisanController extends Controller
             })->get();
             $assuranceIds = $assurances->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('id_Assurance', $assuranceIds)->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->get();
+            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->paginate(12);
         } elseif ($critere === "Finance") {
             $finance = Finances::where(function ($query) use ($search) {
                 $query->where('etat', 'LIKE', "%{$search}%")
                     ->orWhere('Nom', 'LIKE', "%{$search}%");
             })->get();
-
             $financeIds = $finance->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('id_finance', $financeIds)->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->get();
+            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->paginate(12);
         } elseif ($critere === "Organisation") {
             $Organisation = Organisation::where(function ($query) use ($search) {
                 $query->where('etat', 'LIKE', "%{$search}%")
@@ -263,9 +259,20 @@ class ArtisanController extends Controller
             })->get();
             $OrganisationIds = $Organisation->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('organisation_id', $OrganisationIds)->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->get();
+            $artisans = Artisan::whereIn('id_habitation', $habitationIds)->paginate(12);
         }
-        dd($artisans);
-        return view('resultats', ['artisans' => $artisans]);
+
+        $nbrArtisanTotal = Artisan::all()->count();
+        $user = Auth::user();
+        $count = 1;
+
+        // Si aucun résultat n'a été trouvé, définissez $artisans comme un message approprié.
+        if ($artisans->isEmpty()) {
+            $message = "Aucun résultat trouvé pour votre recherche.";
+        }
+        $message = "";
+
+
+        return view('Liste', ['user' => $user, 'artisans' => $artisans, "count" => $count, "nbrArtisanTotal" => $nbrArtisanTotal,"message"=>$message]);
     }
 }
