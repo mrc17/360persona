@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('parrains', function (Blueprint $table) {
             $table->id();
-            $table->string('Nom');
-            $table->string('Prenom');
-            $table->string('sexe');
-            $table->string('Profession');
-            $table->string('Appreciation');
+            $table->string('Nom')->nullable();
+            $table->string('Prenom')->nullable();
+            $table->string('sexe')->nullable();
+            $table->string('Profession')->nullable();
+            $table->string('Appreciation')->nullable();
             $table->timestamps();
         });
     }

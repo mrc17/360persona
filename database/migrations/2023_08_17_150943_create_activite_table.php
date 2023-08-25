@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('activites', function (Blueprint $table) {
             $table->id();
-            $table->string('Activite1');
-            $table->string('Denomination');
-            $table->string('Localisation1');
-            $table->string('numRccm');
-            $table->string('Activite2');
-            $table->string('numeroDeLaDfe');
-            $table->string('Localisation2');
-            $table->string('numcnps');
-            $table->string('Projet');
-            $table->string('CoutestimatifEnlettre');
-            $table->string('CoutestimatifEnchiffre');
+            $table->string('Activite1')->nullable();
+            $table->string('Denomination')->nullable();
+            $table->string('Localisation1')->nullable();
+            $table->string('numRccm')->nullable();
+            $table->string('Activite2')->nullable();
+            $table->string('numeroDeLaDfe')->nullable();
+            $table->string('Localisation2')->nullable();
+            $table->string('numcnps')->nullable();
+            $table->string('Projet')->nullable();
+            $table->string('CoutestimatifEnlettre')->nullable();
+            $table->string('CoutestimatifEnchiffre')->nullable();
             $table->timestamps();
         });
     }

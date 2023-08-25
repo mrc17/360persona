@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('Ville');
             $table->string('Commune');
             $table->string('Quartier');
-            $table->string('SituationMatrimoliale');
-            $table->string('RégimeMatrimoliale');
+            $table->string('SituationMatrimoliale')->nullable();
+            $table->string('RégimeMatrimoliale')->nullable();
             $table->foreignId('id_Assurance')->constrained('assurances');
             $table->foreignId('id_finance')->constrained('Finances');
             $table->foreignId('organisation_id')->constrained('organisations');
