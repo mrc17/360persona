@@ -12,7 +12,6 @@ class Authentication extends Controller
     public function showLoginForm()
     {
         if (!Auth::check()) {
-            # code...
             return view('auth.login');
         }
         return redirect()->intended('/Dashboard');
