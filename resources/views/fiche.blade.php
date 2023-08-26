@@ -191,11 +191,11 @@
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
                             <input id="Femme" name="sexeartisan" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Femme</label>
+                            <label for="Femme" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Femme</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
                             <input id="Homme" name="sexeartisan" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="Homme" class="block text-sm font-medium leading-6 text-gray-900">Homme</label>
+                            <label for="Homme" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Homme</label>
                         </div>
                     </div>
 
@@ -210,11 +210,11 @@
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
                             <input id="registre" name="registre" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="registre" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
+                            <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Oui</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
                             <input id="registre" name="registre" value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="registre" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
+                            <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Non</label>
                         </div>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
@@ -275,7 +275,7 @@
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
                         <input value="Célibataire" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Célibataire" class="block text-sm font-medium leading-6 text-gray-900">Célibataire</label>
+                        <label for="Célibataire" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">Célibataire</label>
                     </div>
                     <div class="flex items-center col-span-4 gap-x-3">
                         <label for="Regime" class="font-medium absolute text-base pt-4 dark:text-white  duration-300">Régime matrimoliale ?</label>
@@ -284,12 +284,12 @@
                         @enderror
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Regime" name="Regime" value="Communauté de bien" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Regime" class="block text-sm font-medium leading-6 text-gray-900">Communauté de bien</label>
+                        <input id="Regime" name="Regime" value="Communauté de bien" type="radio" class="h-4 w-4 dark:text-white border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Regime" class="block text-sm font-medium leading-6 dark:text-white  text-gray-900">Communauté de bien</label>
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
                         <input id="Séparation" name="Regime" value="Séparation de bien" type="radio" value="Séparation de bien" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Séparation" class="block text-sm font-medium leading-6 text-gray-900">Séparation de bien</label>
+                        <label for="Séparation" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Séparation de bien</label>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-6 mt-5 md:gap-6">
@@ -301,15 +301,15 @@
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="CMU" name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="CMU" class="block text-sm font-medium leading-6 text-gray-900">CMU</label>
+                        <label for="CMU" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="CNPS" name="Assurance" value="CNPS" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="CNPS" class="block text-sm font-medium leading-6 text-gray-900">CNPS</label>
+                        <label for="CNPS" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">CNPS</label>
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="AUTREASSURANCE" name="Assurance" value="AUTREASSURANCE" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="AUTREASSURANCE" class="block text-sm font-medium leading-6 text-gray-900">AUTRE</label>
+                        <label for="AUTREASSURANCE" class="block text-sm dark:text-white font-medium leading-6 text-gray-900">AUTRE</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="text" name="autre" id="autre" value="{{ old('autre') }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
