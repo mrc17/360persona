@@ -65,7 +65,7 @@
                         </svg>
                         <span class="dark:text-white">Fiche de renseignement</span>
                     </a>
-                         <a href="" class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out">
+                    <a href="" class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out">
                         <svg class="w-6 h-6 fill-current inline-block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
                         </svg>
@@ -79,8 +79,9 @@
                     </a>
                 </div>
             </div>
-        </div>        <div class=" py-4 h-screen md:block  mx-auto px-3 rounded-md  relative overflow-x-auto transition-transform duration-300 ease-in-out">
-            <form method="POST" action="{{ route('create-artisan') }}"  class="bg-white dark:bg-gray-900 p-5 rounded-lg ">
+        </div>
+        <div class=" py-4 h-screen md:block  mx-auto px-3 rounded-md  relative overflow-x-auto transition-transform duration-300 ease-in-out">
+            <form method="POST" action="{{ route('create-artisan') }}" class="bg-white dark:bg-gray-900 p-5 rounded-lg ">
                 @csrf
                 <div class="flex flex-col border-2 p-2 border-black dark:border-white">
                     <p class="text-xl flex-wrap text-center font-bold text-red-600">FICHE D’IDENTIFICATION ET DE REFERENCEMENT DES PROFESSIONNELS DE METIER</p>
@@ -271,7 +272,7 @@
                     </div>
                     <div class="flex items-center mt-4 col-span-2 gap-x-3">
                         <input id="Marie" value="Marié" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Marie" class="block text-sm font-medium leading-6 text-gray-900">Marié</label>
+                        <label for="Marie" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Marié</label>
                     </div>
                     <div class="flex items-center col-span-2 mt-4 gap-x-3">
                         <input value="Célibataire" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
@@ -494,7 +495,7 @@
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-4 md:gap-6">
-                    <h2 class="font-bold uppercase underline">INFORMATIONS PARRAINS</h2>
+                    <h2 class="font-bold dark:text-white uppercase underline">INFORMATIONS PARRAINS</h2>
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
@@ -520,11 +521,11 @@
                         </div>
                         <div class="flex items-center gap-x-3">
                             <input id="FemmeParrain" name="sexeDuParrain" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="FemmeParrain" class="block text-sm font-medium leading-6 text-gray-900">Femme</label>
+                            <label for="FemmeParrain" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Femme</label>
                         </div>
                         <div class="flex items-center gap-x-3">
                             <input id="HommeParrain" name="sexeDuParrain" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                            <label for="HommeParrain" class="block text-sm font-medium leading-6 text-gray-900">Homme</label>
+                            <label for="HommeParrain" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Homme</label>
                         </div>
                     </div>
                     <div class="relative z-0 col-span-2 w-full mb-6 group">
@@ -555,4 +556,3 @@
     </div>
 </body>
 </html>
-
