@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Finances extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'etat','Nom',
+    protected $fillable = [
+        'etatFinance', 'NomFinance',
     ];
 
-    public function habitation(){
-        return $this->belongsTo(Habitation::class,'id_finance');
+    public function habitation()
+    {
+        return $this->belongsTo(Habitation::class, 'id_finance');
     }
 }
