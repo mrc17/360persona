@@ -17,7 +17,8 @@ class Charge extends Model
         'Scolarise',
     ];
 
-    public function habitation(){
-        return $this->belongsTo(Habitation::class,"charge_id");
+    public function habitation()
+    {
+        return $this->belongsTo(Habitation::class, "charge_id");
     }
 }
