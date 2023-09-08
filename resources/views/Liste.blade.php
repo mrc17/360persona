@@ -98,7 +98,14 @@
 
                             <span>Ajouter un artisan</span>
                         </button>
+                        <a href="{{ route('showSearchAdvanced') }}" class="flex items-center cursor-pointer justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-orange-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-500 dark:hover:bg-orange dark:bg-orange">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 ">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+                            <span>Recherche avancée</span>
+                        </a>
                     </div>
+
                 </div>
                 <div class="mt-6 md:flex md:items-center md:justify-between">
                     <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
@@ -203,7 +210,7 @@
                                         @foreach ( $artisans as $artisan )
                                         <tr>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $count }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $count++ }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Nom }}</h4>
@@ -215,7 +222,7 @@
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Contact }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Dtnaissance}}</h4>
+                                                <h4 class="text-²²/gray-700 dark:text-gray-200">{{ $artisan->Dtnaissance}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Profession}}</h4>
@@ -255,4 +262,3 @@
     </div>
 </body>
 </html>
-
