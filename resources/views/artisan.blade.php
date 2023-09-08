@@ -2,7 +2,7 @@
 <html class="h-full bg-gray-100">
 <head>
     <meta charset="utf-8">
-    <link rel="apple-touch-icon" type="image/gif" sizes="180x180"  href="{{asset('images/360.png') }}">
+    <link rel="apple-touch-icon" type="image/gif" sizes="180x180" href="{{asset('images/360.png') }}">
     <link rel="icon" type="image/gif" sizes="16x16" href="{{asset('images/360.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/360.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/360.png') }}">
@@ -107,7 +107,7 @@
                     <p class="text-sm text-center font-italic  text-gray-800">Fiche à remplir et retourner physiquement ou par mail à ksira2015@yahoo.fr ou par WhatsApp aux 07 68 24 40 61</p>
                     <div class="flex flex-row flex-wrap mt-4">
                         <p class="mx-2 py-4 font-bold">DATE : </p>
-                        <input type="date"  value="{{ $artisan->fiche->date }}" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateRecensement">
+                        <input type="date" value="{{ $artisan->fiche->date }}" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateRecensement">
                         <p class="mx-2 py-4 font-bold">FICHE N°:</p>
                         <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficheRecensement" value="{{ $artisan->fiche->numfiche }}">
                         <p class="mx-2 py-4 font-bold">Code : KS- </p>
@@ -142,35 +142,35 @@
                         <label for="Nom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nom</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="PrenomArtisan" value="{{ $artisan->Prenom }}"  id="Prenom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="PrenomArtisan" value="{{ $artisan->Prenom }}" id="Prenom" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Prenom" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Prénom</label>
 
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="date" name="DateNaissanceArtisan" value="{{ $artisan->Dtnaissance }}"  id="Date_de_naissance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="date" name="DateNaissanceArtisan" value="{{ $artisan->Dtnaissance }}" id="Date_de_naissance" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Date_de_naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date de naissance</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="LieuNaissanceArtisan" value="{{ $artisan->LieuNaissance}}"  id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="LieuNaissanceArtisan" value="{{ $artisan->LieuNaissance}}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Lieu_de_Naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lieu de Naissance</label>
 
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="ProfessionArtisan" value="{{ $artisan->Profession }}"  id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="ProfessionArtisan" value="{{ $artisan->Profession }}" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Profession" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profession</label>
 
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="number" name="AnneeExperienceProfessionnelleArtisan" value="{{ $artisan->AnExpProf }}"  id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="number" name="AnneeExperienceProfessionnelleArtisan" value="{{ $artisan->AnExpProf }}" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="An_exp_prof" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Année d’expérience professionnelle</label>
 
                     </div>
                     @if($artisan->Sexe=="Homme")
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
-                            <input id="Femme"  name="sexeartisan" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="Femme" name="sexeartisan" value="Femme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="Femme" class="block text-sm font-medium leading-6 text-gray-900">Femme</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
@@ -324,7 +324,7 @@
                     </div>
                     @elseif($artisan->habitation->assurances->Nom =="CNPS")
                     <div class="flex items-center gap-x-3">
-                        <input id="CMU"  name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <input id="CMU" name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="CMU" class="block text-sm font-medium leading-6 text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
@@ -337,7 +337,7 @@
                     </div>
                     @else
                     <div class="flex items-center gap-x-3">
-                        <input id="CMU"  name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <input id="CMU" name="Assurance" type="radio" value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="CMU" class="block text-sm font-medium leading-6 text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
@@ -557,4 +557,3 @@
     </div>
 </body>
 </html>
-
