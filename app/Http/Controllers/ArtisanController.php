@@ -15,6 +15,8 @@ use App\Models\Organisation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\SearchArtisanRequest;
+use App\Http\Requests\SearchArtisanAvancedRequest;
+use Termwind\Components\Dd;
 
 class ArtisanController extends Controller
 {
@@ -23,18 +25,18 @@ class ArtisanController extends Controller
     {
 
         $fiche = Fiche::create([
-            "date" => $request->input('dateRecensement'),
+            "dateFiche" => $request->input('dateRecensement'),
             "numfiche" => $request->input('ficheRecensement'),
-            "code" => $request->input('codeRecensement'),
-            "zone" => $request->input('zoneRecensement'),
-            "ordre" => $request->input('ordreRecensement'),
+            "codefiche" => $request->input('codeRecensement'),
+            "zonefiche" => $request->input('zoneRecensement'),
+            "ordrefiche" => $request->input('ordreRecensement'),
         ]);
 
         $fiche_id = $fiche->id;
 
         $finance = Finances::create([
-            'etat' => $request->input('etatFinance'),
-            'Nom' => $request->input('nomfinance'),
+            'etatFinance' => $request->input('etatFinance'),
+            'NomFinance' => $request->input('nomfinance'),
 
         ]);
 
@@ -47,16 +49,16 @@ class ArtisanController extends Controller
 
 
         $assurance = Assurance::create([
-            'Nom' => $Assurance,
-            'numero' => $request->input('numeroCnps'),
-            'Agence' => $request->input('Agence'),
+            'NomAssurance' => $Assurance,
+            'numeroAssurance' => $request->input('numeroCnps'),
+            'AgenceAssurance' => $request->input('Agence'),
         ]);
 
         $assurance_id = $assurance->id;
 
         $organisation = Organisation::create([
-            'etat' => $request->input('etatFinance'),
-            "Nom" => $request->input('nomfinance')
+            'etatOrganisation' => $request->input('etatFinance'),
+            "NomOrganisation" => $request->input('nomfinance')
         ]);
 
         $organisation_id = $organisation->id;
@@ -101,20 +103,20 @@ class ArtisanController extends Controller
         $activite_id = $activite->id;
 
         $agent = Agent::create([
-            "Nom" => $request->input('NomDeLagentRecenseur'),
-            "Contact" => $request->input('contactRecenseur'),
-            "Zone" => $request->input('ZoneRecenseur'),
+            "NomAgent" => $request->input('NomDeLagentRecenseur'),
+            "ContactAgent" => $request->input('contactRecenseur'),
+            "ZoneAgent" => $request->input('ZoneRecenseur'),
         ]);
 
         $agent_id = $agent->id;
 
 
         $parrain = Parrain::create([
-            'Nom' => $request->input('NomDuParrain'),
-            "Prenom" => $request->input('PrenomDuParrain'),
-            "sexe" => $request->input('sexeDuParrain'),
-            "Profession" => $request->input('ProfessionDuParrain'),
-            "Appreciation" => $request->input('Appreciation_du_bureau')
+            'NomParrain' => $request->input('NomDuParrain'),
+            "PrenomParrain" => $request->input('PrenomDuParrain'),
+            "sexeParrain" => $request->input('sexeDuParrain'),
+            "ProfessionParrain" => $request->input('ProfessionDuParrain'),
+            "AppreciationParrain" => $request->input('Appreciation_du_bureau')
         ]);
 
         $parrain_id = $parrain->id;
@@ -217,7 +219,7 @@ class ArtisanController extends Controller
                     ->orWhere('RégimeMatrimoliale', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $habitation->pluck('id')->toArray();
-            $artisans = Artisan::whereIn('id_fiche', $artisanIds)->paginate(12);
+            $artisans = Artisan::whereIn('id_habitation', $artisanIds)->paginate(12);
         } elseif ($critere === "Parrain") {
             $parrains = Parrain::where(function ($query) use ($search) {
                 $query->where('Nom', 'LIKE', "%{$search}%")
@@ -273,6 +275,105 @@ class ArtisanController extends Controller
         $message = "";
 
 
-        return view('Liste', ['user' => $user, 'artisans' => $artisans, "count" => $count, "nbrArtisanTotal" => $nbrArtisanTotal,"message"=>$message]);
+        return view('Liste', ['user' => $user, 'artisans' => $artisans, "count" => $count, "nbrArtisanTotal" => $nbrArtisanTotal, "message" => $message]);
+    }
+    public function showSearchAdvanced()
+    {
+        $nbrArtisanTotal = Artisan::count();
+        return view('showSearchAdvanced', ["nbrArtisanTotal" => $nbrArtisanTotal]);
+    }
+
+    public function searchartisanavanced(SearchArtisanAvancedRequest $request)
+    {
+        // Récupérez les paramètres de recherche du formulaire
+        $params = $request->all();
+        // Initialisez le tableau des résultats
+        $results = Artisan::all()->pluck('id')->toArray();
+        // Créez des tableaux pour stocker les critères de chaque groupe
+        $groupedCriteria = [];
+        $getcolumn = [];
+        foreach ($params as $key => $value) {
+            // Utilisez une expression régulière pour extraire le groupe (par exemple, "table_0")
+            if (preg_match('/^(table|colonne|search)_(\d+)$/', $key, $matches)) {
+                $group = $matches[2]; // Le numéro de groupe (0, 1, 2, ...)
+                $field = $matches[1]; // Le type de champ (table, colonne, search)
+
+                // Créez un tableau pour chaque groupe s'il n'existe pas encore
+                if (!isset($groupedCriteria[$group])) {
+                    $groupedCriteria[$group] = [];
+                }
+                // Ajoutez le critère au groupe correspondant
+                $groupedCriteria[$group][$field] = $value;
+            }
+        }
+
+        foreach ($groupedCriteria as $criteria) {
+            // $criteria est un tableau associatif contenant les clés "table", "colonne" et "search"
+            $table = $criteria["table"];
+            $column = $criteria["colonne"];
+            $search = $criteria["search"];
+            $getcolumn[] = $column;
+            // Construisez dynamiquement le nom de la classe modèle en fonction de la valeur de $table
+            $modelClass = "App\\Models\\" . ucfirst($table);
+
+            // Utilisez le modèle Eloquent dynamique pour exécuter la requête
+            $result = $modelClass::where($column, "LIKE", "%{$search}%")->get();
+            if ($result->isEmpty()) {
+                dd("Rien");
+            } else {
+                if ($table == "Activite") {
+                    $ActiviteIds = $result->pluck('id')->toArray();
+                    dd($ActiviteIds);
+                    $ArtisansIds = Artisan::WhereIn('id_activite', $ActiviteIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Agent') {
+                    $AgentIds = $result->pluck('id');
+                    $ArtisansIds = Artisan::WhereIn('id_activite', $AgentIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Assurance') {
+                    $AgentIds = $result->pluck('id');
+                    $HabitationsIds = Habitation::WhereIn('id_Assurance', $AgentIds)->pluck('id')->toArray();
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Artisan') {
+                    $ArtisansIds = $result->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Charge') {
+                    $ChargeIds = $result->pluck('id');
+                    $HabitationsIds = Habitation::WhereIn('charge_id', $ChargeIds)->pluck('id')->toArray();
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Fiche') {
+                    $FichesIds = $result->pluck('id')->toArray();
+                    $ArtisansIds = Artisan::WhereIn('id_fiche', $FichesIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Finances') {
+                    $FinancesIds = $result->pluck('id')->toArray();
+                    $HabitationsIds = Habitation::WhereIn('id_finance', $FinancesIds)->pluck('id')->toArray();
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Habitation') {
+                    $HabitationsIds = $result->pluck('id');
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Organisation') {
+                    $OrganisationsIds = $result->pluck('id')->toArray();
+                    $HabitationsIds = Habitation::WhereIn('organisation_id', $OrganisationsIds)->pluck('id')->toArray();
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                } elseif ($table == 'Parrain') {
+                    $ParrainsIds = $result->pluck('id');
+                    $ArtisansIds = Artisan::WhereIn('id_habitation', $ParrainsIds)->pluck('id')->toArray();
+                    $results = array_intersect($results, $ArtisansIds);
+                }
+            }
+        }
+        $artisans = Artisan::WhereIn('id', $results)->get();
+        return view('showSearchAdvanced', [
+            'artisans' => $artisans,
+            'count' => 1,
+            'nbrArtisanTotal' => Artisan::count(),
+            'columns' => $getcolumn
+        ]);
     }
 }
