@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('assurances', function (Blueprint $table) {
             $table->id();
-            $table->string('Nom')->nullable();
-            $table->string('numero')->nullable()->nullable();
-            $table->string('Agence')->nullable()->nullable();
+            $table->string('NomAssurance')->nullable();
+            $table->string('numeroAssurance')->nullable();
+            $table->string('AgenceAssurance')->nullable();
             $table->timestamps();
         });
     }
