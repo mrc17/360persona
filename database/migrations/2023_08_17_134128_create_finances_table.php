@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->id();
-            $table->string('etat')->nullable();
-            $table->string('Nom')->nullable();
+            $table->string('etatFinance')->nullable();
+            $table->string('NomFinance')->nullable();
             $table->timestamps();
         });
     }
