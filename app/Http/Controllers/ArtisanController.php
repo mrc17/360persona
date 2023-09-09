@@ -319,7 +319,10 @@ class ArtisanController extends Controller
             // Utilisez le modèle Eloquent dynamique pour exécuter la requête
             $result = $modelClass::where($column, "LIKE", "%{$search}%")->get();
             if ($result->isEmpty()) {
-                dd("Rien");
+                return view('showSearchAdvanced', [
+                    'message' => 'Aucun artisans trouvés',
+                    'nbrArtisanTotal' => Artisan::count(),
+                ]);
             } else {
                 if ($table == "Activite") {
                     $ActiviteIds = $result->pluck('id')->toArray();
