@@ -100,11 +100,20 @@
                     </div>
                 </div>
                 <div class="mt-6 md:flex md:items-center md:justify-between">
+
                     <div id="containerbouton" class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                        <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                            Creer un tri
-                        </button>
+                    @empty($artisans)
+                    <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                       Creer un tri
+                   </button>
+                    @endempty
                         @isset($artisans)
+                        <a href="{{ route('showSearchAdvanced') }}" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            Creer un tri
+                        </a>
+                        <button onclick="getColonneTab()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            Modifier entête du tabeau
+                        </button>
                         <button onclick="createPDF()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
                             Imprimer
                         </button>
@@ -116,14 +125,27 @@
                         {{ csrf_field() }}
                     </form>
                 </div>
-                <div class="flex flex-col mb-10 mt-6">
+                <div class="flex flex-col mb-10">
+                    @isset($message)
+                        <p class="" style="">{{ $message }}</p>
+                    @endisset
                     @isset($artisans)
+                    <div class="-mx-4 my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                            <div id="colonne" style="display: none" class="grid md:grid-cols-4 mt-5 md:gap-6 overflow-hidden">
+                                <div  class="flex items-center">
+                                    <input checked id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Checked state</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div id="pdf" class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                                <table class="min-w-full divide-y text-center divide-gray-200 dark:divide-gray-700">
+                                <table id="Tableau" class="min-w-full divide-y text-center divide-gray-200 dark:divide-gray-700">
                                     <thead class="bg-gray-50 dark:bg-gray-800">
-                                        <tr>
+                                        <tr id="ligne">
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <button class="flex items-center gap-x-3 focus:outline-none">
                                                     <svg class="h-3" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,7 +186,7 @@
                                         @endisset
 
                                         @foreach ( $artisans as $artisan )
-                                        <tr>
+                                        <tr id="donne">
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $count++ }}</h4>
                                             </td>
@@ -262,14 +284,6 @@
                                             @elseif ($column=="ContactAgent")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->ContactAgent}}</h4>
-                                            </td>
-                                            @elseif ($column=="ZoneAgent")
-                                            <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->ZoneAgent}}</h4>
-                                            </td>
-                                            @elseif ($column=="ZoneAgent")
-                                            <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->ZoneAgent}}</h4>
                                             </td>
                                             @elseif ($column=="ZoneAgent")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
@@ -513,6 +527,154 @@
                 .catch(function(error) {
                     document.getElementById(colonne).innerHTML = "<option>" + error.response.data.message + "</option>";
                 });
+        }
+
+        function getColonneTab() {
+            // Assurez-vous que $columns contient les données nécessaires côté serveur.
+            let autrecolonnes = {!! json_encode($autrecolonnes) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
+
+
+            let colonne = document.getElementById("colonne");
+            colonne.style.display = ""; // Vous devez spécifier une valeur valide pour "display", par exemple "block" pour afficher l'élément.
+            colonne.innerHTML = ""; // Efface le contenu de l'élément.
+
+
+
+            Object.values(autrecolonnes).forEach(item => {
+                // Crée un élément div pour chaque élément dans colonnes et ajoute-le à l'élément colonne.
+                let div = document.createElement("div");
+                div.className = "flex items-center";
+
+                // Crée une case à cocher et une étiquette pour chaque élément dans colonnes.
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.className = "w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
+                checkbox.value = item; // Définissez la valeur de la case à cocher sur l'élément actuel de autrecolonnes.
+                checkbox.onclick = function () {
+                    check(checkbox); // Appel de la fonction check lorsque la case est cochée/décochée.
+                };
+                let label = document.createElement("label");
+                label.htmlFor = "checked-checkbox";
+                label.className = "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300";
+                label.textContent = item; // Le texte de l'étiquette provient de l'élément dans colonnes.
+
+                // Ajoute la case à cocher et l'étiquette au div.
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                // Ajoute le div à l'élément colonne.
+                colonne.appendChild(div);
+            });
+
+            function check(checkbox) {
+                let tableau = document.getElementById("Tableau");
+
+                if (checkbox.checked) {
+                    // Créez un nouvel élément <th> pour l'en-tête de colonne.
+                    let enTete = document.createElement("th");
+                    enTete.className = "py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400";
+                    enTete.textContent = checkbox.value;
+
+                    // Ajoutez l'en-tête de colonne à la première ligne du tableau (ou à la ligne d 'en-tête).
+                    let premiereLigne = tableau.querySelector("tr:first-child");
+                    premiereLigne.appendChild(enTete);
+
+                    // Parcourez toutes les lignes de données (à partir de la deuxième ligne) et ajoutez une cellule de données <td> à chaque ligne.
+                    let artisans = {!! json_encode($artisans) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
+                    let tbody= document.querySelector('tbody');
+                    let lignesDonnees =tbody.querySelectorAll("tr");
+                    lignesDonnees.forEach(function (ligne) {
+                        let celluleDonnees = document.createElement("td");
+                        celluleDonnees.className = "px-4 py-4 text-sm capitalize whitespace-nowrap";
+                        let label= document.createElement("h4");
+                        label.className = "text-gray-700 dark:text-gray-200";
+                        if(checkbox.value==="Profession"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="Scolarise"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="Commune"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="NomFinance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="NomAssurance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="numfiche"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="ZoneAgent"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="AnExpProf"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="AnProf"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="ProfessionParrain"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="codefiche"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="Denomination"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="numeroDeLaDfe"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="CoutestimatifEnlettre"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="SituationMatrimoliale"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="Quartier"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="etatFinance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="numeroAssurance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="zone"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="Dtnaissance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="registreMetier"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="NomParrain"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        if(checkbox.value==="AppreciationParrain"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        }
+                        celluleDonnees.appendChild(label);
+                        ligne.appendChild(celluleDonnees);
+                    });
+                } else {
+                    // La case a été décochée, vous pouvez ajouter votre logique ici si nécessaire.
+                    console.log("La case a été décochée : " + checkbox.value);
+                    // Supprimez la colonne correspondante de toutes les lignes.
+                    let colonneASupprimer = tableau.querySelector("th:contains('" + checkbox.value + "')");
+                    let indexColonneASupprimer = colonneASupprimer.cellIndex;
+
+                    let toutesLesLignes = tableau.querySelectorAll("tr");
+                    toutesLesLignes.forEach(function (ligne) {
+                        ligne.deleteCell(indexColonneASupprimer);
+                    });
+                }
+            }
+
+
+
         }
 
     </script>
