@@ -403,7 +403,6 @@ class ArtisanController extends Controller
             "Sexe",
             "registreMetier",
             "Email",
-            "AnExpProf",
             "Contact",
             "AnProf",
             "NomParrain",
