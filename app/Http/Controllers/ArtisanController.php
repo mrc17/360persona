@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\SearchArtisanRequest;
 use App\Http\Requests\SearchArtisanAvancedRequest;
-use Termwind\Components\Dd;
+use Illuminate\Support\Facades\Schema;
+
 
 class ArtisanController extends Controller
 {
@@ -280,7 +281,7 @@ class ArtisanController extends Controller
     public function showSearchAdvanced()
     {
         $nbrArtisanTotal = Artisan::count();
-        return view('showSearchAdvanced', ["nbrArtisanTotal" => $nbrArtisanTotal]);
+        return view('showSearchAdvanced', ["nbrArtisanTotal" => $nbrArtisanTotal, "autrecolonnes" => []]);
     }
 
     public function searchartisanavanced(SearchArtisanAvancedRequest $request)
@@ -371,10 +372,71 @@ class ArtisanController extends Controller
                 }
             }
         }
+
+        $columns = [
+            "Scolarise",
+            "SituationMatrimoliale",
+            "RégimeMatrimoliale",
+            "Ville",
+            "Commune",
+            "Quartier",
+            "NbrEnfant",
+            "Nbrfille",
+            "NbrGarcon",
+            "NomFinance",
+            "etatFinance",
+            "etatOrganisation",
+            "NomOrganisation",
+            "NomAssurance",
+            "numeroAssurance",
+            "AgenceAssurance",
+            "date",
+            "numfiche",
+            "zone",
+            "ordre",
+            "NomAgent",
+            "ZoneAgent",
+            "Dtnaissance",
+            "LieuNaissance",
+            "Profession",
+            "AnExpProf",
+            "Sexe",
+            "registreMetier",
+            "Email",
+            "AnExpProf",
+            "Contact",
+            "AnProf",
+            "NomParrain",
+            "PrenomParrain",
+            "sexeParrain",
+            "ProfessionParrain",
+            "AppreciationParrain",
+            "dateFiche",
+            "numfiche",
+            "codefiche",
+            "zonefiche",
+            "ordrefiche",
+            "Activite1",
+            "Denomination",
+            "Localisation1",
+            "numRccm",
+            "Activite2",
+            "numeroDeLaDfe",
+            "Localisation2",
+            "numcnps",
+            "Projet",
+            "CoutestimatifEnlettre",
+            "CoutestimatifEnchiffre",
+            "ContactAgent"
+        ];
+
+        $autrecolonnes = (array_diff($columns, $getcolumn));
+
         $artisans = Artisan::WhereIn('id', $results)->get();
         return view('showSearchAdvanced', [
             'artisans' => $artisans,
             'count' => 1,
+            'autrecolonnes' => $autrecolonnes,
             'nbrArtisanTotal' => Artisan::count(),
             'columns' => $getcolumn
         ]);
