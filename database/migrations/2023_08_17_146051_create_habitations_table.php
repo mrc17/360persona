@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('habitations', function (Blueprint $table) {
             $table->id();
-            $table->string('Ville');
-            $table->string('Commune');
-            $table->string('Quartier');
-            $table->string('SituationMatrimoliale')->nullable();
-            $table->string('RégimeMatrimoliale')->nullable();
-            $table->foreignId('id_Assurance')->constrained('assurances');
-            $table->foreignId('id_finance')->constrained('Finances');
+            $table->string('ville');
+            $table->string('commune');
+            $table->string('quartier');
+            $table->string('situation_matrimoliale')->nullable()->default('non renseigné');
+            $table->string('regime_matrimoliale')->nullable()->default('non renseigné');
+            $table->foreignId('id_assurance')->constrained('assurances');
+            $table->foreignId('id_finance')->constrained('finances');
             $table->foreignId('organisation_id')->constrained('organisations');
             $table->foreignId('charge_id')->constrained('charges');
             $table->timestamps();
