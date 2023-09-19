@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->id();
-            $table->integer('NbrEnfant')->nullable();
-            $table->integer('Nbrfille')->nullable();
-            $table->integer('NbrGarcon')->nullable();
-            $table->integer('Scolarise')->nullable();
+            $table->string('nbr_enfant')->nullable()->default(0);
+            $table->string('nbr_fille')->nullable()->default(0);
+            $table->string('nbr_garcon')->nullable()->default(0);
+            $table->string('scolarise')->nullable()->default(0);
             $table->timestamps();
         });
     }
