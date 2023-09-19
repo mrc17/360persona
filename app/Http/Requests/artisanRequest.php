@@ -22,11 +22,9 @@ class ArtisanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "dateRecensement" => "required|date",
+            "dateRecensement" => "required",
             "ficheRecensement" => "required|string|max:255",
-            "codeRecensement" => "required|date",
-            "zoneRecensement" => "required|string|max:255",
-            "ordreRecensement" => "required|string|max:255",
+            "codeRecensement" => "required",
             "NomDeLagentRecenseur" => "required|string|max:255",
             "contactRecenseur" => "required|string|max:255",
             "ZoneRecenseur" => "required|string|max:255",
