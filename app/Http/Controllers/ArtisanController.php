@@ -16,133 +16,147 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\SearchArtisanRequest;
 use App\Http\Requests\SearchArtisanAvancedRequest;
-use Illuminate\Support\Facades\Schema;
 
 
 class ArtisanController extends Controller
 {
     //Cretion de la function de
+
     public function create(ArtisanRequest $request)
     {
 
+        // Créez d'abord la fiche
         $fiche = Fiche::create([
-            "dateFiche" => $request->input('dateRecensement'),
-            "numfiche" => $request->input('ficheRecensement'),
-            "codefiche" => $request->input('codeRecensement'),
-            "zonefiche" => $request->input('zoneRecensement'),
-            "ordrefiche" => $request->input('ordreRecensement'),
+            "date_fiche" => $request->input('dateRecensement') ?: "non renseigné",
+            "num_fiche" => $request->input('ficheRecensement') ?: "non renseigné",
+            "code_fiche" => $request->input('codeRecensement') ?: "non renseigné",
+            "zone_fiche" => $request->input('zoneRecensement') ?: "non renseigné",
+            "ordre_fiche" => $request->input('ordreRecensement') ?: "non renseigné",
         ]);
 
-        $fiche_id = $fiche->id;
-
+        // Créez l'entité Finances liée à la fiche
         $finance = Finances::create([
-            'etatFinance' => $request->input('etatFinance'),
-            'NomFinance' => $request->input('nomfinance'),
-
+            'etat_finance' => $request->input('etatFinance') ?: "non renseigné",
+            'nom_finance' => $request->input('nomfinance') ?: "non renseigné",
         ]);
 
+        // Récupérez l'ID de l'entité Finances créée
         $finance_id = $finance->id;
 
-        $Assurance = $request->input('Assurance');
-        $autre = $request->input('autre');
-
-        $Assurance = ($Assurance === "AUTREASSURANCE") ? $autre : $Assurance;
-
-
+        // Créez l'entité Assurance liée à la fiche
         $assurance = Assurance::create([
-            'NomAssurance' => $Assurance,
-            'numeroAssurance' => $request->input('numeroCnps'),
-            'AgenceAssurance' => $request->input('Agence'),
+            'nom_assurance' => $request->input('Assurance') ?: "non renseigné",
+            'numero_assurance' => $request->input('numeroCnps') ?: "non renseigné",
+            'agence_assurance' => $request->input('Agence') ?: "non renseigné",
         ]);
 
+        // Récupérez l'ID de l'entité Assurance créée
         $assurance_id = $assurance->id;
 
+        // Créez l'entité Organisation liée à la fiche
         $organisation = Organisation::create([
-            'etatOrganisation' => $request->input('etatFinance'),
-            "NomOrganisation" => $request->input('nomfinance')
+            'etat_organisation' => $request->input('etatFinance') ?: "non renseigné",
+            "nom_organisation" => $request->input('nomfinance') ?: "non renseigné",
         ]);
 
+
+
+        // Récupérez l'ID de l'entité Organisation créée
         $organisation_id = $organisation->id;
 
+        
+        // Créez l'entité Charge liée à la fiche
         $charge = Charge::create([
-            'NbrEnfant' => $request->input('NbreEnfant'),
-            'Nbrfille' => $request->input('NbreFille'),
-            'NbrGarcon' => $request->input('NbreGarcon'),
-            'Scolarise' => $request->input('Scolaire'),
+            'nbr_enfant' => $request->input('NbreEnfant') ?: 0,
+            'nbr_fille' => $request->input('NbreFille') ?: 0,
+            'nbr_garcon' => $request->input('NbreGarcon') ?: 0,
+            'scolarise' => $request->input('Scolaire') ?: 0,
         ]);
 
+        // Récupérez l'ID de l'entité Charge créée
         $charge_id = $charge->id;
 
+
+        // Créez l'entité Habitation liée à la fiche
         $habitation = Habitation::create([
-            'Ville' => $request->input('VilleArtisan'),
-            'Commune' => $request->input('CommuneArtisan'),
-            'Quartier' => $request->input('QuartierArtisan'),
-            'SituationMatrimoliale' => $request->input('Situation'),
-            'RégimeMatrimoliale' => $request->input('Regime'),
-            'id_Assurance' => $assurance_id,
-            'id_finance' => $finance_id,
-            'organisation_id' => $organisation_id,
-            'charge_id' => $charge_id,
+            'ville' => $request->input('VilleArtisan'),
+            'commune' => $request->input('CommuneArtisan'),
+            'quartier' => $request->input('QuartierArtisan'),
+            'situation_matrimoliale' => $request->input('Situation') ?: "non renseigné",
+            'régime_matrimoliale' => $request->input('Regime') ?: "non renseigné",
+            'id_assurance' => $assurance->id,
+            'id_finance' => $finance->id,
+            'organisation_id' => $organisation->id,
+            'charge_id' => $charge->id,
         ]);
 
+        // Récupérez l'ID de l'entité Habitation créée
         $habitation_id = $habitation->id;
+        // Créez l'entité Activite liée à la fiche
 
         $activite = Activite::create([
-            'Activite1' => $request->input('Activite_1'),
-            'Denomination' => $request->input('denomination'),
-            'Localisation1' => $request->input('Localisation_1'),
-            'numRccm' => $request->input('numero_rccm'),
-            'Activite2' => $request->input('Activite_2'),
-            'numeroDeLaDfe' => $request->input('numeroDeLaDfe'),
-            'Localisation2' => $request->input('Localisation_2'),
-            'numcnps' => $request->input('numeroCnpsActivite'),
-            'Projet' => $request->input('Projet'),
-            'CoutestimatifEnlettre' => $request->input('CoutEstimatifEnLettre'),
-            'CoutestimatifEnchiffre' => $request->input('CoutEstimatifEnChiffre'),
+            'activite1' => $request->input('Activite_1') ?: "non renseigné",
+            'denomination' => $request->input('denomination') ?: "non renseigné",
+            'localisation1' => $request->input('Localisation_1') ?: "non renseigné",
+            'num_rccm' => $request->input('numero_rccm') ?: "non renseigné",
+            'activite2' => $request->input('Activite_2') ?: "non renseigné",
+            'numero_de_la_dfe' => $request->input('numeroDeLaDfe') ?: "non renseigné",
+            'localisation2' => $request->input('Localisation_2') ?: "non renseigné",
+            'num_cnps' => $request->input('numeroCnpsActivite') ?: "non renseigné",
+            'projet' => $request->input('Projet') ?: "non renseigné",
+            'cout_estimatif_en_lettre' => $request->input('CoutEstimatifEnLettre') ?: "Zero",
+            'cout_estimatif_en_chiffre' => $request->input('CoutEstimatifEnChiffre') ?: 0,
         ]);
 
+        // Récupérez l'ID de l'entité Activite créée
         $activite_id = $activite->id;
 
+        // Créez l'entité Agent liée à la fiche
         $agent = Agent::create([
-            "NomAgent" => $request->input('NomDeLagentRecenseur'),
-            "ContactAgent" => $request->input('contactRecenseur'),
-            "ZoneAgent" => $request->input('ZoneRecenseur'),
+            'nom_agent' => $request->input('NomDeLagentRecenseur') ?: "non renseigné",
+            'contact_agent' => $request->input('contactRecenseur') ?: "non renseigné",
+            'zone_agent' => $request->input('ZoneRecenseur') ?: "non renseigné",
         ]);
 
+        // Récupérez l'ID de l'entité Agent créée
         $agent_id = $agent->id;
 
-
+        // Créez l'entité Parrain liée à la fiche
         $parrain = Parrain::create([
-            'NomParrain' => $request->input('NomDuParrain'),
-            "PrenomParrain" => $request->input('PrenomDuParrain'),
-            "sexeParrain" => $request->input('sexeDuParrain'),
-            "ProfessionParrain" => $request->input('ProfessionDuParrain'),
-            "AppreciationParrain" => $request->input('Appreciation_du_bureau')
+            'nom_parrain' => $request->input('NomDuParrain') ?: "non renseigné",
+            'prenom_parrain' => $request->input('PrenomDuParrain') ?: "non renseigné",
+            'sexe_parrain' => $request->input('sexeDuParrain') ?: "non renseigné",
+            'profession_parrain' => $request->input('ProfessionDuParrain') ?: "non renseigné",
+            'appreciation_parrain' => $request->input('Appreciation_du_bureau') ?: "non renseigné",
         ]);
 
+        // Récupérez l'ID de l'entité Parrain créée
         $parrain_id = $parrain->id;
 
-
+        // Créez l'entité Artisan liée à la fiche
         $artisan = Artisan::create([
-            'Nom' => $request->input('NomArtisan'),
-            'Prenom' => $request->input('PrenomArtisan'),
-            'Dtnaissance' => $request->input('DateNaissanceArtisan'),
-            'LieuNaissance' => $request->input('LieuNaissanceArtisan'),
-            'Profession' => $request->input('ProfessionArtisan'),
-            'AnExpProf' => $request->input('AnneeExperienceProfessionnelleArtisan'),
-            'Sexe' => $request->input('sexeartisan'),
-            'AnProf' => $request->input('AnneeProfession'),
-            'registreMetier' => $request->input('registre'),
-            'Email' => $request->input('email'),
-            'Contact' => $request->input('Contact'),
-            'id_parrain' => $parrain_id,
-            'id_habitation' => $habitation_id,
-            'id_agent' => $agent_id,
-            'id_fiche' => $fiche_id,
-            'id_activite' => $activite_id,
+            'nom' => $request->input('NomArtisan') ?: "non renseigné",
+            'prenom' => $request->input('PrenomArtisan') ?: "non renseigné",
+            'dtnaissance' => $request->input('DateNaissanceArtisan') ?: "non renseigné",
+            'lieu_naissance' => $request->input('LieuNaissanceArtisan') ?: "non renseigné",
+            'profession' => $request->input('ProfessionArtisan') ?: "non renseigné",
+            'an_exp_prof' => $request->input('AnneeExperienceProfessionnelleArtisan') ?: "non renseigné",
+            'sexe' => $request->input('sexeartisan') ?: "non renseigné",
+            'an_prof' => $request->input('AnneeProfession') ?: "non renseigné",
+            'registre_metier' => $request->input('registre') ?: "non renseigné",
+            'email' => $request->input('email') ?: "non renseigné",
+            'contact' => $request->input('Contact') ?: "non renseigné",
+            'id_parrain' => $parrain->id,
+            'id_habitation' => $habitation->id,
+            'id_agent' => $agent->id,
+            'id_fiche' => $fiche->id,
+            'id_activite' => $activite->id,
         ]);
-        return redirect()->route('Fiche')->with('success', 'Formulaire Enregister');
+
+
+        return redirect()->route('Fiche')->with('success', "Artisan #$artisan->nom est Enregisté");
     }
+
 
     public function show($artisan)
     {
@@ -281,7 +295,7 @@ class ArtisanController extends Controller
     public function showSearchAdvanced()
     {
         $nbrArtisanTotal = Artisan::count();
-        return view('showSearchAdvanced', ["nbrArtisanTotal" => $nbrArtisanTotal, "autrecolonnes" => []]);
+        return view('showSearchAdvanced', ["nbrArtisanTotal" => $nbrArtisanTotal, "autrecolonnes" => [],]);
     }
 
     public function searchartisanavanced(SearchArtisanAvancedRequest $request)
