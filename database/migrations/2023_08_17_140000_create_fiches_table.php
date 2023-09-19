@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('fiches', function (Blueprint $table) {
             $table->id();
-            $table->string('dateFiche')->nullable();
-            $table->string('numfiche')->nullable();
-            $table->string('codefiche')->nullable();
-            $table->string('zonefiche')->nullable();
-            $table->string('ordrefiche')->nullable();
+            $table->string('date_fiche')->nullable()->default('non renseigné');
+            $table->string('num_fiche')->nullable()->default('non renseigné');
+            $table->string('code_fiche')->nullable()->default('non renseigné');
+            $table->string('zone_fiche')->nullable()->default('non renseigné');
+            $table->string('ordre_fiche')->nullable()->default('non renseigné');
             $table->timestamps();
         });
     }
