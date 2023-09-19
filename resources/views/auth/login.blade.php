@@ -13,8 +13,8 @@
 <body class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
     <section class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
         <div class="container h-full p-10">
-            <div class="g-6 flex h-full flex-wrap items-center justify-center text-neutral-800 dark:text-neutral-200">
-                <div class="w-full">
+            <div class="g-6 flex h-full flex-wrap items-center mx-auto justify-center text-neutral-800 dark:text-neutral-200">
+                <div class="w-full mx-auto">
                     <div class="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
                         <div class="g-0 lg:flex lg:flex-wrap">
                             <!-- Left column container-->
