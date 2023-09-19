@@ -11,14 +11,15 @@ class Fiche extends Model
     use HasFactory;
 
     protected $fillable = [
-        "date",
-        "numfiche",
-        "code",
-        "zone",
-        "ordre"
+        "date_fiche",
+        "num_fiche",
+        "code_fiche",
+        "zone_fiche",
+        "ordre_fiche",
     ];
 
-    public function artisan(){
-        return $this->belongsTo(Artisan::class,'id_fiche');
+    public function artisan()
+    {
+        return $this->belongsTo(Artisan::class);
     }
 }
