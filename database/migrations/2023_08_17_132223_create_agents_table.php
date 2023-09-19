@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
-            $table->string('NomAgent')->nullable();
-            $table->string('ContactAgent')->nullable();
-            $table->string('ZoneAgent')->nullable();
+            $table->string('nom_agent')->nullable()->default('non renseigné');
+            $table->string('contact_agent')->nullable()->default('non renseigné');
+            $table->string('zone_agent')->nullable()->default('non renseigné');
+            $table->foreignId('user_id')->constrained('users');
+
             $table->timestamps();
         });
     }
