@@ -11,10 +11,10 @@ class Charge extends Model
     use HasFactory;
 
     protected $fillable = [
-        'NbrEnfant',
-        'Nbrfille',
-        'NbrGarcon',
-        'Scolarise',
+        'nbr_enfant',
+        'nbr_fille',
+        'nbr_garcon',
+        'scolarise',
     ];
 
     public function habitation()
