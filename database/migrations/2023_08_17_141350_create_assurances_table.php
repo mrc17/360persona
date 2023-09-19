@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('assurances', function (Blueprint $table) {
             $table->id();
-            $table->string('NomAssurance')->nullable();
-            $table->string('numeroAssurance')->nullable();
-            $table->string('AgenceAssurance')->nullable();
+            $table->string('nom_assurance')->nullable()->default('non renseigné');
+            $table->string('numero_assurance')->nullable()->default('non renseigné');
+            $table->string('agence_assurance')->nullable()->default('non renseigné');
             $table->timestamps();
         });
     }
@@ -28,3 +28,4 @@ return new class extends Migration
         Schema::dropIfExists('assurances');
     }
 };
+
