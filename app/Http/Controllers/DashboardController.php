@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artisan;
 use App\Models\Parrain;
 use App\Models\Activite;
+use App\Models\Agent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,14 +55,38 @@ class DashboardController extends Controller
             }
         }
         $nombreFemmesMaturesMoins30 = Artisan::where('Sexe', 'Femme')
-        ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
-        ->count();
+            ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
+            ->count();
 
         $nombreHommesMaturesMoins30 = Artisan::where('Sexe', 'Homme')
-        ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
-        ->count();
+            ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
+            ->count();
 
+            $ClassementAgents = DB::table('artisans')
+            ->select('id_agent', DB::raw('count(*) as total'))
+            ->groupBy('id_agent')
+            ->orderBy('total', 'desc')
+            ->get();
 
+        // Créez un tableau pour stocker les noms des agents correspondant à leurs id_agent
+        $ClassementAgentsNom = [];
+
+        foreach ($ClassementAgents as $Agents) {
+            $agentId = $Agents->id_agent;
+
+            // Récupérez le nom de l'agent correspondant à l'id_agent
+            $agentName = Agent::where('id', $agentId)->pluck('NomAgent')->first();
+
+            // Stockez le nom de l'agent dans le tableau
+            $agent = [
+                'Nom' => $agentName,
+                'total' => $Agents->total,
+            ];
+            $ClassementAgentsNom[] = $agent;
+        }
+        usort($ClassementAgentsNom, function ($a, $b) {
+            return $b['total'] - $a['total'];
+        });
         return view('Dashboard', [
             'user' => $user,
             'nombreArtisans' => $nombreArtisans,
@@ -71,8 +96,9 @@ class DashboardController extends Controller
             'hommesMatures' => $hommesMatures,
             'femmesJeunes' => $femmesJeunes,
             'femmesMatures' => $femmesMatures,
-            'nombreFemmesMaturesMoins30'=>$nombreFemmesMaturesMoins30,
-            'nombreHommesMaturesMoins30'=>$nombreHommesMaturesMoins30
+            'nombreFemmesMaturesMoins30' => $nombreFemmesMaturesMoins30,
+            'nombreHommesMaturesMoins30' => $nombreHommesMaturesMoins30,
+            'ClassementAgentsNom' => $ClassementAgentsNom,
         ]);
     }
 
