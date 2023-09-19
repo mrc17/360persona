@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
+use App\Models\Fiche;
 use App\Models\Artisan;
 use App\Models\Parrain;
 use App\Models\Activite;
-use App\Models\Agent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,12 +24,12 @@ class DashboardController extends Controller
         // Les 4 artisans ayant la plus grande charge
         $artisansCharge = DB::table('artisans')
             ->join('charges', 'artisans.id_parrain', '=', 'charges.id')
-            ->orderByDesc('charges.NbrEnfant')
+            ->orderByDesc('charges.nbr_fille')
             ->limit(4)
             ->get();
 
         // Le projet le plus coûteux
-        $projetLePlusCouteux = Activite::orderByDesc('CoutestimatifEnchiffre')->first();
+        $projetLePlusCouteux = Activite::orderByDesc('cout_estimatif_en_chiffre')->first();
 
         // Répartition des artisans par âge et sexe
         $artisans = Artisan::all();
@@ -62,7 +63,7 @@ class DashboardController extends Controller
             ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
             ->count();
 
-            $ClassementAgents = DB::table('artisans')
+        $ClassementAgents = DB::table('artisans')
             ->select('id_agent', DB::raw('count(*) as total'))
             ->groupBy('id_agent')
             ->orderBy('total', 'desc')
@@ -75,13 +76,14 @@ class DashboardController extends Controller
             $agentId = $Agents->id_agent;
 
             // Récupérez le nom de l'agent correspondant à l'id_agent
-            $agentName = Agent::where('id', $agentId)->pluck('NomAgent')->first();
+            $agentName = Agent::where('id', $agentId)->pluck('nom_agent')->first();
 
             // Stockez le nom de l'agent dans le tableau
             $agent = [
                 'Nom' => $agentName,
                 'total' => $Agents->total,
             ];
+
             $ClassementAgentsNom[] = $agent;
         }
         usort($ClassementAgentsNom, function ($a, $b) {
@@ -105,7 +107,9 @@ class DashboardController extends Controller
     public function showFiche()
     {
         $user = Auth::user();
-        return view('Fiche', ['user' => $user]);
+        $numfiche = Fiche::count() + 1;
+        $code = date("ym") . '000' . $numfiche;
+        return view('Fiche', ['user' => $user, 'numfiche' => $numfiche, "code" => $code]);
     }
     public function showListe()
     {
