@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('finances', function (Blueprint $table) {
             $table->id();
-            $table->string('etatFinance')->nullable();
-            $table->string('NomFinance')->nullable();
+            $table->string('etat_finance')->nullable()->default('non renseigné');
+            $table->string('nom_finance')->nullable()->default('non renseigné');
             $table->timestamps();
         });
     }
@@ -27,3 +27,4 @@ return new class extends Migration
         Schema::dropIfExists('finances');
     }
 };
+
