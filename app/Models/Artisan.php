@@ -33,18 +33,13 @@ class Artisan extends Model
 
 
 
-
-
-
-
-
     public function habitation()
     {
         return $this->belongsTo(Habitation::class, 'id_habitation');
     }
     public function agent()
     {
-        return $this->hasOne(Agent::class, 'id_agent');
+        return $this->belongsTo(Agent::class, 'id_agent');
     }
 
     public function parrain()
