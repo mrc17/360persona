@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/360.png') }}">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <!-- component -->
 <body class="font-poppins w-full antialiased ">
@@ -84,17 +84,14 @@
             <form method="POST" action="{{ route('create-artisan') }}" class="bg-white dark:bg-gray-900 p-5 rounded-lg ">
                 @csrf
                 <div class="flex flex-col border-2 p-2 border-black dark:border-white">
-                    <p class="text-xl flex-wrap text-center font-bold text-red-600">FICHE D’IDENTIFICATION ET DE REFERENCEMENT DES PROFESSIONNELS DE METIER</p>
-                    <p class="text-sm text-center font-italic dark:text-white  text-gray-800">Fiche à remplir et retourner physiquement ou par mail à ksira2015@yahoo.fr ou par WhatsApp aux 07 68 24 40 61</p>
+                    <p class="text-xl flex-wrap text-center font-bold text-red-600">REPERTOIRE D’IDENTIFICATION ET DE REFERENCEMENT DES PROFESSIONNELS DE METIER</p>
                     <div class="flex flex-row flex-wrap mt-4">
                         <p class="mx-2 py-4 dark:text-white font-bold">DATE : </p>
                         <input type="date" value="{{ date('Y-m-d') }}" value="{{ old('dateRecensement') }}" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateRecensement">
                         <p class="mx-2 py-4 dark:text-white font-bold">FICHE N°:</p>
-                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficheRecensement" value="{{ old('ficheRecensement') }}">
+                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficheRecensement" value="{{ $numfiche}}">
                         <p class="mx-2 py-4 dark:text-white font-bold">Code : KS- </p>
-                        <input type="month" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" value="{{ old('codeRecensement') }}" name="codeRecensement" min="03" placeholder="" value="2023-05" /><span class="py-4">/</span>
-                        <input type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" value="{{ old('zoneRecensement') }}" placeholder="Zone" name="zoneRecensement"><span class="py-4">/</span>
-                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" value="{{ old('ordreRecensement') }}" placeholder="N°d'ordre" name="ordreRecensement">
+                        <input type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" readonly value="{{ $code }}" name="codeRecensement" min="03" placeholder="" value="2023-05" /><span class="py-4"></span>
                     </div>
                     @if($errors->any())
                     <div class="grid md:grid-cols-4 md:gap-6">
@@ -120,7 +117,7 @@
                 <div class=""></div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="NomDeLagentRecenseur" value="{{ old('NomDeLagentRecenseur') }}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="NomDeLagentRecenseur" value="{{ $u  }}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Agent" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agent</label>
                         @error('NomDeLagentRecenseur')
                         <p class="text-red-600 italic text-xs">{{ $message }}</p>
@@ -176,17 +173,7 @@
                 </div>
                 <div class="grid md:grid-cols-3 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
-                        <select name="ProfessionArtisan" value="{{ old('ProfessionArtisan') }}" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Profession" />
-                        <option value="">Choisissez une Profession</option>
-                        <option value="Bois">Bois</option>
-                        <option value="Metaux et Mécanique">Metaux et Mécanique</option>
-                        <option value="Textile">Textile</option>
-                        <option value="Batiment">Batiment</option>
-                        <option value="Hygiène et resto">Hygiène et resto</option>
-                        <option value="Electronique">Electronique</option>
-                        <option value="Artisanat d'art">Artisanat d'art</option>
-                        <option value="Autre">Autre</option>
-                        <select
+                        <input name="ProfessionArtisan" type="text" value="{{ old('ProfessionArtisan') }}" id="Profession" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="Profession" />
                         <label for="Profession" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
                         @error('ProfessionArtisan')
                         <p class="text-red-600 italic text-xs">{{ $message }}</p>
@@ -355,11 +342,11 @@
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="Oui" name="etatFinance" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Oui" class="block text-sm font-medium leading-6 text-gray-900">Oui</label>
+                        <label for="Oui" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">Oui</label>
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="Non" name="etatFinance" value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Non" class="block text-sm font-medium leading-6 text-gray-900">Non</label>
+                        <label for="Non" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">Non</label>
                     </div>
                     <div class="relative col-span-3 z-0 w-full mb-6 group">
                         <input type="text" name="nomfinance" id="nomfinance" value="{{ old('nomfinance') }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
@@ -395,7 +382,7 @@
                 <div class="grid md:grid-cols-4 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="text" name="NbreEnfant" id="NbreEnfant" value="{{ old('NbreEnfant') }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
-                        <label for="NbreEnfant" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nbre d’enfant à charge :</label>
+                        <label for="NbreEnfant" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre d’enfant à charge </label>
                         @error('NbreEnfant')
                         <p class="text-red-600 italic text-xs">{{ $message }}</p>
                         @enderror
@@ -566,3 +553,4 @@
     </div>
 </body>
 </html>
+
