@@ -141,7 +141,7 @@ class ArtisanController extends Controller
         ]);
 
 
-        return redirect()->route('Fiche')->with('success', "Artisan #$artisan->nom est Enregisté");
+        return redirect()->route('Fiche')->with('success', "Artisan $artisan->nom est Enregisté");
     }
 
 

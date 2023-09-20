@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/360.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/360.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
     <section class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">

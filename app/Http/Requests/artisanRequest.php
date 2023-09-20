@@ -26,7 +26,7 @@ class ArtisanRequest extends FormRequest
             "ficheRecensement" => "required|string|max:255",
             "codeRecensement" => "required",
             "NomDeLagentRecenseur" => "required|string|max:255",
-            "contactRecenseur" => "required|string|max:255",
+            "contactRecenseur" => "required|string|max:255|",
             "ZoneRecenseur" => "required|string|max:255",
             "NomArtisan" => "required|string|max:255",
             "PrenomArtisan" => "required|string|max:255",
@@ -37,7 +37,7 @@ class ArtisanRequest extends FormRequest
             "sexeartisan" => "required|in:Homme,Femme",
             "registre" => "nullable|in:Oui,Non",
             "AnneeProfession" => "nullable|integer",
-            "Contact" => "required|string|max:255",
+            "Contact" => "required|string|max:255|unique:artisans,contact",
             "email" => "nullable|max:255",
             "VilleArtisan" => "required|string|max:255",
             "CommuneArtisan" => "required|string|max:255",
@@ -85,6 +85,7 @@ class ArtisanRequest extends FormRequest
             "date" => "Le champ :attribute doit être une date valide.",
             "string" => "Le champ :attribute doit être une chaîne de caractères.",
             "min" => "Le champ :attribute doit contenir au moins :min caractères.",
+            "unique" => "Le numero téléphone dèjà utilisé.",
         ];
     }
 }

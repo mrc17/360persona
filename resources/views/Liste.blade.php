@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/360.png') }}">
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <!-- component -->
 <body class="font-poppins w-full antialiased ">
