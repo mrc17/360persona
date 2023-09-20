@@ -34,7 +34,9 @@
                             {{ $user->username }}
                             @endisset
                         </h2>
-                        <p class="text-xs text-gray-500 text-center">Administrateur</p>
+                        <p class="text-xs text-gray-500 text-center"> @isset($user)
+                            {{ $user->grade }}
+                            @endisset</p>
                     </div>
                 </div>
                 <div class="flex border-2 border-gray-200 rounded-md focus-within:ring-2 ring-teal-500">
