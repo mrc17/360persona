@@ -51,7 +51,8 @@ class Authentication extends Controller
 
         Agent::create([
             'nom_agent' => $request->input('Nom'),
-            'contact_agent' => $request->input('contacr_agent'),
+            'contact_agent' => $request->input('conctat'),
+            'zone_agent' => $request->input('zone_agent'),
             'user_id' => $user->id,
         ]);
 
