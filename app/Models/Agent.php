@@ -17,7 +17,15 @@ class Agent extends Model
         "user_id"
     ];
 
-    public function artisan(){
+    public function artisan()
+    {
         return $this->hasOne(Artisan::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
 }
