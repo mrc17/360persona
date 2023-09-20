@@ -213,25 +213,25 @@
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $count++ }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Nom }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->nom }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Prenom }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->prenom }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Contact }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->contact }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-²²/gray-700 dark:text-gray-200">{{ $artisan->Dtnaissance}}</h4>
+                                                <h4 class="text-²²/gray-700 dark:text-gray-200">{{ $artisan->dtnaissance}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Profession}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->profession}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Sexe}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->sexe}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Email}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->quartier .' ('. $artisan->habitation->ville.')'}}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
                                                 <a href="{{ route('show-artisan', ['artisan' => $artisan->id]) }}" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:text-white">

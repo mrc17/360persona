@@ -30,7 +30,7 @@ class ArtisanController extends Controller
             "date_fiche" => $request->input('dateRecensement') ?: "non renseigné",
             "num_fiche" => $request->input('ficheRecensement') ?: "non renseigné",
             "code_fiche" => $request->input('codeRecensement') ?: "non renseigné",
-            "zone_fiche" => $request->input('zoneRecensement') ?: "non renseigné",
+            "zone_fiche" => $request->input('ZoneRecenseur') ?: "non renseigné",
             "ordre_fiche" => $request->input('ordreRecensement') ?: "non renseigné",
         ]);
 
@@ -120,7 +120,6 @@ class ArtisanController extends Controller
 
         // Récupérez l'ID de l'entité Parrain créée
         $parrain_id = $parrain->id;
-
         // Créez l'entité Artisan liée à la fiche
         $artisan = Artisan::create([
             'nom' => $request->input('NomArtisan') ?: "non renseigné",
@@ -136,7 +135,7 @@ class ArtisanController extends Controller
             'contact' => $request->input('Contact') ?: "non renseigné",
             'id_parrain' => $parrain->id,
             'id_habitation' => $habitation->id,
-            'id_agent' => $request('user_id'), //
+            'id_agent' => $request->input('agent_id'), //
             'id_fiche' => $fiche->id,
             'id_activite' => $activite->id,
         ]);
