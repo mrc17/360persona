@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('activites', function (Blueprint $table) {
             $table->id();
-            $table->string('Activite1')->nullable();
-            $table->string('Denomination')->nullable();
-            $table->string('Localisation1')->nullable();
-            $table->string('numRccm')->nullable();
-            $table->string('Activite2')->nullable();
-            $table->string('numeroDeLaDfe')->nullable();
-            $table->string('Localisation2')->nullable();
-            $table->string('numcnps')->nullable();
-            $table->string('Projet')->nullable();
-            $table->string('CoutestimatifEnlettre')->nullable();
-            $table->string('CoutestimatifEnchiffre')->nullable();
+            $table->string('activite1')->nullable()->default('non renseigné');
+            $table->string('denomination')->nullable()->default('non renseigné');
+            $table->string('localisation1')->nullable()->default('non renseigné');
+            $table->string('num_rccm')->nullable()->default('non renseigné');
+            $table->string('activite2')->nullable()->default('non renseigné');
+            $table->string('numero_de_la_dfe')->nullable()->default('non renseigné');
+            $table->string('localisation2')->nullable()->default('non renseigné');
+            $table->string('num_cnps')->nullable()->default('non renseigné');
+            $table->string('projet')->nullable()->default('non renseigné');
+            $table->string('cout_estimatif_en_lettre')->nullable()->default('non renseigné');
+            $table->string('cout_estimatif_en_chiffre')->nullable()->default(0);
             $table->timestamps();
         });
     }
