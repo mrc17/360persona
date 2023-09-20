@@ -102,11 +102,11 @@
                 <div class="mt-6 md:flex md:items-center md:justify-between">
 
                     <div id="containerbouton" class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                    @empty($artisans)
-                    <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                       Creer un tri
-                   </button>
-                    @endempty
+                        @empty($artisans)
+                        <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            Creer un tri
+                        </button>
+                        @endempty
                         @isset($artisans)
                         <a href="{{ route('showSearchAdvanced') }}" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
                             Creer un tri
@@ -127,13 +127,13 @@
                 </div>
                 <div class="flex flex-col mb-10">
                     @isset($message)
-                        <p class="" style="">{{ $message }}</p>
+                    <p class="" style="">{{ $message }}</p>
                     @endisset
                     @isset($artisans)
                     <div class="-mx-4 my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                             <div id="colonne" style="display: none" class="grid md:grid-cols-4 mt-5 md:gap-6 overflow-hidden">
-                                <div  class="flex items-center">
+                                <div class="flex items-center">
                                     <input checked id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                     <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Checked state</label>
                                 </div>
@@ -170,7 +170,6 @@
                                             </th>
                                             @endif
                                             @endforeach
-
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -184,7 +183,6 @@
                                         </tr>
                                         @endif
                                         @endisset
-
                                         @foreach ( $artisans as $artisan )
                                         <tr id="donne">
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
@@ -443,6 +441,9 @@
         <button onclick="toggleForm()" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
             Ajouter un critère
         </button>
+        <button onclick="remove()" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+            Retirer un critère
+        </button>
         `;
         let boutoun = `
         <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -454,14 +455,13 @@
         </div>`;
 
         function toggleForm() {
-            let formHTML = `
             <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
                 <span class="absolute">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-                <select  onchange="getColonnes(this)" id="table_${formCount}" name="table_${formCount}" type="text" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                <select  onchange="getColonnes(this)" id="table_${formCount}" name="table_${formCount}" type="text" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-full placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                     <option value="">Choisissez une table</option>
                     <option value="">-------------------------------------------</option>
                     <option value="Charge">Charge</option>
@@ -494,7 +494,8 @@
                     </svg>
                 </span>
                 <input required type="text" name='search_${formCount}' placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
-            </div>`;
+            </div>
+            `;
             document.getElementById('Form').innerHTML += formHTML;
             formCount++;
         }
@@ -511,6 +512,14 @@
             }
             isFormVisible = !isFormVisible;
         }
+
+        function remove(){
+        let parent = document.getElementById('Form');
+        console.log(parent);
+        const formHTML = parent.lastChild;
+        parent.removeChild(formHTML);
+        }
+
 
         function getColonnes(tag) {
             let colonneId = tag.id;
@@ -529,17 +538,15 @@
                 });
         }
 
+    </script>
+
+    @isset($artisans)
+    <script>
         function getColonneTab() {
-            // Assurez-vous que $columns contient les données nécessaires côté serveur.
-            let autrecolonnes = {!! json_encode($autrecolonnes) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
-
-
+            let autrecolonnes = {!!json_encode($autrecolonnes) !!};
             let colonne = document.getElementById("colonne");
             colonne.style.display = ""; // Vous devez spécifier une valeur valide pour "display", par exemple "block" pour afficher l'élément.
             colonne.innerHTML = ""; // Efface le contenu de l'élément.
-
-
-
             Object.values(autrecolonnes).forEach(item => {
                 // Crée un élément div pour chaque élément dans colonnes et ajoute-le à l'élément colonne.
                 let div = document.createElement("div");
@@ -550,7 +557,7 @@
                 checkbox.type = "checkbox";
                 checkbox.className = "w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600";
                 checkbox.value = item; // Définissez la valeur de la case à cocher sur l'élément actuel de autrecolonnes.
-                checkbox.onclick = function () {
+                checkbox.onclick = function() {
                     check(checkbox); // Appel de la fonction check lorsque la case est cochée/décochée.
                 };
                 let label = document.createElement("label");
@@ -564,126 +571,113 @@
                 // Ajoute le div à l'élément colonne.
                 colonne.appendChild(div);
             });
+        }
 
-            function check(checkbox) {
-                let tableau = document.getElementById("Tableau");
+        function check(checkbox) {
+            let tableau = document.getElementById("Tableau");
+            if (checkbox.checked) {
+                // Créez un nouvel élément <th> pour l'en-tête de colonne.
+                let enTete = document.createElement("th");
+                enTete.className = "py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400";
+                enTete.textContent = checkbox.value;
+                // Ajoutez l'en-tête de colonne à la première ligne du tableau (ou à la ligne d 'en-tête).
+                let premiereLigne = tableau.querySelector("tr:first-child");
+                premiereLigne.appendChild(enTete);
+                // Parcourez toutes les lignes de données (à partir de la deuxième ligne) et ajoutez une cellule de données <td> à chaque ligne.
+                let artisans = {!!json_encode($artisans) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
+                let tbody = document.querySelector('tbody');
+                let lignesDonnees = tbody.querySelectorAll("tr");
+                lignesDonnees.forEach(function (ligne) {
+                    let celluleDonnees = document.createElement("td");
+                    celluleDonnees.className = "px-4 py-4 text-sm capitalize whitespace-nowrap";
+                    let label= document.createElement("h4");
+                    label.className = "text-gray-700 dark:text-gray-200";
+                    if(checkbox.value==="Dtnaissance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Dtnaissance'];
+                    }else if(checkbox.value==="LieuNaissance"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['LieuNaissance'];
+                    }else if(checkbox.value==="Profession"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                    }else if(checkbox.value==="AnExpProf"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['AnExpProf'];
+                    }else if(checkbox.value==="Sexe"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Sexe'];
+                    }else   if(checkbox.value==="AnProf"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['AnProf'];
+                    }else if(checkbox.value==="registreMetier"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['registreMetier'];
+                    }else if(checkbox.value==="Email"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Email'];
+                    }else if(checkbox.value==="Contact"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Contact'];
+                    }else if(checkbox.value==="NbrEnfant"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['NbrEnfant'];
+                    }else if(checkbox.value==="Nbrfille"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['Nbrfille'];
+                    }else if(checkbox.value==="NbrGarcon"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['NbrGarcon'];
+                    }else if(checkbox.value==="Scolarise"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['Scolarise'];
+                    }else if(checkbox.value==="Commune"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Commune'];
+                    }else if(checkbox.value==="Ville"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Ville'];
+                    }else if(checkbox.value==="Quartier"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Quartier'];
+                    }else if(checkbox.value==="SituationMatrimoliale"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['SituationMatrimoliale'];
+                    }else if(checkbox.value==="RégimeMatrimoliale"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['RégimeMatrimoliale'];
+                    }else if(checkbox.value==="Sexe"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Sexe'];
+                    }else if(checkbox.value==="Contact"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Contact'];
+                    }else if(checkbox.value==="Email"){
+                        label.textContent=artisans[ligne.rowIndex-1 ]['Email'];
+                    }
+                    celluleDonnees.appendChild(label);
+                    ligne.appendChild(celluleDonnees);
+                });
+            } else {
+                // Sélectionnez la première ligne <tr>, dont les enfants sont les <th>.
+                let premiereLigne = tableau.querySelector("tr:first-child");
 
-                if (checkbox.checked) {
-                    // Créez un nouvel élément <th> pour l'en-tête de colonne.
-                    let enTete = document.createElement("th");
-                    enTete.className = "py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400";
-                    enTete.textContent = checkbox.value;
+                // Parcourez les cellules <th> de la première ligne pour trouver celle correspondant à la valeur de la colonne.
+                let colonneASupprimer;
+                Array.from(premiereLigne.children).forEach(function (cellule, index) {
+                    if (cellule.textContent === checkbox.value) {
+                        colonneASupprimer = cellule;
+                    }
+                });
 
-                    // Ajoutez l'en-tête de colonne à la première ligne du tableau (ou à la ligne d 'en-tête).
-                    let premiereLigne = tableau.querySelector("tr:first-child");
-                    premiereLigne.appendChild(enTete);
+                if (colonneASupprimer) {
+                    // Supprimez la cellule d'en-tête correspondante.
+                    premiereLigne.removeChild(colonneASupprimer);
 
-                    // Parcourez toutes les lignes de données (à partir de la deuxième ligne) et ajoutez une cellule de données <td> à chaque ligne.
-                    let artisans = {!! json_encode($artisans) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
-                    let tbody= document.querySelector('tbody');
-                    let lignesDonnees =tbody.querySelectorAll("tr");
+                    // Parcourez toutes les lignes de données (à partir de la deuxième ligne).
+                    let tbody = document.querySelector('tbody');
+                    let lignesDonnees = tbody.querySelectorAll("tr");
                     lignesDonnees.forEach(function (ligne) {
-                        let celluleDonnees = document.createElement("td");
-                        celluleDonnees.className = "px-4 py-4 text-sm capitalize whitespace-nowrap";
-                        let label= document.createElement("h4");
-                        label.className = "text-gray-700 dark:text-gray-200";
-                        if(checkbox.value==="Profession"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
+                        // Supprimez la cellule de données correspondante dans chaque ligne.
+                        let celluleASupprimer = ligne.lastChild;
+                        console.log(celluleASupprimer)
+                        if (celluleASupprimer) {
+                            ligne.removeChild(celluleASupprimer);
                         }
-                        if(checkbox.value==="Scolarise"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="Commune"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="NomFinance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="NomAssurance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="numfiche"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="ZoneAgent"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="AnExpProf"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="AnProf"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="ProfessionParrain"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="codefiche"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="Denomination"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="numeroDeLaDfe"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="CoutestimatifEnlettre"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="SituationMatrimoliale"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="Quartier"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="etatFinance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="numeroAssurance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="zone"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="Dtnaissance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="registreMetier"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="NomParrain"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        if(checkbox.value==="AppreciationParrain"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                        }
-                        celluleDonnees.appendChild(label);
-                        ligne.appendChild(celluleDonnees);
-                    });
-                } else {
-                    // La case a été décochée, vous pouvez ajouter votre logique ici si nécessaire.
-                    console.log("La case a été décochée : " + checkbox.value);
-                    // Supprimez la colonne correspondante de toutes les lignes.
-                    let colonneASupprimer = tableau.querySelector("th:contains('" + checkbox.value + "')");
-                    let indexColonneASupprimer = colonneASupprimer.cellIndex;
-
-                    let toutesLesLignes = tableau.querySelectorAll("tr");
-                    toutesLesLignes.forEach(function (ligne) {
-                        ligne.deleteCell(indexColonneASupprimer);
                     });
                 }
             }
-
-
-
         }
-
     </script>
+    @endisset
+
+
     <script>
         function createPDF() {
             var pdf = document.getElementById("pdf");
             var opt = {
-                margin: 0.1
-                , filename: 'SearchAdvanced'
+                margin: 0.1,
+                filename: 'Recherche_filtrer_sur_les_artisans_' + new Date().getMinutes() + new Date().getSeconds()
                 , image: {
                     type: 'jpeg'
                     , quality: 1
@@ -694,7 +688,7 @@
                 , jsPDF: {
                     unit: 'in'
                     , format: 'a4'
-                    , orientation: 'portrait'
+                    , orientation: 'landscape'
                 }
             };
             html2pdf().set(opt).from(pdf).save();
