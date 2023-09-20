@@ -26,6 +26,10 @@ class SignUpRequest extends FormRequest
                 'digits_between:8,14',
                 'unique:agents,contact_agent',
             ],
+            'zone_agent' => [
+                'required',
+                'string',
+            ],
             'username' => [
                 'required',
                 'string',
@@ -49,6 +53,8 @@ class SignUpRequest extends FormRequest
             'Nom.unique' => 'Le nom de l\'agent est déjà utilisé.',
             'Nom.required' => 'Le nom de l\'agent est obligatoire.',
             'Nom.string' => 'Le nom de l\'agent doit être une chaîne de caractères.',
+            'zone_agent.required' => 'La zone_agent de l\'agent est obligatoire.',
+            'zone_agent.string' => 'La  zone_agent de l\'agent doit être une chaîne de caractères.',
             'Nom.max' => 'Le nom de l\'agent ne doit pas dépasser :max caractères.',
             'conctat.unique' => 'Le contact de l\'agent est déjà utilisé.',
             'conctat.required' => 'Le contact de l\'agent est obligatoire.',
