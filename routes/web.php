@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/Calendrier', [DashboardController::class, 'showCalendrier'])->name('Calendrier');
     Route::post('/create/artisan', [ArtisanController::class, 'create'])->name('create-artisan');
     Route::get('/show/artisan/{artisan}', [ArtisanController::class, 'show'])->name('show-artisan');
+    Route::get('/show/artisan/modify/{artisan}', [ArtisanController::class, 'modify'])->name('modify-artisan');
+    Route::get('/show/artisan/delete/{artisan}', [ArtisanController::class, 'delete'])->name('delete-artisan');
     Route::post('/show/artisan/search', [ArtisanController::class, 'searchartisan'])->name('search-artisan');
     Route::get('/showSearchAdvanced', [ArtisanController::class, 'showSearchAdvanced'])->name('showSearchAdvanced');
     Route::post('/show/artisan/SearchAdvanced', [ArtisanController::class, 'searchartisanavanced'])->name('search-artisan-avanced');
