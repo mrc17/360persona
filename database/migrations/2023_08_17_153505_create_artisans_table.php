@@ -25,14 +25,15 @@ return new class extends Migration
             $table->string('email')->nullable()->default('non renseigné');
             $table->string('contact');
             $table->foreignId('id_parrain')->constrained("parrains");
-            $table->foreignId('id_habitation')->constrained("habitations");
+            $table->foreignId('id_habitation')->constrained("habitations")->onDelete('cascade'); // Ajout de onDelete('cascade')
             $table->foreignId('id_agent')->constrained("agents");
-            $table->foreignId('id_fiche')->constrained("fiches");
-            $table->foreignId('id_activite')->constrained("activites");
+            $table->foreignId('id_fiche')->constrained("fiches")->onDelete('cascade');
+            $table->foreignId('id_activite')->constrained("activites")->onDelete('cascade');
             $table->timestamps();
         });
+
     }
-    
+
 
     /**
      * Reverse the migrations.
