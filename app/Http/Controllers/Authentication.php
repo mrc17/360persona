@@ -41,6 +41,9 @@ class Authentication extends Controller
     }
 
     public function showInscription(){
+        if (!Auth::check()) {
+            return view('auth.signup');
+        }
         return view('auth.signup');
     }
 
