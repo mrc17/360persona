@@ -565,7 +565,7 @@
                         <label for="Appreciation_du_bureau" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Appréciation du bureau</label>
                     </div>
                     <div class="flex items-center col-span-full gap-x-3">
-                        <input disabled checked id="checkbox-1" type="checkbox" value="checked" name="checked" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <input checked id="checkbox-1" type="checkbox" value="checked" name="checked" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label class="block text-sm font-medium leading-6 text-gray-900">J’autorise K-SIRA sarl à partager ces informations avec ses partenaires dans le cadre du développement de mes activités et pour mon bien-être.</label>
                     </div>
                 </div>
