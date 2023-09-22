@@ -144,6 +144,10 @@ class ArtisanController extends Controller
         return redirect()->route('Fiche')->with('success', "Artisan $artisan->nom est Enregisté");
     }
 
+    public function modify($artisan){
+        dd($artisan);
+    }
+
 
     public function show($artisan)
     {
@@ -157,8 +161,26 @@ class ArtisanController extends Controller
         }
     }
 
+    public function delete($id)
+{
+    $artisan = Artisan::findOrFail($id);
+
+    // Vérifiez d'abord si l'artisan a une habitation associée
+    if ($artisan->habitation) {
+        // Supprimez d'abord l'habitation associée à cet artisan
+        $artisan->habitation->delete();
+    }
+
+    // Supprimez ensuite l'artisan lui-même
+    $artisan->delete();
+
+    return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
+}
+
+
     public function searchartisan(SearchArtisanRequest $request)
     {
+
         $critere = $request->input('critere');
         $search = $request->input('search');
 
@@ -287,158 +309,168 @@ class ArtisanController extends Controller
 
     public function searchartisanavanced(SearchArtisanAvancedRequest $request)
     {
+
         // Récupérez les paramètres de recherche du formulaire
-        $params = $request->all();
-        // Initialisez le tableau des résultats
-        $results = Artisan::all()->pluck('id')->toArray();
-        // Créez des tableaux pour stocker les critères de chaque groupe
-        $groupedCriteria = [];
-        $getcolumn = [];
-        foreach ($params as $key => $value) {
-            // Utilisez une expression régulière pour extraire le groupe (par exemple, "table_0")
-            if (preg_match('/^(table|colonne|search)_(\d+)$/', $key, $matches)) {
-                $group = $matches[2]; // Le numéro de groupe (0, 1, 2, ...)
-                $field = $matches[1]; // Le type de champ (table, colonne, search)
 
-                // Créez un tableau pour chaque groupe s'il n'existe pas encore
-                if (!isset($groupedCriteria[$group])) {
-                    $groupedCriteria[$group] = [];
-                }
-                // Ajoutez le critère au groupe correspondant
-                $groupedCriteria[$group][$field] = $value;
-            }
-        }
+        if (empty($request->all())) {
+            return view('showSearchAdvanced', [
+                'message' => 'Aucun artisans trouvés',
+                'nbrArtisanTotal' => Artisan::count(),
+            ]);
+        } else {
 
-        foreach ($groupedCriteria as $criteria) {
-            // $criteria est un tableau associatif contenant les clés "table", "colonne" et "search"
-            $table = $criteria["table"];
-            $column = $criteria["colonne"];
-            $search = $criteria["search"];
-            $getcolumn[] = $column;
-            // Construisez dynamiquement le nom de la classe modèle en fonction de la valeur de $table
-            $modelClass = "App\\Models\\" . ucfirst($table);
+            $params = $request->all();
+            // Initialisez le tableau des résultats
+            $results = Artisan::all()->pluck('id')->toArray();
+            // Créez des tableaux pour stocker les critères de chaque groupe
+            $groupedCriteria = [];
+            $getcolumn = [];
+            foreach ($params as $key => $value) {
+                // Utilisez une expression régulière pour extraire le groupe (par exemple, "table_0")
+                if (preg_match('/^(table|colonne|search)_(\d+)$/', $key, $matches)) {
+                    $group = $matches[2]; // Le numéro de groupe (0, 1, 2, ...)
+                    $field = $matches[1]; // Le type de champ (table, colonne, search)
 
-            // Utilisez le modèle Eloquent dynamique pour exécuter la requête
-            $result = $modelClass::where($column, "LIKE", "%{$search}%")->get();
-            if ($result->isEmpty()) {
-                return view('showSearchAdvanced', [
-                    'message' => 'Aucun artisans trouvés',
-                    'nbrArtisanTotal' => Artisan::count(),
-                ]);
-            } else {
-                if ($table == "Activite") {
-                    $ActiviteIds = $result->pluck('id')->toArray();
-                    dd($ActiviteIds);
-                    $ArtisansIds = Artisan::WhereIn('id_activite', $ActiviteIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Agent') {
-                    $AgentIds = $result->pluck('id');
-                    $ArtisansIds = Artisan::WhereIn('id_activite', $AgentIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Assurance') {
-                    $AgentIds = $result->pluck('id');
-                    $HabitationsIds = Habitation::WhereIn('id_Assurance', $AgentIds)->pluck('id')->toArray();
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Artisan') {
-                    $ArtisansIds = $result->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Charge') {
-                    $ChargeIds = $result->pluck('id');
-                    $HabitationsIds = Habitation::WhereIn('charge_id', $ChargeIds)->pluck('id')->toArray();
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Fiche') {
-                    $FichesIds = $result->pluck('id')->toArray();
-                    $ArtisansIds = Artisan::WhereIn('id_fiche', $FichesIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Finances') {
-                    $FinancesIds = $result->pluck('id')->toArray();
-                    $HabitationsIds = Habitation::WhereIn('id_finance', $FinancesIds)->pluck('id')->toArray();
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Habitation') {
-                    $HabitationsIds = $result->pluck('id');
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Organisation') {
-                    $OrganisationsIds = $result->pluck('id')->toArray();
-                    $HabitationsIds = Habitation::WhereIn('organisation_id', $OrganisationsIds)->pluck('id')->toArray();
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
-                } elseif ($table == 'Parrain') {
-                    $ParrainsIds = $result->pluck('id');
-                    $ArtisansIds = Artisan::WhereIn('id_habitation', $ParrainsIds)->pluck('id')->toArray();
-                    $results = array_intersect($results, $ArtisansIds);
+                    // Créez un tableau pour chaque groupe s'il n'existe pas encore
+                    if (!isset($groupedCriteria[$group])) {
+                        $groupedCriteria[$group] = [];
+                    }
+                    // Ajoutez le critère au groupe correspondant
+                    $groupedCriteria[$group][$field] = $value;
                 }
             }
+
+            foreach ($groupedCriteria as $criteria) {
+                // $criteria est un tableau associatif contenant les clés "table", "colonne" et "search"
+                $table = $criteria["table"];
+                $column = $criteria["colonne"];
+                $search = $criteria["search"];
+                $getcolumn[] = $column;
+                // Construisez dynamiquement le nom de la classe modèle en fonction de la valeur de $table
+                $modelClass = "App\\Models\\" . ucfirst($table);
+
+                // Utilisez le modèle Eloquent dynamique pour exécuter la requête
+                $result = $modelClass::where($column, "LIKE", "%{$search}%")->get();
+                if ($result->isEmpty()) {
+                    return view('showSearchAdvanced', [
+                        'message' => 'Aucun artisans trouvés',
+                        'nbrArtisanTotal' => Artisan::count(),
+                    ]);
+                } else {
+                    if ($table == "Activite") {
+                        $ActiviteIds = $result->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_activite', $ActiviteIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Agent') {
+                        $AgentIds = $result->pluck('id');
+                        $ArtisansIds = Artisan::WhereIn('id_activite', $AgentIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Assurance') {
+                        $AgentIds = $result->pluck('id');
+                        $HabitationsIds = Habitation::WhereIn('id_Assurance', $AgentIds)->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Artisan') {
+                        $ArtisansIds = $result->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Charge') {
+                        $ChargeIds = $result->pluck('id');
+                        $HabitationsIds = Habitation::WhereIn('charge_id', $ChargeIds)->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Fiche') {
+                        $FichesIds = $result->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_fiche', $FichesIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Finances') {
+                        $FinancesIds = $result->pluck('id')->toArray();
+                        $HabitationsIds = Habitation::WhereIn('id_finance', $FinancesIds)->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Habitation') {
+                        $HabitationsIds = $result->pluck('id');
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Organisation') {
+                        $OrganisationsIds = $result->pluck('id')->toArray();
+                        $HabitationsIds = Habitation::WhereIn('organisation_id', $OrganisationsIds)->pluck('id')->toArray();
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $HabitationsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    } elseif ($table == 'Parrain') {
+                        $ParrainsIds = $result->pluck('id');
+                        $ArtisansIds = Artisan::WhereIn('id_habitation', $ParrainsIds)->pluck('id')->toArray();
+                        $results = array_intersect($results, $ArtisansIds);
+                    }
+                }
+            }
+
+            $columns = [
+                'dtnaissance',
+                'lieu_naissance',
+                'profession',
+                'an_exp_prof',
+                'sexe',
+                'an_prof',
+                'registre_metier',
+                'email',
+                'contact',
+                'nom_organisation',
+                'etat_organisation',
+                'nom_parrain',
+                'prenom_parrain',
+                'sexe_parrain',
+                'profession_parrain',
+                'appreciation_parrain',
+                'activite1',
+                'denomination',
+                'localisation1',
+                'num_rccm',
+                'activite2',
+                'numero_de_la_dfe',
+                'localisation2',
+                'num_cnps',
+                'projet',
+                'cout_estimatif_en_lettre',
+                'cout_estimatif_en_chiffre',
+                'ville',
+                'commune',
+                'quartier',
+                'situation_matrimoliale',
+                'regime_matrimoliale',
+                'nbr_enfant',
+                'nbr_fille',
+                'nbr_garcon',
+                'scolarise',
+                'nom_agent',
+                'contact_agent',
+                'zone_agent',
+                'etat_finance',
+                'nom_finance',
+                'nom_assurance',
+                'numero_assurance',
+                'agence_assurance',
+                'date_fiche',
+                'num_fiche',
+                'code_fiche',
+                'zone_fiche',
+                'ordre_fiche',
+            ];
+
+            $autrecolonnes = (array_diff($columns, $getcolumn));
+
+            $autrecolonnes = array_unique($autrecolonnes);
+
+            sort($autrecolonnes);
+
+
+            $artisans = Artisan::WhereIn('id', $results)->get();
+            return view('showSearchAdvanced', [
+                'artisans' => $artisans,
+                'count' => 1,
+                'autrecolonnes' => $autrecolonnes,
+                'nbrArtisanTotal' => Artisan::count(),
+                'columns' => $getcolumn
+            ]);
         }
-
-        $columns = [
-            "Scolarise",
-            "SituationMatrimoliale",
-            "RégimeMatrimoliale",
-            "Ville",
-            "Commune",
-            "Quartier",
-            "NbrEnfant",
-            "Nbrfille",
-            "NbrGarcon",
-            "NomFinance",
-            "etatFinance",
-            "etatOrganisation",
-            "NomOrganisation",
-            "NomAssurance",
-            "numeroAssurance",
-            "AgenceAssurance",
-            "date",
-            "numfiche",
-            "zone",
-            "ordre",
-            "NomAgent",
-            "ZoneAgent",
-            "Dtnaissance",
-            "LieuNaissance",
-            "Profession",
-            "AnExpProf",
-            "Sexe",
-            "registreMetier",
-            "Email",
-            "Contact",
-            "AnProf",
-            "NomParrain",
-            "PrenomParrain",
-            "sexeParrain",
-            "ProfessionParrain",
-            "AppreciationParrain",
-            "dateFiche",
-            "numfiche",
-            "codefiche",
-            "zonefiche",
-            "ordrefiche",
-            "Activite1",
-            "Denomination",
-            "Localisation1",
-            "numRccm",
-            "Activite2",
-            "numeroDeLaDfe",
-            "Localisation2",
-            "numcnps",
-            "Projet",
-            "CoutestimatifEnlettre",
-            "CoutestimatifEnchiffre",
-            "ContactAgent"
-        ];
-
-        $autrecolonnes = (array_diff($columns, $getcolumn));
-
-        $artisans = Artisan::WhereIn('id', $results)->get();
-        return view('showSearchAdvanced', [
-            'artisans' => $artisans,
-            'count' => 1,
-            'autrecolonnes' => $autrecolonnes,
-            'nbrArtisanTotal' => Artisan::count(),
-            'columns' => $getcolumn
-        ]);
     }
 }
