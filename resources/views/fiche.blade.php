@@ -32,9 +32,9 @@
                         <h2 class="font-medium text-xs md:text-sm text-center text-teal-500">
                             @isset($user)
                             {{ $user->username }}
-                            @endisset
                         </h2>
-                        <p class="text-xs text-gray-500 text-center">Administrateur</p>
+                        <p class="text-xs text-gray-500 text-center">{{ $user->grade }}</p>
+                        @endisset
                     </div>
                 </div>
                 <div class="flex border-2 border-gray-200 rounded-md focus-within:ring-2 ring-teal-500">
@@ -84,25 +84,25 @@
             @if(session('success'))
             <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                 <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0  0  1  0  2 Z" />
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0  0  1  0  2 Z" />
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                              <span class="font-medium">Success alert!</span> {{session('success')}}.
+                    <span class="font-medium">Success alert!</span> {{session('success')}}.
                 </div>
-  </div>
+            </div>
             @endif
             <form method="POST" action="{{ route('create-artisan') }}" class="bg-white dark:bg-gray-900 p-5 rounded-lg ">
                 @csrf
-                <div class="flex flex-col border-2 p-2 border-black dark:border-white">
+                <div class="flex flex-col items-center border-2 p-2 border-black dark:border-white">
                     <p class="text-xl flex-wrap text-center font-bold text-red-600">REPERTOIRE D’IDENTIFICATION ET DE REFERENCEMENT DES PROFESSIONNELS DE METIER</p>
                     <div class="flex flex-row flex-wrap mt-4">
                         <p class="mx-2 py-4 dark:text-white font-bold">DATE : </p>
-                        <input type="date" value="{{ date('Y-m-d') }}" value="{{ old('dateRecensement') }}" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateRecensement">
+                        <input readonly type="date" value="{{ date('Y-m-d') }}" value="{{ old('dateRecensement') }}" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="dateRecensement">
                         <p class="mx-2 py-4 dark:text-white font-bold">FICHE N°:</p>
-                        <input type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficheRecensement" value="{{ $numfiche}}">
+                        <input readonly type="number" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" name="ficheRecensement" value="{{ $numfiche}}">
                         <p class="mx-2 py-4 dark:text-white font-bold">Code : KS- </p>
-                        <input type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" readonly value="{{ $code }}" name="codeRecensement" min="03" placeholder="" value="2023-05" /><span class="py-4"></span>
+                        <input readonly type="text" class="rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none" readonly value="{{ $code }}" name="codeRecensement" min="03" placeholder="" value="2023-05" /><span class="py-4"></span>
                     </div>
                     @if($errors->any())
                     <div class="grid md:grid-cols-4 md:gap-6">
@@ -566,4 +566,3 @@
     </div>
 </body>
 </html>
-
