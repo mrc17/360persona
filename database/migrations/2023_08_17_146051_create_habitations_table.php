@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('quartier');
             $table->string('situation_matrimoliale')->nullable()->default('non renseigné');
             $table->string('regime_matrimoliale')->nullable()->default('non renseigné');
-            $table->foreignId('id_assurance')->constrained('assurances');
-            $table->foreignId('id_finance')->constrained('finances');
-            $table->foreignId('organisation_id')->constrained('organisations');
-            $table->foreignId('charge_id')->constrained('charges');
+            $table->foreignId('id_assurance')->constrained('assurances')->onDelete('cascade');
+            $table->foreignId('id_finance')->constrained('finances')->onDelete('cascade');
+            $table->foreignId('organisation_id')->constrained('organisations')->onDelete('cascade');
+            $table->foreignId('charge_id')->constrained('charges')->onDelete('cascade');
             $table->timestamps();
         });
     }
