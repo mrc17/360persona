@@ -151,7 +151,7 @@
                         <label for="Date_de_naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date de naissance</label>
                     </div>
                     <div class="relative z-0 w-full mb-6 group">
-                        <input type="text" name="LieuNaissanceArtisan" value="{{ $artisan->lieuNaissance}}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="LieuNaissanceArtisan" value="{{ $artisan->lieu_naissance}}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Lieu_de_Naissance" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lieu de Naissance</label>
 
                     </div>
@@ -194,9 +194,6 @@
                 <div class="grid md:grid-cols-5 mt-5 md:gap-6">
                     <div class="relative z-0 w-full mb-6">
                         <label class="font-medium absolute text-base pt-4 text-gray-500 dark:text-gray-400 duration-300">Avez-vous un registre de métier ?</label>
-                        @error('registre')
-                        <p class="text-red-600 absolute duration-300 italic text-xs">{{ $message }}</p>
-                        @enderror
                     </div>
                     <div class="grid md:grid-cols-2 md:gap-6">
                         @if ($artisan->registre_metier=="Oui")
@@ -233,9 +230,6 @@
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="email" name="email" id="mail" value="{{$artisan->email }}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">E- mail</label>
-                        @error('email')
-                        <p class="text-red-600 italic text-xs">{{ $message }}</p>
-                        @enderror
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 mt-4 md:gap-6">
@@ -560,9 +554,7 @@
                             <input id="HommeParrain" checked name="sexeDuParrain" value="Homme" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="HommeParrain" class="block text-sm font-medium leading-6 text-gray-900">Homme</label>
                         </div>
-
                         @endif
-
                     </div>
                     <div class="relative z-0 col-span-2 w-full mb-6 group">
                         <input type="text" name="ProfessionDuParrain" value="{{$artisan->parrain->profession_parrain}}" id="Professionparrain" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
@@ -578,9 +570,8 @@
                     </div>
                 </div>
                 <div class="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="reset" class="rounded-md bg-white px-3 py-2 text-sm font-semibold border-1 text-red-600 shadow-2xl hover:bg-red-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 duration-150 ease-in-out focus-visible:outline-indigo-600">Suppression</button>
-                    <button type="reset" class="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold border-1 text-white shadow-2xl hover:bg-orange-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 duration-150 ease-in-out focus-visible:outline-indigo-600">Modifier</button>
-                    <button type="submit" class="rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style="background-color: #006A4E">Imprimer</button>
+                    <a href="{{ route('delete-artisan',['artisan'=>$artisan->id]) }}" class="rounded-md bg-white px-3 py-2 text-sm font-semibold border-1 text-red-600 shadow-2xl hover:bg-red-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 duration-150 ease-in-out focus-visible:outline-indigo-600">Suppression</a>
+                    <a href="{{ route('modify-artisan',['artisan'=>$artisan->id]) }}" class="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold border-1 text-white shadow-2xl hover:bg-orange-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 duration-150 ease-in-out focus-visible:outline-indigo-600">Modifier</a>
                 </div>
         </div>
         </form>
