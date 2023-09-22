@@ -100,13 +100,19 @@
                     </div>
                 </div>
                 <div class="mt-6 md:flex md:items-center md:justify-between">
-
                     <div id="containerbouton" class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
                         @empty($artisans)
+                        @empty($message)
                         <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
                             Creer un tri
                         </button>
                         @endempty
+                        @endempty
+                        @isset($message)
+                        <a href="{{ route('showSearchAdvanced') }}" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                            Creer un tri
+                        </a>
+                        @endisset
                         @isset($artisans)
                         <a href="{{ route('showSearchAdvanced') }}" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
                             Creer un tri
@@ -121,13 +127,13 @@
                     </div>
                 </div>
                 <div class="mt-6 md:flex md:items-center md:justify-between">
-                    <form method="POST" id="Form" action="{{ route('search-artisan-avanced') }}" class="flex flex-row flex-wrap gap-4 bg-white  divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:divide-gray-700">
+                    <form method="POST" id="Form" action="{{ route('search-artisan-avanced') }}" class="flex flex-row flex-wrap gap-4 bg-white w-full     divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:divide-gray-700">
                         {{ csrf_field() }}
                     </form>
                 </div>
                 <div class="flex flex-col mb-10">
                     @isset($message)
-                    <p class="" style="">{{ $message }}</p>
+                    <p class="dark:text-white text-center text-gray font-bold" style="">{{ $message }}</p>
                     @endisset
                     @isset($artisans)
                     <div class="-mx-4 my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -163,7 +169,7 @@
                                                 <span>Prenom</span>
                                             </th>
                                             @foreach ($columns as $column )
-                                            @if ($column=="Nom" || $column=="Prenom")
+                                            @if ($column=="nom" || $column=="prenom")
                                             @else
                                             <th scope="col" class="py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">
                                                 <span>{{ $column }}</span>
@@ -189,175 +195,179 @@
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $count++ }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Nom }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->nom }}</h4>
                                             </td>
                                             <td class="px-4 py-4 text-sm whitespace-nowrap text-center">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Prenom }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->prenom }}</h4>
                                             </td>
                                             @foreach ($columns as $column )
-                                            @if ($column=="Scolarise")
+                                            @if ($column=="scolarise")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->Scolarise }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->scolarise}}</h4>
                                             </td>
-                                            @elseif ($column=="SituationMatrimoliale")
+                                            @elseif ($column=="situation_matrimoliale")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->SituationMatrimoliale }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->situation_matrimoliale }}</h4>
                                             </td>
-                                            @elseif ($column=="RégimeMatrimoliale")
+                                            @elseif ($column=="regime_matrimoliale")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->RégimeMatrimoliale }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->regime_matrimoliale }}</h4>
                                             </td>
-                                            @elseif ($column=="Ville")
+                                            @elseif ($column=="ville")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->Ville}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->ville}}</h4>
                                             </td>
-                                            @elseif ($column=="Commune")
+                                            @elseif ($column=="commune")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->Commune}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->commune}}</h4>
                                             </td>
-                                            @elseif ($column=="Quartier")
+                                            @elseif ($column=="quartier")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->Quartier}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->quartier}}</h4>
                                             </td>
-                                            @elseif ($column=="NbrEnfant")
+                                            @elseif ($column=="nbr_enfant")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->NbrEnfant}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->nbr_enfant}}</h4>
                                             </td>
-                                            @elseif ($column=="Nbrfille")
+                                            @elseif ($column=="nbr_fille")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->Nbrfille}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->nbr_fille}}</h4>
                                             </td>
-                                            @elseif ($column=="NbrGarcon")
+                                            @elseif ($column=="nbr_garcon")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->NbrGarcon}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->charge->nbr_garcon}}</h4>
                                             </td>
-                                            @elseif ($column=="NomFinance")
+                                            @elseif ($column=="nom_finance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->finances->NomFinance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->finances->nom_finance}}</h4>
                                             </td>
-                                            @elseif ($column=="etatFinance")
+                                            @elseif ($column=="etat_finance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->finances->etatFinance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->finances->etat_finance}}</h4>
                                             </td>
-                                            @elseif ($column=="etatOrganisation")
+                                            @elseif ($column=="etat_organisation")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->organisation->etatOrganisation}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->organisation->etat_organisation}}</h4>
                                             </td>
-                                            @elseif ($column=="NomOrganisation")
+                                            @elseif ($column=="nom_organisation")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->organisation->NomOrganisation}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->organisation->nom_organisation}}</h4>
                                             </td>
-                                            @elseif ($column=="NomAssurance")
+                                            @elseif ($column=="nom_assurance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->NomAssurance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->nom_assurance}}</h4>
                                             </td>
-                                            @elseif ($column=="numeroAssurance")
+                                            @elseif ($column=="numero_assurance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->numeroAssurance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->numero_assurance}}</h4>
                                             </td>
-                                            @elseif ($column=="AgenceAssurance")
+                                            @elseif ($column=="agence_assurance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->AgenceAssurance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->assurances->agence_assurance}}</h4>
                                             </td>
-                                            @elseif ($column=="date")
+                                            @elseif ($column=="date_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->date}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->date_fiche}}</h4>
                                             </td>
-                                            @elseif ($column=="numfiche")
+                                            @elseif ($column=="num_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->numfiche}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->num_fiche}}</h4>
                                             </td>
-                                            @elseif ($column=="zone")
+                                            @elseif ($column=="code_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->zone}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->code_fiche}}</h4>
+                                            </td>
+                                            @elseif ($column=="zone_fiche")
+                                            <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->zone_fiche}}</h4>
                                             </td>
                                             @elseif ($column=="ordre")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->ordre}}</h4>
                                             </td>
-                                            @elseif ($column=="NomAgent")
+                                            @elseif ($column=="nom_agent")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->NomAgent }}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->nom_agent }}</h4>
                                             </td>
-                                            @elseif ($column=="ContactAgent")
+                                            @elseif ($column=="contact_agent")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->ContactAgent}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->contact_agent}}</h4>
                                             </td>
-                                            @elseif ($column=="ZoneAgent")
+                                            @elseif ($column=="zone_agent")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->ZoneAgent}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->agent->zone_agent}}</h4>
                                             </td>
-                                            @elseif ($column=="Dtnaissance")
+                                            @elseif ($column=="dtnaissance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Dtnaissance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->dtnaissance}}</h4>
                                             </td>
-                                            @elseif ($column=="LieuNaissance")
+                                            @elseif ($column=="lieu_naissance")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->LieuNaissance}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->lieu_naissance}}</h4>
                                             </td>
-                                            @elseif ($column=="Profession")
+                                            @elseif ($column=="profession")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Profession}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->profession}}</h4>
                                             </td>
-                                            @elseif ($column=="AnExpProf")
+                                            @elseif ($column=="an_exp_prof")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->AnExpProf}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->an_exp_prof}}</h4>
                                             </td>
-                                            @elseif ($column=="Sexe")
+                                            @elseif ($column=="sexe")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Sexe}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->sexe}}</h4>
                                             </td>
-                                            @elseif ($column=="registreMetier")
+                                            @elseif ($column=="registre_metier")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->registreMetier}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->registre_metier}}</h4>
                                             </td>
-                                            @elseif ($column=="Email")
+                                            @elseif ($column=="email")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Email}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->email}}</h4>
                                             </td>
-                                            @elseif ($column=="AnExpProf")
+                                            @elseif ($column=="an_exp_prof")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->AnExpProf}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->an_exp_prof}}</h4>
                                             </td>
-                                            @elseif ($column=="Contact")
+                                            @elseif ($column=="contact")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->Contact}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->contact}}</h4>
                                             </td>
-                                            @elseif ($column=="AnProf")
+                                            @elseif ($column=="an_prof")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->AnProf}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->an_prof}}</h4>
                                             </td>
-                                            @elseif ($column=="NomParrain")
+                                            @elseif ($column=="nom_parrain")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->NomParrain}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->nom_parrain}}</h4>
                                             </td>
-                                            @elseif ($column=="PrenomParrain")
+                                            @elseif ($column=="prenom_parrain")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->PrenomParrain}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->prenom_parrain}}</h4>
                                             </td>
-                                            @elseif ($column=="sexeParrain")
+                                            @elseif ($column=="sexe_parrain")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->sexeParrain}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->sexe_parrain}}</h4>
                                             </td>
-                                            @elseif ($column=="ProfessionParrain")
+                                            @elseif ($column=="profession_parrain")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->ProfessionParrain}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->profession_parrain}}</h4>
                                             </td>
-                                            @elseif ($column=="AppreciationParrain")
+                                            @elseif ($column=="appreciation_parrain")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->AppreciationParrain}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->parrain->appreciation_parrain}}</h4>
                                             </td>
-                                            @elseif ($column=="dateFiche")
+                                            @elseif ($column=="date_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->dateFiche}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->date_fiche}}</h4>
                                             </td>
-                                            @elseif ($column=="numfiche")
+                                            @elseif ($column=="num_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->numfiche}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->num_fiche}}</h4>
                                             </td>
-                                            @elseif ($column=="codefiche")
+                                            @elseif ($column=="code_fiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->codefiche}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->code_fiche}}</h4>
                                             </td>
                                             @elseif ($column=="zonefiche")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
@@ -367,25 +377,25 @@
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->fiche->ordrefiche}}</h4>
                                             </td>
-                                            @elseif ($column=="Activite1")
+                                            @elseif ($column=="activite1")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->Activite1}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->activite1}}</h4>
                                             </td>
                                             @elseif ($column=="Denomination")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->Denomination}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->denomination}}</h4>
                                             </td>
                                             @elseif ($column=="Localisation1")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->Localisation1}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->localisation1}}</h4>
                                             </td>
                                             @elseif ($column=="numRccm")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->numRccm}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->num_rccm}}</h4>
                                             </td>
                                             @elseif ($column=="Activite2")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->Activite2}}</h4>
+                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->activite2}}</h4>
                                             </td>
                                             @elseif ($column=="numeroDeLaDfe")
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
@@ -411,10 +421,6 @@
                                             <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
                                                 <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->CoutestimatifEnchiffre}}</h4>
                                             </td>
-                                            @elseif ($column=="CoutestimatifEnchiffre")
-                                            <td class="px-4 py-4 text-sm capitalize whitespace-nowrap">
-                                                <h4 class="text-gray-700 dark:text-gray-200">{{ $artisan->habitation->activite->CoutestimatifEnchiffre}}</h4>
-                                            </td>
                                             @endif
                                             @endforeach
                                         </tr>
@@ -434,8 +440,7 @@
     <script>
         let isFormVisible = false;
         let formCount = 0;
-        let boutouns = `
-        <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+        let boutouns = `<button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
             Fermer
         </button>
         <button onclick="toggleForm()" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -443,59 +448,56 @@
         </button>
         <button onclick="remove()" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
             Retirer un critère
-        </button>
-        `;
-        let boutoun = `
-        <button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-            Creer un tri
         </button>`;
-        let boutounFormulaire = `
-        <div class="relative w-full mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300">
+        let boutoun = `<button onclick="showForm()" id="label" class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+            Creer un tri</button>`;
+        let boutounFormulaire = `<div class="relative w-full mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:text-gray-300">
             <input type="submit" class="block cursor-pointer w-full py-1.5 pr-5 text-gray-700 bg-green-500 rounded-lg cursor-point pl-11 rtl:pr-11 rtl:pl-5 dark:text-white dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none" value='Recherche'>
         </div>`;
 
         function toggleForm() {
-            <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                <span class="absolute">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
-                </span>
-                <select  onchange="getColonnes(this)" id="table_${formCount}" name="table_${formCount}" type="text" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-full placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
-                    <option value="">Choisissez une table</option>
-                    <option value="">-------------------------------------------</option>
-                    <option value="Charge">Charge</option>
-                    <option value="Agent">Agent</option>
-                    <option value="Finances">Finances</option>
-                    <option value="Artisan">Artisan</option>
-                    <option value="Parrain">Parrain</option>
-                    <option value="Activite">Activité</option>
-                    <option value="Habitation">Habitation</option>
-                    <option value="Organisation">Organisation</option>
-                    <option value="Assurance">Assurance Maladie</option>
-                    <option value="Fiche">Fiche recensement</option>
-                </select>
-            </div>
-            <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                <span class="absolute">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
-                </span>
-                <select id="colonne${formCount}" name="colonne_${formCount}" type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
-                    <option value="">Choisissez une colonne</option>
-                    <option value="Charge">-------------------------------------------</option>
-                </select>
-            </div>
-            <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
-                <span class="absolute">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>
-                </span>
-                <input required type="text" name='search_${formCount}' placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
-            </div>
-            `;
+            formHTML = `<div id='requete' class="grid grid-cols-3 grid-rows-1 gap-6">
+                <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </span>
+                    <select onchange="getColonnes(this)" id="table_${formCount}" name="table_${formCount}" type="text" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-full placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                        <option value="">Choisissez une table</option>
+                        <option value="">-------------------------------------------</option>
+                        <option value="Charge">Charge</option>
+                        <option value="Agent">Agent</option>
+                        <option value="Finances">Finances</option>
+                        <option value="Artisan">Artisan</option>
+                        <option value="Parrain">Parrain</option>
+                        <option value="Activite">Activité</option>
+                        <option value="Habitation">Habitation</option>
+                        <option value="Organisation">Organisation</option>
+                        <option value="Assurance">Assurance Maladie</option>
+                        <option value="Fiche">Fiche recensement</option>
+                    </select>
+                </div>
+                <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </span>
+                    <select id="colonne${formCount}" name="colonne_${formCount}" type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                        <option value="">Choisissez une colonne</option>
+                        <option value="Charge">-------------------------------------------</option>
+                    </select>
+                </div>
+                <div class="relative flex items-center mt-4 md:mt-0 px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                    <span class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </span>
+                    <input required type="text" name='search_${formCount}' placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                </div>
+            </div>`;
             document.getElementById('Form').innerHTML += formHTML;
             formCount++;
         }
@@ -513,13 +515,12 @@
             isFormVisible = !isFormVisible;
         }
 
-        function remove(){
-        let parent = document.getElementById('Form');
-        console.log(parent);
-        const formHTML = parent.lastChild;
-        parent.removeChild(formHTML);
+        function remove() {
+            let parent = document.getElementById('Form');
+            if(parent.lastChild.id=="requete"){
+                parent.removeChild(parent.lastChild);
+            }
         }
-
 
         function getColonnes(tag) {
             let colonneId = tag.id;
@@ -540,6 +541,7 @@
 
     </script>
 
+
     @isset($artisans)
     <script>
         function getColonneTab() {
@@ -551,7 +553,6 @@
                 // Crée un élément div pour chaque élément dans colonnes et ajoute-le à l'élément colonne.
                 let div = document.createElement("div");
                 div.className = "flex items-center";
-
                 // Crée une case à cocher et une étiquette pour chaque élément dans colonnes.
                 let checkbox = document.createElement("input");
                 checkbox.type = "checkbox";
@@ -564,7 +565,6 @@
                 label.htmlFor = "checked-checkbox";
                 label.className = "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300";
                 label.textContent = item; // Le texte de l'étiquette provient de l'élément dans colonnes.
-
                 // Ajoute la case à cocher et l'étiquette au div.
                 div.appendChild(checkbox);
                 div.appendChild(label);
@@ -585,55 +585,65 @@
                 premiereLigne.appendChild(enTete);
                 // Parcourez toutes les lignes de données (à partir de la deuxième ligne) et ajoutez une cellule de données <td> à chaque ligne.
                 let artisans = {!!json_encode($artisans) !!}; // Utilisez json_encode pour formatter correctement les données côté serveur.
+
+                console.log(artisans);
+
                 let tbody = document.querySelector('tbody');
                 let lignesDonnees = tbody.querySelectorAll("tr");
-                lignesDonnees.forEach(function (ligne) {
+                lignesDonnees.forEach(function(ligne) {
                     let celluleDonnees = document.createElement("td");
                     celluleDonnees.className = "px-4 py-4 text-sm capitalize whitespace-nowrap";
-                    let label= document.createElement("h4");
+                    let label = document.createElement("h4");
                     label.className = "text-gray-700 dark:text-gray-200";
-                    if(checkbox.value==="Dtnaissance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Dtnaissance'];
-                    }else if(checkbox.value==="LieuNaissance"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['LieuNaissance'];
-                    }else if(checkbox.value==="Profession"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Profession'];
-                    }else if(checkbox.value==="AnExpProf"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['AnExpProf'];
-                    }else if(checkbox.value==="Sexe"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Sexe'];
-                    }else   if(checkbox.value==="AnProf"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['AnProf'];
-                    }else if(checkbox.value==="registreMetier"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['registreMetier'];
-                    }else if(checkbox.value==="Email"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Email'];
-                    }else if(checkbox.value==="Contact"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Contact'];
-                    }else if(checkbox.value==="NbrEnfant"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['NbrEnfant'];
-                    }else if(checkbox.value==="Nbrfille"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['Nbrfille'];
-                    }else if(checkbox.value==="NbrGarcon"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['NbrGarcon'];
-                    }else if(checkbox.value==="Scolarise"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['charge']['Scolarise'];
-                    }else if(checkbox.value==="Commune"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Commune'];
-                    }else if(checkbox.value==="Ville"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Ville'];
-                    }else if(checkbox.value==="Quartier"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['Quartier'];
-                    }else if(checkbox.value==="SituationMatrimoliale"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['SituationMatrimoliale'];
-                    }else if(checkbox.value==="RégimeMatrimoliale"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['habitation']['RégimeMatrimoliale'];
-                    }else if(checkbox.value==="Sexe"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Sexe'];
-                    }else if(checkbox.value==="Contact"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Contact'];
-                    }else if(checkbox.value==="Email"){
-                        label.textContent=artisans[ligne.rowIndex-1 ]['Email'];
+                    if (checkbox.value === "dtnaissance") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['dtnaissance'];
+                    } else if (checkbox.value === "lieu_naissance") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['lieu_naissance'];
+                    } else if (checkbox.value === "profession") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['profession'];
+                    } else if (checkbox.value === "an_exp_prof") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['an_exp_prof'];
+                    } else if (checkbox.value === "sexe") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['sexe'];
+                    } else if (checkbox.value === "an_prof") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['an_prof'];
+                    } else if (checkbox.value === "registre_metier") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['registre_metier'];
+                    } else if (checkbox.value === "email") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['email'];
+                    } else if (checkbox.value === "contact") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['contact'];
+                    } else if (checkbox.value === "nbr_enfant") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['charge']['nbr_enfant'];
+                    } else if (checkbox.value === "nbr_fille") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['charge']['nbr_fille'];
+                    } else if (checkbox.value === "nbr_garcon") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['charge']['nbr_garcon'];
+                    } else if (checkbox.value === "Scolarise") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['charge']['scolarise'];
+                    } else if (checkbox.value === "contact") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['contact'];
+                    } else if (checkbox.value === "ville") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['ville'];
+                    }else if (checkbox.value === "commune") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['commune'];
+                    } else if (checkbox.value === "quartier") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['quartier'];
+                    } else if (checkbox.value === "situation_matrimoliale") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['situation_matrimoliale'];
+                    } else if (checkbox.value === "regime_matrimoliale") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['habitation']['regime_matrimoliale'];
+                    } else if (checkbox.value === "sexe") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['sexe'];
+                    } else if (checkbox.value === "contact") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['contact'];
+                    } else if (checkbox.value === "contact_agent") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['agent']['contact_agent'];
+                    }else if (checkbox.value === "zone_agent") {
+                        console.log(artisans[ligne.rowIndex - 1])
+                        label.textContent = artisans[ligne.rowIndex - 1]['agent']['zone_agent'];
+                    }else if (checkbox.value === "nom_parrain") {
+                        label.textContent = artisans[ligne.rowIndex - 1]['parrain']['nom_parrain'];
                     }
                     celluleDonnees.appendChild(label);
                     ligne.appendChild(celluleDonnees);
@@ -644,7 +654,7 @@
 
                 // Parcourez les cellules <th> de la première ligne pour trouver celle correspondant à la valeur de la colonne.
                 let colonneASupprimer;
-                Array.from(premiereLigne.children).forEach(function (cellule, index) {
+                Array.from(premiereLigne.children).forEach(function(cellule, index) {
                     if (cellule.textContent === checkbox.value) {
                         colonneASupprimer = cellule;
                     }
@@ -657,10 +667,9 @@
                     // Parcourez toutes les lignes de données (à partir de la deuxième ligne).
                     let tbody = document.querySelector('tbody');
                     let lignesDonnees = tbody.querySelectorAll("tr");
-                    lignesDonnees.forEach(function (ligne) {
+                    lignesDonnees.forEach(function(ligne) {
                         // Supprimez la cellule de données correspondante dans chaque ligne.
                         let celluleASupprimer = ligne.lastChild;
-                        console.log(celluleASupprimer)
                         if (celluleASupprimer) {
                             ligne.removeChild(celluleASupprimer);
                         }
@@ -668,16 +677,16 @@
                 }
             }
         }
+
     </script>
     @endisset
-
 
     <script>
         function createPDF() {
             var pdf = document.getElementById("pdf");
             var opt = {
-                margin: 0.1,
-                filename: 'Recherche_filtrer_sur_les_artisans_' + new Date().getMinutes() + new Date().getSeconds()
+                margin: 0.1
+                , filename: 'Recherche_filtrer_sur_les_artisans_' + new Date().getMinutes() + new Date().getSeconds()
                 , image: {
                     type: 'jpeg'
                     , quality: 1
