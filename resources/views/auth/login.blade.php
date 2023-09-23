@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
+<body class="gradient-form h-full bg-neutral-200 mx-auto dark:bg-neutral-700">
     <section class="gradient-form h-full bg-neutral-200 dark:bg-neutral-700">
-        <div class="container h-full p-10">
+        <div class="container mx-auto h-full p-10">
             <div class="g-6 flex h-full flex-wrap items-center mx-auto justify-center text-neutral-800 dark:text-neutral-200">
                 <div class="w-full mx-auto">
                     <div class="block rounded-lg bg-white shadow-lg dark:bg-neutral-800">
