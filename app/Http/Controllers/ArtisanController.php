@@ -14,6 +14,7 @@ use App\Models\Habitation;
 use App\Models\Organisation;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
+use App\Http\Requests\ArtisanModifyRequest;
 use App\Http\Requests\SearchArtisanRequest;
 use App\Http\Requests\SearchArtisanAvancedRequest;
 
@@ -144,38 +145,209 @@ class ArtisanController extends Controller
         return redirect()->route('Fiche')->with('success', "Artisan $artisan->nom est Enregisté");
     }
 
-    public function modify($artisan){
+
+    public function modify(ArtisanModifyRequest $request)
+    {
+        ///Verification du permission
+
+
+
+        $id_agent = $request->input('agent_id');
+
+        $agent = Agent::where([
+            'id' => $id_agent,
+        ])->first(); // Recherchez l'agent correspondant
+
+        if (!$agent) {
+        // Si aucun agent correspondant n'est trouvé, redirigez vers une autre route
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+
+        // Mette à jour les valeurs de l'agent avec les nouvelles valeurs du formulaire
+        $agent->nom_agent = $request->input('NomDeLagentRecenseur');
+        $agent->contact_agent = $request->input('contactRecenseur');
+        $agent->save();
+
+        $fiche=Fiche::where('num_fiche',$request->input('ficheRecensement'))->first();
+
+        if(!$fiche){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+        $fiche->zone_fiche=$request->input('ZoneRecenseur');
+        $fiche->save();
+
+        $artisan=Artisan::where('id',$request->input('artisan'))->first();
+
+        if(!$artisan){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+
+        $artisan->nom=$request->input('NomArtisan');
+        $artisan->prenom=$request->input('PrenomArtisan');
+        $artisan->dtnaissance=$request->input('DateNaissanceArtisan');
+        $artisan->lieu_naissance=$request->input('LieuNaissanceArtisan');
+        $artisan->profession=$request->input('ProfessionArtisan');
+        $artisan->an_exp_prof=$request->input('AnneeExperienceProfessionnelleArtisan');
+        $artisan->sexe=$request->input('sexeartisan');
+        $artisan->an_prof=$request->input('AnneeProfession');
+        $artisan->registre_metier=$request->input('registre');
+        $artisan->email=$request->input('email');
+        $artisan->contact=$request->input('Contact');
+        $artisan->save();
+
+        $habitation=Habitation::where('id',$artisan->id_habitation)->first();
+        $habitation->ville=$request->input('VilleArtisan');
+        $habitation->commune=$request->input('CommuneArtisan');
+        $habitation->quartier=$request->input('QuartierArtisan');
+        $habitation->regime_matrimoliale=$request->input('registre');
+        $habitation->situation_matrimoliale=$request->input('Situation');
+        $habitation->save();
+
+        $finance =Finances::where('id',$habitation->id_finance)->first();
+
+        if(!$finance){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+
+        $finance->etat_finance=$request->input('etatFinance');
+        $finance->nom_finance=$request->input('nomfinance');
+        $finance->save();
+
+        $organisation=Organisation::where('id',$habitation->organisation_id)->first();
+
+        if(!$organisation){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+        $organisation->etat_organisation=$request->input('reponseOrganition');
+        $organisation->nom_organisation=$request->input('NomOrganisation');
+
+        $organisation->save();
+
+        $parrain=Parrain::where('id',$artisan->id_parrain)->first();
+        $parrain->nom_parrain=$request->input('NomDuParrain');
+        $parrain->prenom_parrain=$request->input('PrenomDuParrain');
+        $parrain->sexe_parrain=$request->input('sexeDuParrain');
+        $parrain->profession_parrain=$request->input('ProfessionDuParrain');
+        $parrain->appreciation_parrain=$request->input('Appreciation_du_bureau');
+        $parrain->save();
+
+        $assurance=Assurance::where('id',$habitation->id_assurance)->first();
+
+        if(!$assurance){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+
+        $assurance->nom_assurance=$request->input('Assurance');
+        $assurance->numero_assurance=$request->input('numeroCnps');
+        $assurance->agence_assurance=$request->input('Agence');
+        $assurance->save();
+
+        $charge=Charge::where('id',$habitation->charge_id)->first();
+        if(!$charge){
+            return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
+        }
+        $charge->nbr_enfant=$request->input('NbreEnfant');
+        $charge->nbr_fille=$request->input('NbreFille');
+        $charge->nbr_garcon=$request->input('NbreGarcon');
+        $charge->scolarise=$request->input('Scolaire');
+        $charge->save();
+
+        dd($charge);
+
+        $activite=Activite::where('id',$artisan->id_activite)->first();
+        $activite->activite1=$request->input('Activite_1');
+        $activite->denomination=$request->input('denomination');
+        $activite->localisation1=$request->input('Localisation_1');
+        $activite->num_rccm=$request->input('numero_rccm');
+        $activite->activite2=$request->input('Activite_2');
+        $activite->numero_de_la_dfe=$request->input('numeroDeLaDfe');
+        $activite->localisation2=$request->input('Localisation_2');
+        $activite->num_cnps=$request->input('numeroCnpsActivite');
+        $activite->projet=$request->input('Projet');
+        $activite->cout_estimatif_en_chiffre=$request->input('CoutEstimatifEnChiffre');
+        $activite->cout_estimatif_en_lettre=$request->input('CoutEstimatifEnLettre');
+        $activite->save();
+
+
         dd($artisan);
+        // Mette à jour les valeurs de la fiche lie  avec les nouvelles valeurs du formulaire
     }
+
+
+
+
+    public function showmodifyartisan($id)
+    {
+        // Récupérer l'artisan avec l'ID spécifié
+        $artisan = Artisan::find($id);
+
+        // Vérifier si l'artisan existe
+        if (!$artisan) {
+            // Rediriger en cas d'artisan non trouvé (ajoutez ici la logique appropriée)
+            return redirect()->route('show-artisan')->with('error', "L'artisan n'a pas été trouvé.");
+        }
+
+        // Récupérer l'utilisateur actuellement authentifié
+        $user = Auth::user();
+
+        // Récupérer l'ID de l'agent associé à l'utilisateur
+        $id_agent = $user->id;
+
+        // Récupérer l'ID de l'utilisateur associé à l'agent
+        $agent = Agent::where('id', $id_agent)->first();
+
+        // Vérifier si l'agent existe
+        if (!$agent) {
+            // Rediriger en cas d'agent non trouvé (ajoutez ici la logique appropriée)
+            return redirect()->route('show-artisan')->with('error', "Votre agent n'a pas été trouvé.");
+        }
+
+        // Vérifier si l'agent a la permission de modifier l'artisan
+        if ($artisan->id_agent != $agent->user_id) {
+            return redirect()->route('show-artisan')->with('error', "Vous n'avez pas le droit de modifier cet artisan.");
+        }
+
+        // Si tout est en ordre, afficher la vue pour modifier l'artisan
+        return view('artisan-modify', compact('artisan'));
+    }
+
+
 
 
     public function show($artisan)
     {
-
         $artisan = Artisan::find($artisan);
 
         if ($artisan) {
             return view('artisan', compact('artisan'));
         } else {
-            return redirect()->route('LoginForm');
+            return redirect()->route('Liste')->with('error', 'Artisan n\'existe pas');
         }
     }
 
     public function delete($id)
-{
-    $artisan = Artisan::findOrFail($id);
+    {
+        // Rechercher l'artisan avec l'ID spécifié, en déclenchant une exception si l'artisan n'est pas trouvé
+        try {
+            $artisan = Artisan::findOrFail($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Rediriger en cas d'artisan non trouvé avec un message d'erreur approprié
+            return redirect()->route('Liste')->with('error', "L'artisan n'a pas été trouvé.");
+        }
 
-    // Vérifiez d'abord si l'artisan a une habitation associée
-    if ($artisan->habitation) {
-        // Supprimez d'abord l'habitation associée à cet artisan
-        $artisan->habitation->delete();
+        // Vérifiez d'abord si l'artisan a une habitation associée
+        if ($artisan->habitation) {
+            // Supprimez d'abord l'habitation associée à cet artisan
+            $artisan->habitation->delete();
+        }
+
+        // Supprimez ensuite l'artisan lui-même
+        $artisan->delete();
+
+        // Rediriger avec un message de succès après la suppression
+        return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
     }
 
-    // Supprimez ensuite l'artisan lui-même
-    $artisan->delete();
-
-    return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
-}
 
 
     public function searchartisan(SearchArtisanRequest $request)
@@ -301,6 +473,7 @@ class ArtisanController extends Controller
 
         return view('Liste', ['user' => $user, 'artisans' => $artisans, "count" => $count, "nbrArtisanTotal" => $nbrArtisanTotal, "message" => $message]);
     }
+
     public function showSearchAdvanced()
     {
         $nbrArtisanTotal = Artisan::count();
