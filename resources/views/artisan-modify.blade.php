@@ -136,6 +136,10 @@
                         <input type="text" name="agent_id" value="{{ $artisan->agent->user_id }}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Agent" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agent</label>
                     </div>
+                    <div hidden class="relative z-0 w-full mb-6 group">
+                        <input type="text" name="artisan" value="{{ $artisan->id }}" id="Agent" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <label for="Agent" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Agent</label>
+                    </div>
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="tel" value="{{ $artisan->agent->contact_agent }}" name="contactRecenseur" id="Contact" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Contact" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact</label>
@@ -241,9 +245,10 @@
                         <p class="text-red-600 absolute duration-300 italic text-xs">{{ $message }}</p>
                         @enderror
                     </div>
+                    @if ($artisan->registre_metier=="Oui")
                     <div class="grid md:grid-cols-2 md:gap-6">
                         <div class="flex items-center w-1/2  gap-x-3">
-                            <input id="registre" name="registre" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <input id="registre" name="registre" value="Oui" checked type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                             <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Oui</label>
                         </div>
                         <div class="flex items-center w-1/2 gap-x-3">
@@ -251,6 +256,18 @@
                             <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Non</label>
                         </div>
                     </div>
+                    @else
+                    <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="flex items-center w-1/2  gap-x-3">
+                            <input id="registre" name="registre" value="Oui" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Oui</label>
+                        </div>
+                        <div class="flex items-center w-1/2 gap-x-3">
+                            <input id="registre" name="registre" checked value="Non" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                            <label for="registre" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Non</label>
+                        </div>
+                    </div>
+                    @endif
                     <div class="relative z-0 w-full mb-6 group">
                         <input type="number" name="AnneeProfession" value="{{ $artisan->an_prof }}" id="An_exp_prof" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="An_exp_prof" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Année de profession</label>
@@ -303,25 +320,25 @@
                         <p class="text-red-600 absolute duration-300 mb-8 italic text-xs">{{ $message }}</p>
                         @enderror
                     </div>
-                 @if ($artisan->habitation->situation_matrimoliale=="Marié")
-                 <div class="flex items-center mt-4 col-span-2 gap-x-3">
-                    <input id="Marie" value="Marié" checked name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="Marie" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Marié</label>
-                </div>
-                <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                    <input value="Célibataire" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="Célibataire" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">Célibataire</label>
-                </div>
-                 @else
-                 <div class="flex items-center mt-4 col-span-2 gap-x-3">
-                    <input id="Marie" value="Marié" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="Marie" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Marié</label>
-                </div>
-                <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                    <input value="Célibataire" checked name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                    <label for="Célibataire" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">Célibataire</label>
-                </div>
-                 @endif
+                    @if ($artisan->habitation->situation_matrimoliale=="Marié")
+                    <div class="flex items-center mt-4 col-span-2 gap-x-3">
+                        <input id="Marie" value="Marié" checked name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Marie" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Marié</label>
+                    </div>
+                    <div class="flex items-center col-span-2 mt-4 gap-x-3">
+                        <input value="Célibataire" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Célibataire" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">Célibataire</label>
+                    </div>
+                    @else
+                    <div class="flex items-center mt-4 col-span-2 gap-x-3">
+                        <input id="Marie" value="Marié" name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Marie" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Marié</label>
+                    </div>
+                    <div class="flex items-center col-span-2 mt-4 gap-x-3">
+                        <input value="Célibataire" checked name="Situation" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="Célibataire" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">Célibataire</label>
+                    </div>
+                    @endif
                     <div class="flex items-center col-span-4 gap-x-3">
                         <label for="Regime" class="font-medium absolute text-base pt-4 dark:text-white  duration-300">Régime matrimoliale ?</label>
                         @error('Regime')
@@ -346,15 +363,6 @@
                         <input id="Séparation" checked name="Regime" value="Séparation de bien" type="radio" value="Séparation de bien" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="Séparation" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Séparation de bien</label>
                     </div>
-                    @else
-                    <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Regime" name="Regime" value="Communauté de bien" type="radio" class="h-4 w-4 dark:text-white border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Regime" class="block text-sm font-medium leading-6 dark:text-white  text-gray-900">Communauté de bien</label>
-                    </div>
-                    <div class="flex items-center col-span-2 mt-4 gap-x-3">
-                        <input id="Séparation" name="Regime" value="Séparation de bien" type="radio" value="Séparation de bien" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                        <label for="Séparation" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">Séparation de bien</label>
-                    </div>
                     @endif
                 </div>
                 <div class="grid md:grid-cols-6 mt-5 md:gap-6">
@@ -366,12 +374,16 @@
                     </div>
                     @if ($artisan->habitation->assurance->nom_assurance=="CMU")
                     <div class="flex items-center gap-x-3">
-                        <input id="CMU" name="Assurance" type="radio"  checked value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <input id="CMU" name="Assurance" type="radio" checked value="CMU" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="CMU" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
                         <input id="CNPS" name="Assurance" value="CNPS" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="CNPS" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">CNPS</label>
+                    </div>
+                    <div class="flex items-center gap-x-3">
+                        <input id="AUTREASSURANCE" name="Assurance" value="{{ $artisan->habitation->assurance->nom_organisation }}" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <label for="AUTREASSURANCE" class="block text-sm dark:text-white font-medium leading-6 text-gray-900">AUTRE</label>
                     </div>
                     @elseif($artisan->habitation->assurance->nom_assurance=="CNPS")
                     <div class="flex items-center gap-x-3">
@@ -392,11 +404,11 @@
                         <label for="CMU" class="block text-sm font-medium leading-6 dark:text-white text-gray-900">CMU</label>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="CNPS" name="Assurance" value="CNPS"  type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <input id="CNPS" name="Assurance" value="CNPS" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="CNPS" class="block text-sm font-medium dark:text-white leading-6 text-gray-900">CNPS</label>
                     </div>
                     <div class="flex items-center gap-x-3">
-                        <input id="AUTREASSURANCE" name="Assurance" checked value="{{ $artisan->habitation->assurance->nom_organisation }}" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                        <input id="AUTREASSURANCE" name="Assurance" checked value="AUTREASSURANCE" type="radio" class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600">
                         <label for="AUTREASSURANCE" class="block text-sm dark:text-white font-medium leading-6 text-gray-900">AUTRE</label>
                     </div>
                     @endif
@@ -676,7 +688,7 @@
                         @enderror
                     </div>
                     <div class="relative z-0 col-span-full w-full mb-6 group">
-                        <input type="text" name="Appreciation_du_bureau" value="{{ $artisan->parrain->Appreciation_du_bureau }}" id="Appreciation_du_bureau" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+                        <input type="text" name="Appreciation_du_bureau" value="{{ $artisan->parrain->appreciation_parrain }}" id="Appreciation_du_bureau" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                         <label for="Appreciation_du_bureau" class="peer-focus:font-medium absolute text-sm dark:text-white  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Appréciation du bureau</label>
                         @error('Appreciation_du_bureau')
                         <p class="text-red-600 italic text-xs">{{ $message }}</p>
@@ -689,10 +701,36 @@
                 </div>
                 <div class="mt-6 flex items-center justify-end gap-x-6">
                     <a href="{{ route('show-artisan',['artisan',$artisan->id]) }}" type="reset" class="rounded-md bg-white px-3 py-2 text-sm font-semibold border-1 text-red-600 shadow-2xl hover:bg-red-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 duration-150 ease-in-out focus-visible:outline-indigo-600">Annuler</a>
-                    <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style="background-color: #006A4E">Sauvegarder</button>
+                    <button data-modal-target="popup-modal" type="button" data-modal-toggle="popup-modal" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" style="background-color: #006A4E">Sauvegarder</button>
                 </div>
+        </div>
+
+        <div id="popup-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-6 text-center">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Êtes-vous sûr de vouloir modifier l'artisan ?</h3>
+                        <button data-modal-hide="popup-modal" type="submit" class="text-white bg-green-500 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                            Oui, je suis sûr
+                        </button>
+                        <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-red-500 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Non, j'annule</button>
+                    </div>
+                </div>
+            </div>
         </div>
         </form>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
 </body>
 </html>
+
