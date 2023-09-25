@@ -150,8 +150,6 @@ class ArtisanController extends Controller
     {
         ///Verification du permission
 
-
-
         $id_agent = $request->input('agent_id');
 
         $agent = Agent::where([
@@ -304,7 +302,7 @@ class ArtisanController extends Controller
 
         // Vérifier si l'agent a la permission de modifier l'artisan
         if ($artisan->id_agent != $agent->user_id) {
-            return redirect()->route('show-artisan')->with('error', "Vous n'avez pas le droit de modifier cet artisan.");
+            return redirect()->route('show-artisan',['artisan'=>$artisan->id])->with('error', "Vous n'avez pas le droit de modifier cet artisan.");
         }
 
         // Si tout est en ordre, afficher la vue pour modifier l'artisan
