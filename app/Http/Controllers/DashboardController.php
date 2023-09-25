@@ -18,7 +18,11 @@ class DashboardController extends Controller
 
         // Statistiques générales
         $nombreArtisans = Artisan::count();
-        $nombreParrains = Parrain::count();
+        $nombreParrains = DB::table('Parrains')
+        ->select('prenom_parrain','nom_parrain')
+        ->groupBy('prenom_parrain','nom_parrain')
+        ->get()->count();
+
         $nombreActivites = Activite::count();
 
         // Les 4 artisans ayant la plus grande charge
