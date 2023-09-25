@@ -98,7 +98,7 @@ class DashboardController extends Controller
         $tomorrow=date('Y-m-d', strtotime("$today +1 day"));
 
         $nombredesArtisanenregistreparjour = Artisan::whereDate('created_at', '=', $today)->get()->count();
-        $listedesArtisanenregistreparjour = Artisan::whereDate('created_at', '=', $today)->get();
+        $listedesArtisanenregistreparjour = Artisan::whereDate('created_at', '=', $today)->take(20)->orderBy('id','desc')->get();
 
         return view('Dashboard', [
             'user' => $user,
