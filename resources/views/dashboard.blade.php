@@ -83,38 +83,38 @@
             </div>
         </div>
         <div class="h-screen md:block w-11/12  mx-auto px-3 rounded-md overflow-x-auto transition-transform duration-300 ease-in-out">
-            <div class="antialiased bg-gray-900 w-full min-h-screen text-slate-300 relative py-2">
+            <div class="antialiased dark:bg-gray-900 w-full min-h-screen text-slate-300 relative py-2">
                 <div class="grid grid-cols-12 mx-auto gap-2 sm:gap-4 md:gap-6 lg:gap-10 xl:gap-14 max-w-7xl my-10 px-2">
-                    <div id="content" class="bg-white/10 col-span-12 rounded-lg p-6">
+                    <div id="content" class="bg-white dark:bg-white/10 col-span-12 rounded-lg p-6">
                         <div id="24h">
-                            <h1 class="font-bold py-4 uppercase">STATISTIQUES</h1>
+                            <h1 class="font-bold text-gray-800 dark:text-white py-4 uppercase">STATISTIQUES</h1>
                             <div id="stats" class="grid gird-cols-12 ">
                                 <p class="text-indigo-300 text-sm font-medium uppercase py-5 leading-4">Classement des Agents les plus productives.</p>
                                 <div class="relative pb-8 overflow-x-auto">
-                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <table class="w-full text-sm text-left dark:bg-white bg-dark text-gray-500 dark:text-gray-400">
                                         <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
-                                                <th scope="col" class="px-6 py-3 rounded-l-lg">
+                                                <th scope="col" class="px-6 py-3">
                                                     Rang
                                                 </th>
                                                 <th scope="col" class="px-6 py-3">
                                                     Nom et Prenom
                                                 </th>
-                                                <th scope="col" class="px-6 py-3 rounded-r-lg">
+                                                <th scope="col" class="px-6  py-3 text-center">
                                                     Nombre de proffessionnel / Artisans enregistrés
                                                 </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($ClassementAgentsNom as $key => $Agent )
-                                            <tr class="bg-white dark:bg-gray-800">
+                                            <tr class="bg-gray-200 dark:bg-gray-800">
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     {{$rank = $key + 1}}
                                                 </th>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6 py-4 text-black dark:text-white font-bold">
                                                     {{$Agent['Nom']}}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6 py-4 text-black dark:text-white font-bold text-center">
                                                     {{$Agent['total']}}
                                                 </td>
                                             </tr>
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div id="stats" class="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <div class="bg-black/60 to-white/5 p-6 rounded-lg">
+                                <div class="bg-black p-6 rounded-lg">
                                     <div class="flex flex-row space-x-4 items-center">
                                         <div id="stats-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
@@ -193,7 +193,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 to-white/5 p-6 rounded-lg">
+                                <div class="bg-black p-6 rounded-lg">
                                     <div class="flex flex-row space-x-4 items-center">
                                         <div id="stats-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
@@ -213,7 +213,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 p-6 rounded-lg">
+                                <div class="bg-black p-6 rounded-lg">
                                     <div class="flex flex-row space-x-4 items-center">
                                         <div id="stats-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
@@ -235,7 +235,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 p-6 rounded-lg">
+                                <div class="bg-black p-6 rounded-lg">
                                     <div class="flex flex-row space-x-4 items-center">
                                         <div id="stats-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
@@ -262,7 +262,7 @@
                         <div id="last-incomes">
                             <h1 class="font-bold py-4 uppercase">STATISTIQUES AVANCEE</h1>
                             <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                                <div class="bg-black/60 to-white/5 rounded-lg">
+                                <div class="bg-black to-white/5 rounded-lg">
                                     <div class="flex flex-row items-center">
                                         <div class="text-3xl p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -282,7 +282,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 to-white/5 rounded-lg">
+                                <div class="bg-black to-white/5 rounded-lg">
                                     <div class="flex flex-row items-center">
                                         <div class="text-3xl p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -302,7 +302,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 to-white/5 rounded-lg">
+                                <div class="bg-black to-white/5 rounded-lg">
                                     <div class="flex flex-row items-center">
                                         <div class="text-3xl p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -324,7 +324,7 @@
                                 </div>
 
 
-                                <div class="bg-black/60 to-white/5 rounded-lg">
+                                <div class="bg-black to-white/5 rounded-lg">
                                     <div class="flex flex-row items-center">
                                         <div class="text-3xl p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -344,7 +344,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="bg-black/60 to-white/5 rounded-lg">
+                                <div class="bg-black to-white/5 rounded-lg">
                                     <div class="flex flex-row items-center">
                                         <div class="text-3xl p-4"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-white">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
