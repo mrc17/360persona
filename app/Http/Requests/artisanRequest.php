@@ -71,7 +71,7 @@ class ArtisanRequest extends FormRequest
             "sexeDuParrain" => "nullable|in:Homme,Femme",
             "ProfessionDuParrain" => "nullable|string|max:255",
             "Appreciation_du_bureau" => "nullable|string|max:255",
-            "checked" => "nullable|in:checked",
+            "checked" => "in:checked",
         ];
     }
     public function messages()
