@@ -12,6 +12,7 @@ use App\Models\Finances;
 use App\Models\Assurance;
 use App\Models\Habitation;
 use App\Models\Organisation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\ArtisanModifyRequest;
@@ -323,26 +324,39 @@ class ArtisanController extends Controller
 
     public function delete($id)
     {
-        // Rechercher l'artisan avec l'ID spécifié, en déclenchant une exception si l'artisan n'est pas trouvé
-        try {
-            $artisan = Artisan::findOrFail($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            // Rediriger en cas d'artisan non trouvé avec un message d'erreur approprié
+        // Récupérer l'utilisateur actuellement authentifié
+        $user = Auth::user();
+
+        // Récupérer l'ID de l'agent associé à l'utilisateur
+        $id_agent = $user->id;
+
+        // Récupérer l'artisan avec l'ID spécifié ou rediriger en cas d'absence
+        $artisan = Artisan::find($id);
+
+        if (!$artisan) {
             return redirect()->route('Liste')->with('error', "L'artisan n'a pas été trouvé.");
         }
 
-        // Vérifiez d'abord si l'artisan a une habitation associée
-        if ($artisan->habitation) {
-            // Supprimez d'abord l'habitation associée à cet artisan
-            $artisan->habitation->delete();
+        // Vérifier si l'agent a la permission de supprimer l'artisan
+        if ($artisan->id_agent != $id_agent) {
+            return redirect()->route('show-artisan', ['artisan' => $artisan->id])->with('error', "Vous n'avez pas le droit de supprimer cet artisan");
         }
 
-        // Supprimez ensuite l'artisan lui-même
-        $artisan->delete();
+        // Utiliser une transaction pour s'assurer que la suppression est atomique
+        DB::transaction(function () use ($artisan) {
+            // Vérifier d'abord si l'artisan a une habitation associée et la supprimer si elle existe
+            if ($artisan->habitation) {
+                $artisan->habitation->delete();
+            }
+
+            // Supprimer ensuite l'artisan lui-même
+            $artisan->delete();
+        });
 
         // Rediriger avec un message de succès après la suppression
         return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
     }
+
 
 
 
