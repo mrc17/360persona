@@ -44,7 +44,7 @@ class DashboardController extends Controller
         $ageSeuil = 30;
 
         foreach ($artisans as $artisan) {
-            $age = date('Y') - date('Y', strtotime($artisan->Dtnaissance));
+            $age = date('Y') - date('Y', strtotime($artisan->dtnaissance));
             if ($artisan->Sexe === 'Homme') {
                 if ($age < $ageSeuil) {
                     $hommesJeunes++;
@@ -60,11 +60,11 @@ class DashboardController extends Controller
             }
         }
         $nombreFemmesMaturesMoins30 = Artisan::where('Sexe', 'Femme')
-            ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
+            ->whereRaw('YEAR(CURDATE()) - YEAR(dtnaissance) >= 30')
             ->count();
 
         $nombreHommesMaturesMoins30 = Artisan::where('Sexe', 'Homme')
-            ->whereRaw('YEAR(CURDATE()) - YEAR(Dtnaissance) >= 30')
+            ->whereRaw('YEAR(CURDATE()) - YEAR(dtnaissance) >= 30')
             ->count();
 
         $ClassementAgents = DB::table('artisans')
@@ -93,6 +93,13 @@ class DashboardController extends Controller
         usort($ClassementAgentsNom, function ($a, $b) {
             return $b['total'] - $a['total'];
         });
+
+        $today=date("Y-m-d");
+        $tomorrow=date('Y-m-d', strtotime("$today +1 day"));
+
+        $nombredesArtisanenregistreparjour = Artisan::whereDate('created_at', '=', $today)->get()->count();
+        $listedesArtisanenregistreparjour = Artisan::whereDate('created_at', '=', $today)->get();
+
         return view('Dashboard', [
             'user' => $user,
             'nombreArtisans' => $nombreArtisans,
@@ -105,6 +112,9 @@ class DashboardController extends Controller
             'nombreFemmesMaturesMoins30' => $nombreFemmesMaturesMoins30,
             'nombreHommesMaturesMoins30' => $nombreHommesMaturesMoins30,
             'ClassementAgentsNom' => $ClassementAgentsNom,
+            'projetLePlusCouteux' => $projetLePlusCouteux,
+            'listedesArtisanenregistreparjour' => $listedesArtisanenregistreparjour,
+            'nombredesArtisanenregistreparjour' => $nombredesArtisanenregistreparjour,
         ]);
     }
 
