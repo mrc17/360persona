@@ -157,7 +157,7 @@ class ArtisanController extends Controller
         ])->first(); // Recherchez l'agent correspondant
 
         if (!$agent) {
-        // Si aucun agent correspondant n'est trouvé, redirigez vers une autre route
+            // Si aucun agent correspondant n'est trouvé, redirigez vers une autre route
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
 
@@ -166,104 +166,104 @@ class ArtisanController extends Controller
         $agent->contact_agent = $request->input('contactRecenseur');
         $agent->save();
 
-        $fiche=Fiche::where('num_fiche',$request->input('ficheRecensement'))->first();
+        $fiche = Fiche::where('num_fiche', $request->input('ficheRecensement'))->first();
 
-        if(!$fiche){
+        if (!$fiche) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
-        $fiche->zone_fiche=$request->input('ZoneRecenseur');
+        $fiche->zone_fiche = $request->input('ZoneRecenseur');
         $fiche->save();
 
-        $artisan=Artisan::where('id',$request->input('artisan'))->first();
+        $artisan = Artisan::where('id', $request->input('artisan'))->first();
 
-        if(!$artisan){
+        if (!$artisan) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
 
-        $artisan->nom=$request->input('NomArtisan');
-        $artisan->prenom=$request->input('PrenomArtisan');
-        $artisan->dtnaissance=$request->input('DateNaissanceArtisan');
-        $artisan->lieu_naissance=$request->input('LieuNaissanceArtisan');
-        $artisan->profession=$request->input('ProfessionArtisan');
-        $artisan->an_exp_prof=$request->input('AnneeExperienceProfessionnelleArtisan');
-        $artisan->sexe=$request->input('sexeartisan');
-        $artisan->an_prof=$request->input('AnneeProfession');
-        $artisan->registre_metier=$request->input('registre');
-        $artisan->email=$request->input('email');
-        $artisan->contact=$request->input('Contact');
+        $artisan->nom = $request->input('NomArtisan');
+        $artisan->prenom = $request->input('PrenomArtisan');
+        $artisan->dtnaissance = $request->input('DateNaissanceArtisan');
+        $artisan->lieu_naissance = $request->input('LieuNaissanceArtisan');
+        $artisan->profession = $request->input('ProfessionArtisan');
+        $artisan->an_exp_prof = $request->input('AnneeExperienceProfessionnelleArtisan');
+        $artisan->sexe = $request->input('sexeartisan');
+        $artisan->an_prof = $request->input('AnneeProfession');
+        $artisan->registre_metier = $request->input('registre');
+        $artisan->email = $request->input('email');
+        $artisan->contact = $request->input('Contact');
         $artisan->save();
 
-        $habitation=Habitation::where('id',$artisan->id_habitation)->first();
-        $habitation->ville=$request->input('VilleArtisan');
-        $habitation->commune=$request->input('CommuneArtisan');
-        $habitation->quartier=$request->input('QuartierArtisan');
-        $habitation->regime_matrimoliale=$request->input('registre');
-        $habitation->situation_matrimoliale=$request->input('Situation');
+        $habitation = Habitation::where('id', $artisan->id_habitation)->first();
+        $habitation->ville = $request->input('VilleArtisan');
+        $habitation->commune = $request->input('CommuneArtisan');
+        $habitation->quartier = $request->input('QuartierArtisan');
+        $habitation->regime_matrimoliale = $request->input('registre');
+        $habitation->situation_matrimoliale = $request->input('Situation');
         $habitation->save();
 
-        $finance =Finances::where('id',$habitation->id_finance)->first();
+        $finance = Finances::where('id', $habitation->id_finance)->first();
 
-        if(!$finance){
+        if (!$finance) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
 
-        $finance->etat_finance=$request->input('etatFinance');
-        $finance->nom_finance=$request->input('nomfinance');
+        $finance->etat_finance = $request->input('etatFinance');
+        $finance->nom_finance = $request->input('nomfinance');
         $finance->save();
 
-        $organisation=Organisation::where('id',$habitation->organisation_id)->first();
+        $organisation = Organisation::where('id', $habitation->organisation_id)->first();
 
-        if(!$organisation){
+        if (!$organisation) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
-        $organisation->etat_organisation=$request->input('reponseOrganition');
-        $organisation->nom_organisation=$request->input('NomOrganisation');
+        $organisation->etat_organisation = $request->input('reponseOrganition');
+        $organisation->nom_organisation = $request->input('NomOrganisation');
 
         $organisation->save();
 
-        $parrain=Parrain::where('id',$artisan->id_parrain)->first();
-        $parrain->nom_parrain=$request->input('NomDuParrain');
-        $parrain->prenom_parrain=$request->input('PrenomDuParrain');
-        $parrain->sexe_parrain=$request->input('sexeDuParrain');
-        $parrain->profession_parrain=$request->input('ProfessionDuParrain');
-        $parrain->appreciation_parrain=$request->input('Appreciation_du_bureau');
+        $parrain = Parrain::where('id', $artisan->id_parrain)->first();
+        $parrain->nom_parrain = $request->input('NomDuParrain');
+        $parrain->prenom_parrain = $request->input('PrenomDuParrain');
+        $parrain->sexe_parrain = $request->input('sexeDuParrain');
+        $parrain->profession_parrain = $request->input('ProfessionDuParrain');
+        $parrain->appreciation_parrain = $request->input('Appreciation_du_bureau');
         $parrain->save();
 
-        $assurance=Assurance::where('id',$habitation->id_assurance)->first();
+        $assurance = Assurance::where('id', $habitation->id_assurance)->first();
 
-        if(!$assurance){
+        if (!$assurance) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
 
-        $assurance->nom_assurance=$request->input('Assurance');
-        $assurance->numero_assurance=$request->input('numeroCnps');
-        $assurance->agence_assurance=$request->input('Agence');
+        $assurance->nom_assurance = $request->input('Assurance');
+        $assurance->numero_assurance = $request->input('numeroCnps');
+        $assurance->agence_assurance = $request->input('Agence');
         $assurance->save();
 
-        $charge=Charge::where('id',$habitation->charge_id)->first();
-        if(!$charge){
+        $charge = Charge::where('id', $habitation->charge_id)->first();
+        if (!$charge) {
             return redirect()->route('show-artisan', ['artisan' => $request->input('artisan')]);
         }
-        $charge->nbr_enfant=$request->input('NbreEnfant');
-        $charge->nbr_fille=$request->input('NbreFille');
-        $charge->nbr_garcon=$request->input('NbreGarcon');
-        $charge->scolarise=$request->input('Scolaire');
+        $charge->nbr_enfant = $request->input('NbreEnfant');
+        $charge->nbr_fille = $request->input('NbreFille');
+        $charge->nbr_garcon = $request->input('NbreGarcon');
+        $charge->scolarise = $request->input('Scolaire');
         $charge->save();
 
         dd($charge);
 
-        $activite=Activite::where('id',$artisan->id_activite)->first();
-        $activite->activite1=$request->input('Activite_1');
-        $activite->denomination=$request->input('denomination');
-        $activite->localisation1=$request->input('Localisation_1');
-        $activite->num_rccm=$request->input('numero_rccm');
-        $activite->activite2=$request->input('Activite_2');
-        $activite->numero_de_la_dfe=$request->input('numeroDeLaDfe');
-        $activite->localisation2=$request->input('Localisation_2');
-        $activite->num_cnps=$request->input('numeroCnpsActivite');
-        $activite->projet=$request->input('Projet');
-        $activite->cout_estimatif_en_chiffre=$request->input('CoutEstimatifEnChiffre');
-        $activite->cout_estimatif_en_lettre=$request->input('CoutEstimatifEnLettre');
+        $activite = Activite::where('id', $artisan->id_activite)->first();
+        $activite->activite1 = $request->input('Activite_1');
+        $activite->denomination = $request->input('denomination');
+        $activite->localisation1 = $request->input('Localisation_1');
+        $activite->num_rccm = $request->input('numero_rccm');
+        $activite->activite2 = $request->input('Activite_2');
+        $activite->numero_de_la_dfe = $request->input('numeroDeLaDfe');
+        $activite->localisation2 = $request->input('Localisation_2');
+        $activite->num_cnps = $request->input('numeroCnpsActivite');
+        $activite->projet = $request->input('Projet');
+        $activite->cout_estimatif_en_chiffre = $request->input('CoutEstimatifEnChiffre');
+        $activite->cout_estimatif_en_lettre = $request->input('CoutEstimatifEnLettre');
         $activite->save();
 
 
@@ -302,7 +302,7 @@ class ArtisanController extends Controller
 
         // Vérifier si l'agent a la permission de modifier l'artisan
         if ($artisan->id_agent != $agent->user_id) {
-            return redirect()->route('show-artisan',['artisan'=>$artisan->id])->with('error', "Vous n'avez pas le droit de modifier cet artisan.");
+            return redirect()->route('show-artisan', ['artisan' => $artisan->id])->with('error', "Vous n'avez pas le droit de modifier cet artisan.");
         }
 
         // Si tout est en ordre, afficher la vue pour modifier l'artisan
@@ -356,100 +356,101 @@ class ArtisanController extends Controller
 
         if ($critere === "Artisan") {
             $artisans = Artisan::where(function ($query) use ($search) {
-                $query->where('Nom', 'LIKE', "%{$search}%")
-                    ->orWhere('Prenom', 'LIKE', "%{$search}%")
-                    ->orWhere('Sexe', 'LIKE', "%{$search}%")
-                    ->orWhere('Profession', 'LIKE', "%{$search}%")
-                    ->orWhere('Dtnaissance', 'LIKE', "%{$search}%")
-                    ->orWhere('LieuNaissance', 'LIKE', "%{$search}%")
-                    ->orWhere('AnExpProf', 'LIKE', "%{$search}%")
-                    ->orWhere('AnProf', 'LIKE', "%{$search}%")
-                    ->orWhere('registreMetier', 'LIKE', "%{$search}%")
-                    ->orWhere('Email', 'LIKE', "%{$search}%")
-                    ->orWhere('Contact', 'LIKE', "%{$search}%");
+                $query->where('nom', 'LIKE', "%{$search}%")
+                    ->orWhere('prenom', 'LIKE', "%{$search}%")
+                    ->orWhere('sexe', 'LIKE', "%{$search}%")
+                    ->orWhere('profession', 'LIKE', "%{$search}%")
+                    ->orWhere('dtnaissance', 'LIKE', "%{$search}%")
+                    ->orWhere('lieu_naissance', 'LIKE', "%{$search}%")
+                    ->orWhere('an_exp_prof', 'LIKE', "%{$search}%")
+                    ->orWhere('an_prof', 'LIKE', "%{$search}%")
+                    ->orWhere('registre_metier', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('contact', 'LIKE', "%{$search}%");
             })->paginate(12);
         } elseif ($critere === "Agent") {
             $agents = Agent::where(function ($query) use ($search) {
-                $query->where('Nom', 'LIKE', "%{$search}%")
-                    ->orWhere('Contact', 'LIKE', "%{$search}%")
-                    ->orWhere('Zone', 'LIKE', "%{$search}%");
+                $query->where('nom_agent', 'LIKE', "%{$search}%")
+                    ->orWhere('contact_agent', 'LIKE', "%{$search}%")
+                    ->orWhere('zone_agent', 'LIKE', "%{$search}%");
             })->get();
             $agentIds = $agents->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_agent', $agentIds)->paginate(12);
         } elseif ($critere === "Activite") {
             $activites = Activite::where(function ($query) use ($search) {
-                $query->where('Activite1', 'LIKE', "%{$search}%")
-                    ->orWhere('Denomination', 'LIKE', "%{$search}%")
-                    ->orWhere('Localisation1', 'LIKE', "%{$search}%")
-                    ->orWhere('numRccm', 'LIKE', "%{$search}%")
-                    ->orWhere('Activite2', 'LIKE', "%{$search}%")
-                    ->orWhere('numeroDeLaDfe', 'LIKE', "%{$search}%")
-                    ->orWhere('Localisation2', 'LIKE', "%{$search}%")
-                    ->orWhere('numcnps', 'LIKE', "%{$search}%")
-                    ->orWhere('Projet', 'LIKE', "%{$search}%")
-                    ->orWhere('CoutestimatifEnlettre', 'LIKE', "%{$search}%")
-                    ->orWhere('CoutestimatifEnchiffre', 'LIKE', "%{$search}%");
+                $query->where('activite1', 'LIKE', "%{$search}%")
+                    ->orWhere('denomination', 'LIKE', "%{$search}%")
+                    ->orWhere('localisation1', 'LIKE', "%{$search}%")
+                    ->orWhere('num_rccm', 'LIKE', "%{$search}%")
+                    ->orWhere('activite2', 'LIKE', "%{$search}%")
+                    ->orWhere('numero_de_LaDfe', 'LIKE', "%{$search}%")
+                    ->orWhere('localisation2', 'LIKE', "%{$search}%")
+                    ->orWhere('num_cnps', 'LIKE', "%{$search}%")
+                    ->orWhere('projet', 'LIKE', "%{$search}%")
+                    ->orWhere('cout_estimatif_en_lettre', 'LIKE', "%{$search}%")
+                    ->orWhere('cout_estimatif_en_chiffre', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $activites->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_activite', $artisanIds)->paginate(12);
         } elseif ($critere === "Fiche") {
             $fiches = Fiche::where(function ($query) use ($search) {
-                $query->where('date', 'LIKE', "%{$search}%")
-                    ->orWhere('numfiche', 'LIKE', "%{$search}%")
-                    ->orWhere('code', 'LIKE', "%{$search}%")
-                    ->orWhere('zone', 'LIKE', "%{$search}%")
-                    ->orWhere('ordre', 'LIKE', "%{$search}%");
+                $query->where('date_fiche', 'LIKE', "%{$search}%")
+                    ->orWhere('num_fiche', 'LIKE', "%{$search}%")
+                    ->orWhere('code_fiche', 'LIKE', "%{$search}%")
+                    ->orWhere('zone_fiche', 'LIKE', "%{$search}%")
+                    ->orWhere('ordre_fiche', 'LIKE', "%{$search}%");
             })->get();
             // Maintenant, récupérez les artisans liés à ces fiches
             $artisanIds = $fiches->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_fiche', $artisanIds)->paginate(12);
         } elseif ($critere === "Habitation") {
             $habitation = Habitation::where(function ($query) use ($search) {
-                $query->where('Ville', 'LIKE', "%{$search}%")
-                    ->orWhere('Quartier', 'LIKE', "%{$search}%")
-                    ->orWhere('SituationMatrimoliale', 'LIKE', "%{$search}%")
-                    ->orWhere('RégimeMatrimoliale', 'LIKE', "%{$search}%");
+                $query->where('ville', 'LIKE', "%{$search}%")
+                    ->orWhere('quartier', 'LIKE', "%{$search}%")
+                    ->orWhere('situation_matrimoliale', 'LIKE', "%{$search}%")
+                    ->orWhere('regime_matrimoliale', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $habitation->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_habitation', $artisanIds)->paginate(12);
         } elseif ($critere === "Parrain") {
             $parrains = Parrain::where(function ($query) use ($search) {
-                $query->where('Nom', 'LIKE', "%{$search}%")
-                    ->orWhere('Prenom', 'LIKE', "%{$search}%")
-                    ->orWhere('Sexe', 'LIKE', "%{$search}%")
-                    ->orWhere('Profession', 'LIKE', "%{$search}%");
+                $query->where('nom_parrain', 'LIKE', "%{$search}%")
+                    ->orWhere('prenom_parrain', 'LIKE', "%{$search}%")
+                    ->orWhere('sexe_parrain', 'LIKE', "%{$search}%")
+                    ->orWhere('profession_parrain', 'LIKE', "%{$search}%");
             })->get();
             $artisanIds = $parrains->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_parrain', $artisanIds)->paginate(12);
         } elseif ($critere === "Charge") {
             $Charge = Charge::where(function ($query) use ($search) {
-                $query->where('NbrEnfant', 'LIKE', "%{$search}%")
-                    ->orWhere('Nbrfille', 'LIKE', "%{$search}%")
-                    ->orWhere('NbrGarcon', 'LIKE', "%{$search}%")
-                    ->orWhere('Scolarise', 'LIKE', "%{$search}%");
+                $query->where('nbr_fille', 'LIKE', "%{$search}%")
+                    ->orWhere('nbr_enfant', 'LIKE', "%{$search}%")
+                    ->orWhere('nbr_garcon', 'LIKE', "%{$search}%")
+                    ->orWhere('scolaire', 'LIKE', "%{$search}%");
             })->get();
             $ChargeIds = $Charge->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_parrain', $ChargeIds)->paginate(12);
         } elseif ($critere === "Assurance") {
             $assurances = Assurance::where(function ($query) use ($search) {
-                $query->where('Nom', 'LIKE', "%{$search}%")
-                    ->orWhere('numero', 'LIKE', "%{$search}%");
+                $query->where('nom_assurance', 'LIKE', "%{$search}%")
+                    ->orWhere('numero_assurance', 'LIKE', "%{$search}%")
+                    ->orWhere('agence_assurance', 'LIKE', "%{$search}%");
             })->get();
             $assuranceIds = $assurances->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('id_Assurance', $assuranceIds)->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_habitation', $habitationIds)->paginate(12);
         } elseif ($critere === "Finance") {
             $finance = Finances::where(function ($query) use ($search) {
-                $query->where('etat', 'LIKE', "%{$search}%")
-                    ->orWhere('Nom', 'LIKE', "%{$search}%");
+                $query->where('etat_finance', 'LIKE', "%{$search}%")
+                    ->orWhere('nom_finance', 'LIKE', "%{$search}%");
             })->get();
             $financeIds = $finance->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('id_finance', $financeIds)->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_habitation', $habitationIds)->paginate(12);
         } elseif ($critere === "Organisation") {
             $Organisation = Organisation::where(function ($query) use ($search) {
-                $query->where('etat', 'LIKE', "%{$search}%")
-                    ->orWhere('Nom', 'LIKE', "%{$search}%");
+                $query->where('etat_organisation', 'LIKE', "%{$search}%")
+                    ->orWhere('nom_organisation', 'LIKE', "%{$search}%");
             })->get();
             $OrganisationIds = $Organisation->pluck('id')->toArray();
             $habitationIds = Habitation::whereIn('organisation_id', $OrganisationIds)->pluck('id')->toArray();
