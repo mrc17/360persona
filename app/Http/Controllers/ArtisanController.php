@@ -312,8 +312,6 @@ class ArtisanController extends Controller
     }
 
 
-
-
     public function show($artisan)
     {
         $artisan = Artisan::find($artisan);
