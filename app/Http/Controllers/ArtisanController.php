@@ -18,6 +18,8 @@ use App\Http\Requests\ArtisanRequest;
 use App\Http\Requests\ArtisanModifyRequest;
 use App\Http\Requests\SearchArtisanRequest;
 use App\Http\Requests\SearchArtisanAvancedRequest;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class ArtisanController extends Controller
@@ -324,26 +326,16 @@ class ArtisanController extends Controller
 
     public function delete($id)
     {
-        // Récupérer l'utilisateur actuellement authentifié
-        $user = Auth::user();
+        try {
+            // Récupérer l'artisan avec l'ID spécifié ou générer une exception si absent
+            $artisan = Artisan::findOrFail($id);
 
-        // Récupérer l'ID de l'agent associé à l'utilisateur
-        $id_agent = $user->id;
+            // Vérifier si l'utilisateur authentifié a la permission de supprimer l'artisan
+            $this->authorize('delete', $artisan);
 
-        // Récupérer l'artisan avec l'ID spécifié ou rediriger en cas d'absence
-        $artisan = Artisan::find($id);
+            // Utiliser une transaction pour s'assurer que la suppression est atomique
+            DB::beginTransaction();
 
-        if (!$artisan) {
-            return redirect()->route('Liste')->with('error', "L'artisan n'a pas été trouvé.");
-        }
-
-        // Vérifier si l'agent a la permission de supprimer l'artisan
-        if ($artisan->id_agent != $id_agent) {
-            return redirect()->route('show-artisan', ['artisan' => $artisan->id])->with('error', "Vous n'avez pas le droit de supprimer cet artisan");
-        }
-
-        // Utiliser une transaction pour s'assurer que la suppression est atomique
-        DB::transaction(function () use ($artisan) {
             // Vérifier d'abord si l'artisan a une habitation associée et la supprimer si elle existe
             if ($artisan->habitation) {
                 $artisan->habitation->activite->delete();
@@ -355,15 +347,24 @@ class ArtisanController extends Controller
                 $artisan->habitation->organisation->delete();
                 $artisan->parrain->delete();
                 $artisan->fiche->delete();
-
             }
 
             // Supprimer ensuite l'artisan lui-même
             $artisan->delete();
-        });
 
-        // Rediriger avec un message de succès après la suppression
-        return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
+            // Valider la transaction
+            DB::commit();
+
+            return redirect()->route('Liste')->with('success', "Artisan supprimé avec succès");
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('Liste')->with('error', "L'artisan n'a pas été trouvé.");
+        } catch (AuthorizationException $e) {
+            return redirect()->route('show-artisan', ['artisan' => $id])->with('error', "Vous n'avez pas le droit de supprimer cet artisan");
+        } catch (\Exception $e) {
+            // En cas d'erreur inattendue, annulez la transaction
+            DB::rollback();
+            return redirect()->route('Liste')->with('error', "Une erreur s'est produite lors de la suppression de l'artisan.");
+        }
     }
 
 
