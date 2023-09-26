@@ -33,8 +33,7 @@
                             @isset($user)
                             {{ $user->username }}
                         </h2>
-                        <p class="text-xs text-gray-500 text-center"></p>
-                        {{$user->grade}}
+                        <p class="text-xs text-gray-500 text-center">{{ $user->grade }}</p>
                         @endisset
                     </div>
                 </div>
@@ -101,17 +100,7 @@
             </div>
         </div>
         <div class=" py-4 h-screen md:block  mx-auto px-3 rounded-md  relative overflow-x-auto transition-transform duration-300 ease-in-out">
-            @if(session('error'))
-            <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                  <span class="font-medium">Danger alert!</span> {{session('error')}}.
-                </div>
-              </div>
-            @endif
+
             <form method="POST" action="{{ route('create-artisan') }}" class="bg-white p-5 rounded-lg ">
                 @csrf
                 <div class="flex flex-col border-2 p-2 border-black">
