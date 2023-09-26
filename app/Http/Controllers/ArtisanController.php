@@ -283,7 +283,7 @@ class ArtisanController extends Controller
         // Vérifier si l'artisan existe
         if (!$artisan) {
             // Rediriger en cas d'artisan non trouvé (ajoutez ici la logique appropriée)
-            return redirect()->route('show-artisan')->with('error', "L'artisan n'a pas été trouvé.");
+            return redirect()->route('Liste')->with('error', "L'artisan n'a pas été trouvé.");
         }
 
         // Récupérer l'utilisateur actuellement authentifié
@@ -346,7 +346,16 @@ class ArtisanController extends Controller
         DB::transaction(function () use ($artisan) {
             // Vérifier d'abord si l'artisan a une habitation associée et la supprimer si elle existe
             if ($artisan->habitation) {
+                $artisan->habitation->activite->delete();
+                $artisan->habitation->finances->delete();
                 $artisan->habitation->delete();
+                $artisan->activites->delete();
+                $artisan->habitation->charge->delete();
+                $artisan->habitation->assurance->delete();
+                $artisan->habitation->organisation->delete();
+                $artisan->parrain->delete();
+                $artisan->fiche->delete();
+
             }
 
             // Supprimer ensuite l'artisan lui-même
@@ -440,7 +449,7 @@ class ArtisanController extends Controller
                 $query->where('nbr_fille', 'LIKE', "%{$search}%")
                     ->orWhere('nbr_enfant', 'LIKE', "%{$search}%")
                     ->orWhere('nbr_garcon', 'LIKE', "%{$search}%")
-                    ->orWhere('scolaire', 'LIKE', "%{$search}%");
+                    ->orWhere('scolarise', 'LIKE', "%{$search}%");
             })->get();
             $ChargeIds = $Charge->pluck('id')->toArray();
             $artisans = Artisan::whereIn('id_parrain', $ChargeIds)->paginate(12);
